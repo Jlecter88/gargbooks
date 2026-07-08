@@ -1,16 +1,33 @@
 {
   "books": {
     "dracula": {
-      "en": true
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "the-metamorphosis": {
+      "en": true,
+      "pt-br": true
     }
   },
   "stories": {
     "conto-thomas-kael-1783522769210": {
       "en": true,
-      "pt-br": true
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "conto-thomas-kael-1783522167466": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true
     }
   },
   "discoveredWorks": [],
   "lastDiscoveryTimestamp": null,
-  "totalCycles": 1
+  "totalCycles": 7
 }

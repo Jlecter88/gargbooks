@@ -47,7 +47,9 @@ export default function PublicarLivro() {
 
   useEffect(() => {
     if (currentUser) {
-      setAuthor(currentUser.name);
+      setTimeout(() => {
+        setAuthor(currentUser.name);
+      }, 0);
     }
   }, [currentUser]);
 
@@ -69,9 +71,9 @@ export default function PublicarLivro() {
       const result = await compressImage(file, 800, 1000, 0.7);
       setCoverImage(result.base64);
       setCompressionInfo(result);
-    } catch (err: any) {
+    } catch (err) {
       console.error(err);
-      setError(err.message || "Erro ao compactar a imagem.");
+      setError((err as Error).message || "Erro ao compactar a imagem.");
     } finally {
       setIsCompressing(false);
     }

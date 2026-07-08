@@ -4,6 +4,7 @@ import React, { useMemo, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { useUserSession } from "@/context/UserContext";
 import { useBooks } from "@/context/BookContext";
 
@@ -392,14 +393,7 @@ export default function PerfilPublicoPage() {
       </main>
 
       {/* Footer */}
-      <footer className="mt-20 border-t border-white/10 py-10 px-6">
-        <div className="max-w-6xl mx-auto flex items-center justify-between text-[9px] font-mono text-stone-600">
-          <span className="uppercase tracking-widest">Gargbooks por Creative Pash</span>
-          <Link href="/" className="hover:text-accent transition-colors uppercase tracking-widest">
-            ← Estante
-          </Link>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

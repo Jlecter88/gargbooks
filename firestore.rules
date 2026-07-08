@@ -2,9 +2,35 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Regras padrão de desenvolvimento: permite leitura/escrita para todos os usuários autenticados
-    match /{document=**} {
-      allow read, write: if request.auth != null;
+    
+    // Perfil dos Usuários
+    match /users/{userId} {
+      allow read: if request.auth != null; // Qualquer usuário logado pode ver perfis
+      allow write: if request.auth != null && request.auth.uid == userId; // Apenas o próprio usuário edita seu perfil
+    }
+
+    // Catálogo de Livros e Contos
+    match /books/{bookId} {
+      // Qualquer pessoa pode navegar e ler os livros/contos
+      allow read: if true;
+      
+      // Criação permitida para qualquer usuário autenticado
+      allow create: if request.auth != null && request.resource.data.authorId == request.auth.uid;
+      
+      // Edição e exclusão reservadas apenas para o autor original do livro
+      allow update, delete: if request.auth != null && resource.data.authorId == request.auth.uid;
+      
+      // Avaliações/Resenhas dos Livros (Subcoleção recomendada para escalabilidade)
+      match /reviews/{reviewId} {
+        allow read: if true;
+        allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
+        allow update, delete: if request.auth != null && resource.data.userId == request.auth.uid;
+      }
+    }
+
+    // Favoritos / Bookmarks dos Usuários
+    match /users/{userId}/bookmarks/{bookmarkId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
     }
   }
 }

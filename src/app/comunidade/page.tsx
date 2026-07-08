@@ -2,9 +2,9 @@
 
 import React, { useState } from "react";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { useUserSession } from "@/context/UserContext";
-import { matchTablesForUser } from "@/utils/rpgMatchmaker";
-import { canEditProfile } from "@/utils/security";
+import { matchTablesForUser, User, RPGTable } from "@/utils/rpgMatchmaker";
 
 export default function ComunidadeRPG() {
   const {
@@ -525,14 +525,15 @@ export default function ComunidadeRPG() {
 
         </div>
       </main>
+      <Footer />
     </div>
   );
 }
 
 // Sub-Component: RPG Table Card to avoid duplicated rendering logic
 interface RPGTableCardProps {
-  table: any;
-  users: any[];
+  table: RPGTable;
+  users: User[];
   currentUserId?: string;
   onToggleJoin: (id: string) => void;
   isRecommended: boolean;

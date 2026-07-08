@@ -276,8 +276,8 @@ export default function RPGChat({ currentUser, onSendMessage }: RPGChatProps) {
       if (onSendMessage) {
         onSendMessage(newMessage);
       }
-    } catch (err: any) {
-      setErrorMessage(err.message || "Erro ao processar comando.");
+    } catch (err) {
+      setErrorMessage((err as Error).message || "Erro ao processar comando.");
     }
   };
 

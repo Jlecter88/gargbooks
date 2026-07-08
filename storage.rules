@@ -2,8 +2,29 @@ rules_version = '2';
 
 service firebase.storage {
   match /b/{bucket}/o {
-    match /{allPaths=**} {
-      allow read, write: if request.auth != null;
+    
+    // Imagens de Capa Personalizadas (Máximo 10MB)
+    match /covers/{coverId} {
+      allow read: if true; // Qualquer leitor pode ver as capas
+      allow write: if request.auth != null 
+                   && request.resource.size < 10 * 1024 * 1024 
+                   && request.resource.contentType.matches('image/.*');
+    }
+
+    // PDFs e arquivos para Download dos Livros/Contos
+    match /downloads/{fileId} {
+      allow read: if true; // Leitores podem fazer download dos arquivos
+      allow write: if false; // NENHUM usuário comum envia arquivos para a pasta oficial de downloads
+                             // Apenas o Admin SDK (seu PC) poderá alimentar esta pasta!
+    }
+
+    // Avatares e imagens de perfil dos usuários
+    match /avatars/{userId} {
+      allow read: if true;
+      allow write: if request.auth != null 
+                   && request.auth.uid == userId 
+                   && request.resource.size < 5 * 1024 * 1024 
+                   && request.resource.contentType.matches('image/.*');
     }
   }
 }

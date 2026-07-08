@@ -3,11 +3,11 @@
 import React, { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { useUserSession } from "@/context/UserContext";
 import { useBooks } from "@/context/BookContext";
 import { getRecommendations } from "@/utils/recommendations";
 import RecommendedSection from "@/components/RecommendedSection";
-import { ReadBookEntry } from "@/utils/rpgMatchmaker";
 import { compressImage } from "@/utils/imageCompressor";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
@@ -68,7 +68,6 @@ export default function PerfilPage() {
     setReadingNow,
     isInWishlist,
     isRead,
-    isReadingNow,
   } = useUserSession();
 
   const { books } = useBooks();
@@ -89,12 +88,14 @@ export default function PerfilPage() {
   // Sync state with active user switch
   useEffect(() => {
     if (currentUser) {
-      setEditBio(currentUser.bio ?? "");
-      setEditStyle(currentUser.favorite_style ?? "");
-      setEditGenres(currentUser.favorite_genres ?? []);
-      setEditTags(currentUser.interest_tags ?? []);
-      setProfilePic(currentUser.profile_picture ?? "");
-      setShowAdultContent(currentUser.preferences?.showAdultContent ?? false);
+      setTimeout(() => {
+        setEditBio(currentUser.bio ?? "");
+        setEditStyle(currentUser.favorite_style ?? "");
+        setEditGenres(currentUser.favorite_genres ?? []);
+        setEditTags(currentUser.interest_tags ?? []);
+        setProfilePic(currentUser.profile_picture ?? "");
+        setShowAdultContent(currentUser.preferences?.showAdultContent ?? false);
+      }, 0);
     }
   }, [currentUser]);
 
@@ -112,9 +113,9 @@ export default function PerfilPage() {
     try {
       const result = await compressImage(file, 400, 400, 0.7);
       setProfilePic(result.base64);
-    } catch (err: any) {
+    } catch (err) {
       console.error(err);
-      alert(err.message || "Falha ao processar e comprimir imagem.");
+      alert((err as Error).message || "Falha ao processar e comprimir imagem.");
     } finally {
       setIsUploading(false);
     }
@@ -842,14 +843,7 @@ export default function PerfilPage() {
       </main>
 
       {/* Footer */}
-      <footer className="mt-20 border-t border-white/10 py-10 px-6">
-        <div className="max-w-6xl mx-auto flex items-center justify-between text-[9px] font-mono text-stone-600">
-          <span className="uppercase tracking-widest">Gargbooks por Creative Pash</span>
-          <Link href="/" className="hover:text-accent transition-colors uppercase tracking-widest">
-            ← Estante
-          </Link>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

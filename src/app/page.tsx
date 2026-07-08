@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useBooks } from "@/context/BookContext";
 import { useUserSession } from "@/context/UserContext";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import RecommendedSection from "@/components/RecommendedSection";
 import { getRecommendations } from "@/utils/recommendations";
 import { Book } from "@/context/BookContext";
@@ -467,30 +468,7 @@ export default function Home() {
       </main>
 
       {/* ── Footer ───────────────────────────────────────────────────────── */}
-      <footer className={`mt-28 border-t ${borderClasses} py-16 px-6`}>
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10 text-[10px] font-mono text-current/55">
-          <div className="flex items-center gap-3">
-            <svg viewBox="0 0 100 100" className="w-5 h-5 stroke-accent fill-none stroke-[2]">
-              <path d="M50,50 A0.5,0.5 0 0,1 50,50.1 A1,1 0 0,1 49,49 A2,2 0 0,1 51,47 A4,4 0 0,1 55,51 A8,8 0 0,1 47,59 A16,16 0 0,1 31,43 A32,32 0 0,1 63,11 A64,64 0 0,1 -1,75" />
-            </svg>
-            <span className="uppercase tracking-widest font-bold">GARGBOOKS por Creative Pash</span>
-          </div>
-          <div className="flex gap-8 uppercase tracking-widest">
-            <Link href="/perfil" className="hover:text-accent transition-colors">
-              Perfil
-            </Link>
-            <Link href="/publicar" className="hover:text-accent transition-colors">
-              Publicar
-            </Link>
-            <a href="#" className="hover:text-accent transition-colors">
-              Termos
-            </a>
-            <a href="#" className="hover:text-accent transition-colors">
-              Contato
-            </a>
-          </div>
-        </div>
-      </footer>
+      <Footer borderClass={borderClasses} />
     </div>
   );
 }

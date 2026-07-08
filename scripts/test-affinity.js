@@ -1,8 +1,4 @@
-/**
- * Script de Verificação do Sistema de Afinidade de RPG (Matchmaking)
- * Gargbooks - Creative Pash
- */
-
+/* eslint-disable @typescript-eslint/no-require-imports */
 const users = require("../src/data/users-mock.json");
 const tables = require("../src/data/rpg-mock.json");
 

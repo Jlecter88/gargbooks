@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import { useParams, useRouter } from "next/navigation";
+import Link from "next/link";
 import { useBooks, Edition } from "@/context/BookContext";
 import Header from "@/components/Header";
 import AdultContentGuard from "@/components/AdultContentGuard";
@@ -13,7 +14,7 @@ type ThemeMode = "premium-dark" | "sepia" | "pure-black" | "light-cream";
 export default function DetalheLivro() {
   const params = useParams();
   const router = useRouter();
-  const { books, addReview, addBookmark } = useBooks();
+  const { books, addReview, addBookmark, toggleReactionOnBook, toggleReactionOnReview } = useBooks();
   const { currentUser, users, forumComments, addComment } = useUserSession();
 
   const bookId = params.id as string;
@@ -29,7 +30,16 @@ export default function DetalheLivro() {
   const displayDownloadFile = translation?.downloadFile || book?.downloadFile || (book ? `/downloads/${book.id}.txt` : "");
 
   // Tabs state
-  const [activeTab, setActiveTab] = useState<"reader" | "editions" | "forum">("reader");
+  const [activeTab, setActiveTab] = useState<"reader" | "editions" | "forum" | "reviews">("reader");
+
+  // Find author profile
+  const authorUser = useMemo(() => {
+    if (!book) return null;
+    if (book.authorId) {
+      return users.find((u) => u.id === book.authorId);
+    }
+    return users.find((u) => u.name === book.author || u.username === book.author);
+  }, [users, book]);
 
   // Forum thread states
   const [replyingToId, setReplyingToId] = useState<string | null>(null);
@@ -52,7 +62,6 @@ export default function DetalheLivro() {
   const [userRegion, setUserRegion] = useState<"BR" | "PT">("BR");
 
   // Form states for reviews
-  const [reviewerName, setReviewerName] = useState("");
   const [reviewRating, setReviewRating] = useState(5);
   const [reviewText, setReviewText] = useState("");
   const [reviewSubmitted, setReviewSubmitted] = useState(false);
@@ -71,19 +80,115 @@ export default function DetalheLivro() {
     }
   }, []);
 
-  const [downloadUrl, setDownloadUrl] = useState<string>("");
+  const [savedParagraphIdx, setSavedParagraphIdx] = useState<number | null>(null);
 
-  // Create runtime text download url using Blob
+  // Load reader style preferences and reading progress on mount/bookId change
   useEffect(() => {
-    if (!displayFullText) return;
-    const blob = new Blob([displayFullText], { type: "text/plain;charset=utf-8" });
+    if (!book) return;
+    if (typeof window !== "undefined") {
+      const savedTheme = localStorage.getItem("gargbooks_reader_theme") as ThemeMode | null;
+      const savedSize = localStorage.getItem("gargbooks_reader_fontsize");
+      const savedSerif = localStorage.getItem("gargbooks_reader_seriffont");
+      const savedProgress = localStorage.getItem(`gargbooks_progress_${book.id}`);
+
+      setTimeout(() => {
+        if (savedTheme) setReaderTheme(savedTheme);
+        if (savedSize) setFontSize(Number(savedSize));
+        if (savedSerif) setSerifFont(savedSerif === "true");
+        
+        if (savedProgress) {
+          setSavedParagraphIdx(Number(savedProgress));
+        } else {
+          setSavedParagraphIdx(null);
+        }
+      }, 0);
+    }
+  }, [book]);
+
+  // Persist style preferences on changes
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("gargbooks_reader_theme", readerTheme);
+    }
+  }, [readerTheme]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("gargbooks_reader_fontsize", fontSize.toString());
+    }
+  }, [fontSize]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("gargbooks_reader_seriffont", serifFont.toString());
+    }
+  }, [serifFont]);
+
+  // Handler to set reading progress (bookmark) at paragraph index
+  const handleMarkPage = (idx: number) => {
+    if (!book) return;
+    if (typeof window !== "undefined") {
+      localStorage.setItem(`gargbooks_progress_${book.id}`, idx.toString());
+      setSavedParagraphIdx(idx);
+      
+      const toast = document.createElement("div");
+      toast.className = "fixed bottom-6 right-6 z-50 bg-accent text-white px-5 py-3 rounded-full text-xs font-semibold shadow-xl border border-white/10 animate-slide-in";
+      toast.innerText = `🔖 Marcador de página salvo no parágrafo ${idx + 1}!`;
+      document.body.appendChild(toast);
+      setTimeout(() => {
+        toast.classList.add("opacity-0", "transition-opacity", "duration-500");
+        setTimeout(() => toast.remove(), 500);
+      }, 2500);
+    }
+  };
+
+  const [downloadUrl, setDownloadUrl] = useState<string>("");
+  const [fullTextContent, setFullTextContent] = useState<string>("");
+  const [textLoading, setTextLoading] = useState<boolean>(false);
+
+  // Fetch full text from hosted files under public/downloads
+  useEffect(() => {
+    if (!book) return;
+
+    const fetchText = async () => {
+      setTextLoading(true);
+      // Determine the best source file url
+      const targetFile = translation?.downloadFile || book.downloadFile || `/downloads/${book.id}.txt`;
+      
+      try {
+        const response = await fetch(targetFile);
+        if (!response.ok) {
+          throw new Error("File not found on server");
+        }
+        const text = await response.text();
+        if (text && text.trim().length > 100) {
+          setFullTextContent(text);
+        } else {
+          // Fallback to JSON content if the text file is empty
+          setFullTextContent(displayFullText);
+        }
+      } catch (err) {
+        console.warn("Could not fetch hosted book file, using database fallback:", err);
+        setFullTextContent(displayFullText);
+      } finally {
+        setTextLoading(false);
+      }
+    };
+
+    fetchText();
+  }, [book?.id, currentLang, displayFullText, translation?.downloadFile]);
+
+  // Create runtime text download url using Blob based on loaded full text
+  useEffect(() => {
+    if (!fullTextContent) return;
+    const blob = new Blob([fullTextContent], { type: "text/plain;charset=utf-8" });
     const url = URL.createObjectURL(blob);
     setDownloadUrl(url);
 
     return () => {
       URL.revokeObjectURL(url);
     };
-  }, [displayFullText]);
+  }, [fullTextContent]);
 
 
   if (!book) {
@@ -214,7 +319,34 @@ export default function DetalheLivro() {
               {displayTitle}
             </h1>
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[10px] font-mono uppercase tracking-wider text-stone-400 border-y border-white/5 py-3 w-full">
-              <span>Autor: <strong className="text-stone-200">{book.author}</strong></span>
+              <span className="flex items-center gap-1.5">
+                Autor:{" "}
+                {book.genres.includes("Adulto +18") && book.publishWithRealPhoto === false ? (
+                  <span className="flex items-center gap-1">
+                    <span className="w-5 h-5 rounded-full bg-stone-800 text-[8px] font-mono font-bold flex items-center justify-center text-stone-500">?</span>
+                    <strong className="text-stone-400 font-medium font-sans">Autor Anônimo</strong>
+                  </span>
+                ) : authorUser ? (
+                  <Link
+                    href={`/perfil/${authorUser.id}`}
+                    className="flex items-center gap-1.5 hover:underline text-stone-250 transition-colors"
+                  >
+                    {authorUser.profile_picture ? (
+                      <span
+                        className="w-5 h-5 rounded-full bg-cover bg-center border border-accent/20 block"
+                        style={{ backgroundImage: `url(${authorUser.profile_picture})` }}
+                      />
+                    ) : (
+                      <span className="w-5 h-5 rounded-full bg-accent/20 border border-accent/20 text-[8px] font-mono font-bold flex items-center justify-center text-accent">
+                        {authorUser.avatar_initial}
+                      </span>
+                    )}
+                    <strong className="text-stone-200">{book.author}</strong>
+                  </Link>
+                ) : (
+                  <strong className="text-stone-200">{book.author}</strong>
+                )}
+              </span>
               <span>•</span>
               <span>Ano: <strong className="text-stone-200">{book.year}</strong></span>
               <span>•</span>
@@ -233,13 +365,40 @@ export default function DetalheLivro() {
             <p className="text-sm text-stone-400 leading-relaxed max-w-3xl font-sans pt-2">
               {displaySynopsis}
             </p>
+
+            {/* Story Reactions Bar */}
+            <div className="flex items-center gap-3 pt-4 border-t border-white/5">
+              <span className="text-[9px] font-mono uppercase tracking-widest text-stone-550">Reações:</span>
+              <div className="flex gap-2">
+                {["❤️", "🔥", "👏", "🤯"].map((type) => {
+                  const userList = book.reactions?.[type] ?? [];
+                  const hasReacted = currentUser ? userList.includes(currentUser.id) : false;
+                  return (
+                    <button
+                      key={type}
+                      onClick={() => toggleReactionOnBook(book.id, type, currentUser?.id || "")}
+                      disabled={!currentUser}
+                      className={`flex items-center gap-1.5 py-1.5 px-3 rounded-full text-[10px] border transition-all ${
+                        hasReacted
+                          ? "bg-accent/20 border-accent text-accent font-bold scale-105"
+                          : "bg-white/5 border-white/10 text-stone-400 hover:border-white/20 hover:text-white"
+                      } disabled:opacity-45 disabled:cursor-not-allowed cursor-pointer`}
+                      title={currentUser ? "Clique para reagir" : "Faça login para reagir"}
+                    >
+                      <span>{type}</span>
+                      {userList.length > 0 && <span className="font-mono text-[9px]">{userList.length}</span>}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Tabs navigation bar */}
       <section className="bg-corto-dark/95 border-b border-white/5 sticky top-[72px] z-30 px-6 backdrop-blur-md">
-        <div className="max-w-6xl w-full mx-auto flex font-mono text-xs uppercase tracking-widest font-semibold">
+        <div className="max-w-6xl w-full mx-auto flex font-mono text-xs uppercase tracking-widest font-semibold overflow-x-auto scrollbar-none">
           <button
             onClick={() => setActiveTab("reader")}
             className={`py-4 px-6 border-b transition-all flex items-center gap-2 cursor-pointer ${
@@ -269,6 +428,16 @@ export default function DetalheLivro() {
             }`}
           >
             03/ Fórum ({forumComments.filter((c) => c.bookId === book.id).length})
+          </button>
+          <button
+            onClick={() => setActiveTab("reviews")}
+            className={`py-4 px-6 border-b transition-all flex items-center gap-2 cursor-pointer ${
+              activeTab === "reviews"
+                ? "border-accent text-accent"
+                : "border-transparent text-stone-400 hover:text-stone-250"
+            }`}
+          >
+            04/ Resenhas ({book.reviews?.length ?? 0})
           </button>
         </div>
       </section>
@@ -385,8 +554,50 @@ export default function DetalheLivro() {
 
               {/* Instruction tooltip */}
               <p className="text-[10px] text-center text-stone-500 font-mono italic tracking-wide">
-                💡 Dica de Leitura: Selecione qualquer frase do texto abaixo para salvar um Marcador.
+                💡 Dica de Leitura: Selecione qualquer frase do texto abaixo para salvar um Marcador. Ou clique no marcador discreto ao lado do parágrafo para marcar sua posição.
               </p>
+
+              {/* Continuar Lendo Banner */}
+              {savedParagraphIdx !== null && (
+                <div className="bg-accent/10 border border-accent/25 rounded-2xl p-4 flex flex-wrap gap-4 items-center justify-between animate-fade-in text-xs font-mono">
+                  <div className="flex items-center gap-2">
+                    <span className="text-base">🔖</span>
+                    <span className="text-stone-300">
+                      Você possui um marcador de página no parágrafo <strong>#{savedParagraphIdx + 1}</strong>.
+                    </span>
+                  </div>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => {
+                        const el = document.getElementById(`para-${savedParagraphIdx}`);
+                        if (el) {
+                          el.scrollIntoView({
+                            behavior: "smooth",
+                            block: "center"
+                          });
+                          el.classList.add("ring-2", "ring-accent/50", "ring-offset-2", "ring-offset-neutral-900", "rounded-xl", "transition-all", "duration-1000");
+                          setTimeout(() => {
+                            el.classList.remove("ring-2", "ring-accent/50", "ring-offset-2", "ring-offset-neutral-900");
+                          }, 3000);
+                        }
+                      }}
+                      className="px-4 py-2 bg-accent text-white font-bold rounded-xl hover:bg-accent-hover transition-all cursor-pointer"
+                    >
+                      Continuar Lendo ➔
+                    </button>
+                    <button
+                      onClick={() => {
+                        localStorage.removeItem(`gargbooks_progress_${book.id}`);
+                        setSavedParagraphIdx(null);
+                      }}
+                      className="px-3 py-2 bg-white/5 hover:bg-white/10 text-stone-400 hover:text-white rounded-xl transition-all cursor-pointer"
+                      title="Remover Marcador"
+                    >
+                      Remover
+                    </button>
+                  </div>
+                </div>
+              )}
 
               {/* E-reader Book Text Container */}
               <div
@@ -411,28 +622,67 @@ export default function DetalheLivro() {
                   </button>
                 )}
 
-                {/* Renders paragraphs split by double newline */}
-                {displayFullText.split("\n\n").map((para, idx) => {
-                  if (para.startsWith("##")) {
-                    return (
-                      <h2 key={idx} className="font-bold text-2xl md:text-3xl mt-8 mb-5 leading-snug font-serif text-accent border-b border-current/10 pb-2">
-                        {para.replace(/##\s*/, "")}
-                      </h2>
+                {textLoading ? (
+                  <div className="py-20 text-center space-y-4 font-mono text-xs opacity-60">
+                    <span className="block animate-spin text-2xl text-accent">🌀</span>
+                    <span className="block uppercase tracking-widest">Carregando obra completa hospedada no servidor...</span>
+                  </div>
+                ) : (
+                  /* Renders paragraphs split by double newline */
+                  fullTextContent.split("\n\n").map((para, idx) => {
+                    const isHighlighted = savedParagraphIdx === idx;
+                    const isHeading2 = para.startsWith("##");
+                    const isHeading3 = para.startsWith("###");
+
+                    const markButton = (
+                      <button
+                        onClick={() => handleMarkPage(idx)}
+                        className={`opacity-0 group-hover/para:opacity-100 transition-opacity duration-300 p-1.5 rounded-xl hover:bg-white/5 text-stone-500 hover:text-accent cursor-pointer text-xs`}
+                        title="Marcar página aqui"
+                      >
+                        {isHighlighted ? "🔖" : "🏷️"}
+                      </button>
                     );
-                  }
-                  if (para.startsWith("###")) {
+
+                    if (isHeading2) {
+                      return (
+                        <div key={idx} className="group/para flex items-center justify-between gap-4 mt-8 mb-5 border-b border-current/10 pb-2">
+                          <h2 id={`para-${idx}`} className="font-bold text-2xl md:text-3xl leading-snug font-serif text-accent flex-1">
+                            {para.replace(/##\s*/, "")}
+                          </h2>
+                          {markButton}
+                        </div>
+                      );
+                    }
+                    if (isHeading3) {
+                      return (
+                        <div key={idx} className="group/para flex items-center justify-between gap-4 mt-6 mb-4">
+                          <h3 id={`para-${idx}`} className="font-semibold text-lg md:text-xl leading-snug font-serif text-accent/80 flex-1">
+                            {para.replace(/###\s*/, "")}
+                          </h3>
+                          {markButton}
+                        </div>
+                      );
+                    }
                     return (
-                      <h3 key={idx} className="font-semibold text-lg md:text-xl mt-6 mb-4 leading-snug font-serif text-accent/80">
-                        {para.replace(/###\s*/, "")}
-                      </h3>
+                      <div
+                        key={idx}
+                        className={`group/para flex gap-4 items-start py-2.5 rounded-2xl transition-all duration-300 ${
+                          isHighlighted
+                            ? "bg-accent/10 border border-accent/25 px-5 my-3 shadow-sm shadow-accent/5"
+                            : "hover:bg-white/[0.01] px-5 -mx-5"
+                        }`}
+                      >
+                        <p id={`para-${idx}`} className="mb-0 indent-8 text-justify flex-1">
+                          {para}
+                        </p>
+                        <div className="pt-0.5 select-none">
+                          {markButton}
+                        </div>
+                      </div>
                     );
-                  }
-                  return (
-                    <p key={idx} className="mb-6 indent-8 text-justify">
-                      {para}
-                    </p>
-                  );
-                })}
+                  })
+                )}
               </div>
             </div>
           );
@@ -657,6 +907,151 @@ export default function DetalheLivro() {
             </div>
           </div>
         )}
+
+        {/* TAB 4: REVIEWS SECTION */}
+        {activeTab === "reviews" && (
+          <div className="space-y-10 animate-fade-in max-w-3xl mx-auto">
+            <h3 className="font-serif text-2xl font-bold border-b border-white/5 pb-3">
+              Resenhas & Críticas Literárias
+            </h3>
+
+            {/* Review Submission Form */}
+            {currentUser ? (
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  if (!reviewText.trim()) return;
+                  addReview(book.id, currentUser.name, reviewRating, reviewText);
+                  setReviewText("");
+                  setReviewSubmitted(true);
+                  setTimeout(() => setReviewSubmitted(false), 3000);
+                }}
+                className="bg-white/3 rounded-3xl p-6 border border-white/5 space-y-4"
+              >
+                <h4 className="font-serif text-sm font-semibold text-stone-250">Escrever Resenha</h4>
+                {reviewSubmitted && (
+                  <div className="p-3 bg-emerald-950/20 border border-emerald-500/30 text-emerald-400 text-xs rounded-xl">
+                    ✓ Resenha publicada com sucesso!
+                  </div>
+                )}
+                <div className="flex flex-col sm:flex-row gap-4 justify-between sm:items-center">
+                  <div className="flex items-center gap-2 text-xs font-mono">
+                    <span>Avaliação:</span>
+                    <select
+                      value={reviewRating}
+                      onChange={(e) => setReviewRating(Number(e.target.value))}
+                      className="px-3 py-1 bg-neutral-900 border border-white/10 text-accent rounded-xl font-bold outline-none cursor-pointer"
+                    >
+                      {[5, 4, 3, 2, 1].map((r) => (
+                        <option key={r} value={r}>
+                          {"★".repeat(r)} ({r}/5)
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="text-[10px] font-mono text-stone-500">
+                    Resenhando como: <strong className="text-stone-300">@{currentUser.username}</strong>
+                  </div>
+                </div>
+                <textarea
+                  required
+                  rows={4}
+                  value={reviewText}
+                  onChange={(e) => setReviewText(e.target.value)}
+                  placeholder="Escreva sua opinião crítica sobre esta obra..."
+                  className="w-full px-4 py-3 bg-neutral-900 border border-white/10 rounded-2xl text-xs focus:border-accent outline-none resize-none font-sans text-stone-200"
+                />
+                <div className="flex justify-end">
+                  <button
+                    type="submit"
+                    className="px-6 py-2.5 bg-accent text-white rounded-full text-[10px] uppercase font-mono font-bold tracking-widest hover:bg-accent-hover active:scale-95 transition-all shadow-md cursor-pointer"
+                  >
+                    Publicar Resenha ↗
+                  </button>
+                </div>
+              </form>
+            ) : (
+              <div className="p-6 bg-white/3 rounded-3xl border border-white/5 text-center text-xs text-stone-500 font-mono italic">
+                🔒 Faça login na aba <a href="/comunidade" className="text-accent underline">Comunidade</a> para poder avaliar e resenhar.
+              </div>
+            )}
+
+            {/* Reviews List */}
+            <div className="space-y-6">
+              {!book.reviews || book.reviews.length === 0 ? (
+                <p className="text-xs text-stone-550 italic text-center py-10">
+                  Nenhuma resenha escrita ainda. Seja o primeiro a avaliar!
+                </p>
+              ) : (
+                book.reviews.map((rev) => {
+                  const revAuthor = users.find((u) => u.name === rev.username || u.username === rev.username);
+                  const revReactions = rev.reactions ?? {};
+                  return (
+                    <div
+                      key={rev.id}
+                      className="p-6 bg-white/3 border border-white/5 rounded-3xl text-sm space-y-3 hover:border-accent/30 transition-all duration-300"
+                    >
+                      <div className="flex justify-between items-center text-xs">
+                        <div className="flex items-center gap-2">
+                          {revAuthor && revAuthor.profile_picture ? (
+                            <span
+                              className="w-7 h-7 rounded-full bg-cover bg-center border border-accent/20 block"
+                              style={{ backgroundImage: `url(${revAuthor.profile_picture})` }}
+                            />
+                          ) : (
+                            <span className="w-7 h-7 rounded-full bg-accent/15 border border-accent/20 text-accent text-[10px] font-bold flex items-center justify-center">
+                              {rev.username.slice(0, 2).toUpperCase()}
+                            </span>
+                          )}
+                          {revAuthor ? (
+                            <Link
+                              href={`/perfil/${revAuthor.id}`}
+                              className="font-semibold text-stone-200 hover:underline"
+                            >
+                              {rev.username}
+                            </Link>
+                          ) : (
+                            <span className="font-semibold text-stone-200">{rev.username}</span>
+                          )}
+                          <span className="text-accent ml-2 text-[10px] font-mono">
+                            {"★".repeat(rev.rating)}{"☆".repeat(5 - rev.rating)}
+                          </span>
+                        </div>
+                        <span className="font-mono text-stone-500 text-[10px]">{rev.date}</span>
+                      </div>
+                      <p className="text-stone-300 text-xs md:text-sm leading-relaxed font-sans pl-9">
+                        {rev.text}
+                      </p>
+
+                      {/* Reactions bar for Review */}
+                      <div className="flex gap-2.5 pt-2 border-t border-white/5 mt-2 pl-9">
+                        {["❤️", "👍", "💡", "😮"].map((type) => {
+                          const userList = revReactions[type] ?? [];
+                          const hasReacted = currentUser ? userList.includes(currentUser.id) : false;
+                          return (
+                            <button
+                              key={type}
+                              onClick={() => toggleReactionOnReview(book.id, rev.id, type, currentUser?.id || "")}
+                              disabled={!currentUser}
+                              className={`flex items-center gap-1 py-1 px-2.5 rounded-full text-[10px] font-mono border transition-all cursor-pointer ${
+                                hasReacted
+                                  ? "bg-accent/10 border-accent/30 text-accent font-bold"
+                                  : "bg-white/3 border-white/5 text-stone-500 hover:border-white/10 hover:text-stone-300"
+                              } disabled:opacity-40 disabled:cursor-not-allowed`}
+                            >
+                              <span>{type}</span>
+                              {userList.length > 0 && <span>{userList.length}</span>}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  );
+                })
+              )}
+            </div>
+          </div>
+        )}
       </main>
     </div>
   );
@@ -684,6 +1079,7 @@ function CommentNode({
 }: CommentNodeProps) {
   const author = users.find(u => u.id === comment.authorId);
   const replies = allComments.filter(c => c.parentId === comment.id);
+  const { toggleReactionOnComment } = useUserSession();
   
   const isSpoiler = comment.isSpoiler;
   const isRevealed = revealedSpoilers[comment.id] || false;
@@ -696,22 +1092,35 @@ function CommentNode({
     minute: "2-digit"
   });
 
+  const commentReactions = comment.reactions ?? {};
+
   return (
     <div className="space-y-4">
       {/* Box do Comentário */}
       <div className="p-6 bg-white/3 border border-white/5 rounded-3xl text-sm space-y-3 hover:border-accent/30 transition-all duration-300">
         <div className="flex justify-between items-center text-xs">
           <div className="flex items-center gap-2">
-            <span className={`w-7 h-7 rounded-full text-[10px] font-bold flex items-center justify-center border ${
-              author?.is_ai_persona 
-                ? "bg-red-950/45 border-red-500/30 text-red-400" 
-                : "bg-accent/25 border-accent/25 text-accent"
-            }`}>
-              {(author?.name || "Leitor").slice(0, 2).toUpperCase()}
-            </span>
-            <span className="font-semibold text-stone-200">
-              {author?.name || "Leitor Anônimo"}
-            </span>
+            {author && author.profile_picture ? (
+              <span
+                className="w-7 h-7 rounded-full bg-cover bg-center border border-accent/20 block animate-fade-in"
+                style={{ backgroundImage: `url(${author.profile_picture})` }}
+              />
+            ) : (
+              <span className={`w-7 h-7 rounded-full text-[10px] font-bold flex items-center justify-center border ${
+                author?.is_ai_persona 
+                  ? "bg-red-950/45 border-red-500/30 text-red-400" 
+                  : "bg-accent/25 border-accent/25 text-accent"
+              }`}>
+                {(author?.name || "Leitor").slice(0, 2).toUpperCase()}
+              </span>
+            )}
+            {author ? (
+              <Link href={`/perfil/${author.id}`} className="font-semibold text-stone-200 hover:underline">
+                {author.name}
+              </Link>
+            ) : (
+              <span className="font-semibold text-stone-200">Leitor Anônimo</span>
+            )}
             <span className="text-[10px] font-mono text-stone-500">
               @{author?.username || "anonimo"}
             </span>
@@ -741,17 +1150,40 @@ function CommentNode({
           )}
         </div>
 
-        {/* Ações: Responder */}
-        {currentUser && (
-          <div className="flex justify-end pt-1">
+        {/* Reações e Responder */}
+        <div className="flex justify-between items-center pt-2 border-t border-white/5 mt-2">
+          {/* Reactions bar for comments */}
+          <div className="flex gap-2">
+            {["❤️", "👍", "💡", "😮"].map((type) => {
+              const userList = commentReactions[type] ?? [];
+              const hasReacted = currentUser ? userList.includes(currentUser.id) : false;
+              return (
+                <button
+                  key={type}
+                  onClick={() => toggleReactionOnComment(comment.id, type)}
+                  className={`flex items-center gap-1 py-1 px-2 rounded-full text-[10px] font-mono border transition-all cursor-pointer ${
+                    hasReacted
+                      ? "bg-accent/15 border-accent/35 text-accent font-bold"
+                      : "bg-white/3 border-white/5 text-stone-500 hover:border-white/10 hover:text-stone-300"
+                  }`}
+                  title={`${userList.length} reações`}
+                >
+                  <span>{type}</span>
+                  {userList.length > 0 && <span>{userList.length}</span>}
+                </button>
+              );
+            })}
+          </div>
+
+          {currentUser && (
             <button
               onClick={() => onReply(comment.id, author?.username || "anonimo")}
               className="text-[10px] font-mono text-accent hover:underline flex items-center gap-1 cursor-pointer"
             >
               ↩ Responder
             </button>
-          </div>
-        )}
+          )}
+        </div>
       </div>
 
       {/* Respostas Aninhadas (Recursivo) */}

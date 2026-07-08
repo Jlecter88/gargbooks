@@ -44,7 +44,7 @@ export default function RecommendedSection({
 
       {/* Cards Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        {recommendations.map(({ book, score, reasons }) => {
+        {recommendations.map(({ book, reasons }) => {
           const price = getBestPrice(book, region);
           const affiliateLink = getBestAffiliateLink(book, region);
           const hasEditions = book.editions && book.editions.length > 0;
