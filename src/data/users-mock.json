@@ -1,0 +1,130 @@
+[
+  {
+    "id": "usr-normal-1",
+    "username": "leitor_comum",
+    "name": "Thiago Santos",
+    "age_verified": true,
+    "is_premium": false,
+    "is_ai_persona": false,
+    "interest_tags": [
+      "Terror Gótico",
+      "Iniciantes",
+      "Mistério"
+    ],
+    "bio": "Leitor casual focado em mistérios e histórias que arrepiam.",
+    "favorite_style": "Gótico",
+    "favorite_genres": [
+      "Terror Gótico",
+      "Mistério",
+      "Clássicos"
+    ],
+    "read_books": [
+      {
+        "bookId": "castelo-otranto",
+        "bookTitle": "O Castelo de Otranto",
+        "readAt": "2026-05-10",
+        "rating": 5,
+        "note": "Fundador do gênero gótico — incrível!"
+      }
+    ],
+    "wishlist": [
+      "dracula",
+      "neuromancer"
+    ],
+    "reading_now": "silmarillion",
+    "avatar_initial": "T"
+  },
+  {
+    "id": "usr-premium-1",
+    "username": "cacador_de_goticos",
+    "name": "Arthur Pendragon",
+    "age_verified": true,
+    "is_premium": true,
+    "is_ai_persona": false,
+    "interest_tags": [
+      "D&D 5e",
+      "Fantasia Sombria",
+      "Terror Gótico",
+      "Cyberpunk"
+    ],
+    "bio": "Entusiasta de RPGs clássicos de terror e fantasia medieval.",
+    "favorite_style": "Dark Fantasy",
+    "favorite_genres": [
+      "Terror Gótico",
+      "Fantasia",
+      "Épico",
+      "Cyberpunk"
+    ],
+    "read_books": [
+      {
+        "bookId": "dracula",
+        "bookTitle": "Drácula",
+        "readAt": "2026-03-15",
+        "rating": 5,
+        "note": "Clássico absoluto. Leitura obrigatória."
+      },
+      {
+        "bookId": "silmarillion",
+        "bookTitle": "O Silmarillion",
+        "readAt": "2026-01-20",
+        "rating": 5,
+        "note": "A mitologia de Tolkien em todo seu esplendor."
+      }
+    ],
+    "wishlist": [
+      "neuromancer",
+      "memorias-postumas"
+    ],
+    "reading_now": "castelo-otranto",
+    "avatar_initial": "A"
+  },
+  {
+    "id": "ai-luna-novak",
+    "username": "luna_novak",
+    "name": "Luna Novak",
+    "age_verified": true,
+    "is_premium": true,
+    "is_ai_persona": true,
+    "interest_tags": [
+      "Cyberpunk",
+      "Fantasia Sombria",
+      "Cyberpunk RED",
+      "Original"
+    ],
+    "bio": "[//PERFIL PROTEGIDO - IA PERSONA SYSTEM GENERATED//] Escritora residente do setor D-7 do Grid.",
+    "favorite_style": "Cyberpunk",
+    "favorite_genres": [
+      "Ficção Científica",
+      "Cyberpunk",
+      "Original"
+    ],
+    "read_books": [],
+    "wishlist": [],
+    "reading_now": null,
+    "avatar_initial": "L"
+  },
+  {
+    "id": "ai-arthur-brand",
+    "username": "arthur_brand",
+    "name": "Arthur Brand",
+    "age_verified": true,
+    "is_premium": true,
+    "is_ai_persona": true,
+    "interest_tags": [
+      "Terror Gótico",
+      "Fantasia Sombria",
+      "Vampiro: A Máscara"
+    ],
+    "bio": "[//PERFIL PROTEGIDO - IA PERSONA SYSTEM GENERATED//] Pesquisador do ocultismo clássico e colecionador de edições raras.",
+    "favorite_style": "Gótico",
+    "favorite_genres": [
+      "Terror Gótico",
+      "Clássicos",
+      "Fantasia Sombria"
+    ],
+    "read_books": [],
+    "wishlist": [],
+    "reading_now": null,
+    "avatar_initial": "A"
+  }
+]

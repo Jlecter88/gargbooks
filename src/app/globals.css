@@ -1,26 +1,140 @@
 @import "tailwindcss";
 
+@theme {
+  /* Brand colors matching House of Corto */
+  --color-corto-cream: #FAF7F2;
+  --color-corto-sand: #EAE5DC;
+  --color-corto-charcoal: #1A1A1A;
+  --color-corto-clay: #C55A37;
+  --color-corto-dark: #0E0E0C;
+  --color-corto-stone: #2D2B2A;
+  
+  /* Semantic mappings for the app components */
+  --color-accent: #C55A37;
+  --color-accent-hover: #A34426;
+  --color-cream: #FAF7F2;
+  --color-dark: #0E0E0C;
+  
+  /* Reading themes */
+  --color-sepia-bg: #F3EDE2;
+  --color-sepia-text: #3E3529;
+  --color-sepia-muted: #8F6E4E;
+  
+  --color-night-bg: #0E0E0C;
+  --color-night-text: #ECE8E1;
+  --color-night-muted: #8A857D;
+  
+  /* Font mapping */
+  --font-sans: var(--font-outfit), system-ui, sans-serif;
+  --font-serif: var(--font-playfair), Georgia, serif;
+  
+  /* Custom easing curve for organic motion */
+  --ease-corto: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #0E0E0C;
+  --foreground: #ECE8E1;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  transition: background-color 0.8s cubic-bezier(0.16, 1, 0.3, 1), color 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow-x: hidden;
 }
+
+/* Custom scrollbars matching the sand / charcoal tones */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(197, 90, 55, 0.15);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(197, 90, 55, 0.5);
+}
+
+/* Sculptural Glass panels and borders */
+.glass-panel {
+  background: rgba(14, 14, 12, 0.7);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(236, 232, 225, 0.06);
+}
+
+.glass-panel-light {
+  background: rgba(250, 247, 242, 0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(26, 26, 26, 0.06);
+}
+
+/* Staggered load animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Fine line decoration style */
+.editorial-line {
+  height: 1px;
+  background-color: currentColor;
+  opacity: 0.08;
+  width: 100%;
+}
+
+.editorial-line-vertical {
+  width: 1px;
+  background-color: currentColor;
+  opacity: 0.08;
+  height: 100%;
+}
+
+/* Interactive custom link underline */
+.corto-underline {
+  position: relative;
+}
+.corto-underline::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 1px;
+  bottom: -2px;
+  left: 0;
+  background-color: currentColor;
+  transform-origin: bottom right;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.corto-underline:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+/* Hide scrollbar utility */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+

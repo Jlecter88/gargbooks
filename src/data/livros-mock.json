@@ -1,0 +1,353 @@
+[
+  {
+    "id": "castelo-otranto",
+    "title": "O Castelo de Otranto",
+    "author": "Horace Walpole",
+    "year": 1764,
+    "genres": [
+      "Terror Gótico",
+      "Clássicos"
+    ],
+    "rating": 4.2,
+    "coverGradient": "from-stone-900 via-red-950 to-neutral-900",
+    "synopsis": "Considerada a obra fundadora do romance gótico. A história se passa em um castelo assombrado e envolve profecias sombrias, mortes inexplicáveis e uma atmosfera de terror psicológico medieval.",
+    "fullText": "## Capítulo I\n\nManfredo, príncipe de Otranto, tinha um filho e uma filha: Conrado, de cerca de quinze anos, e Matilda, uma linda jovem de dezoito. Conrado, embora fosse um rapaz de saúde extremamente frágil e temperamento melancólico, era o favorito de seu pai, que havia arranjado para ele um casamento com Isabella, filha do Marquês de Vicenza.\n\nO dia do casamento foi marcado. Os nobres convidados estavam reunidos na capela do castelo, e tudo estava preparado para a cerimônia. Manfredo, impaciente pela chegada de seu filho, enviou um servo para buscá-lo em seus aposentos.\n\nO servo voltou pálido e trêmulo, incapaz de falar. Após muita insistência, apontou para o pátio interno do castelo. Manfredo correu até lá, seguido pela multidão de convidados. No centro do pátio, jazia o corpo inanimado de Conrado, esmagado sob um elmo colossal de aço negro, cem vezes maior que qualquer elmo humano, adornado com uma plumagem negra que se agitava ao vento selvagem.\n\nA multidão recuou horrorizada. De onde teria vindo aquele objeto titânico? Nenhuma resposta parecia possível nas sombras frias de Otranto.",
+    "editions": [
+      {
+        "id": "ed-otranto-dark",
+        "publisher": "DarkSide Books",
+        "year": 2019,
+        "isbn": "978-8594541567",
+        "pages": 224,
+        "coverType": "Capa Dura",
+        "priceBR": 59.9,
+        "pricePT": 18.5,
+        "linkBR": "https://www.amazon.com.br/dp/8594541567",
+        "linkPT": "https://www.amazon.es/dp/8594541567"
+      },
+      {
+        "id": "ed-otranto-classic",
+        "publisher": "Editora Martin Claret",
+        "year": 2012,
+        "isbn": "978-8572329064",
+        "pages": 160,
+        "coverType": "Brochura",
+        "priceBR": 32.9,
+        "pricePT": 9.99,
+        "linkBR": "https://www.amazon.com.br/dp/8572329064",
+        "linkPT": "https://www.amazon.es/dp/8572329064"
+      }
+    ],
+    "reviews": [
+      {
+        "id": "rev-1",
+        "username": "goth_reader",
+        "rating": 5,
+        "date": "2026-06-15",
+        "text": "O início de tudo! A atmosfera sombria do castelo e o elmo gigante caindo no pátio são imagens inesquecíveis da literatura gótica. Uma leitura rápida e essencial para compreender o terror moderno."
+      },
+      {
+        "id": "rev-2",
+        "username": "gabriel_m",
+        "rating": 4,
+        "date": "2026-07-02",
+        "text": "Muito interessante notar como Walpole estabeleceu tropos que usamos até hoje: castelos labirínticos, passagens secretas e vilões tirânicos. O ritmo é bem acelerado, quase como uma peça teatral."
+      }
+    ]
+  },
+  {
+    "id": "silmarillion",
+    "title": "O Silmarillion",
+    "author": "J.R.R. Tolkien",
+    "year": 1977,
+    "genres": [
+      "Fantasia",
+      "Épico"
+    ],
+    "rating": 4.8,
+    "coverGradient": "from-emerald-950 via-teal-900 to-zinc-950",
+    "synopsis": "A lenda da criação de Arda e a história da Primeira Era da Terra-média, detalhando a rebelião dos Elfos Noldor contra os Valar e a guerra pelos Silmarils contra o primeiro Senhor Sombrio, Morgoth.",
+    "fullText": "## AINULINDALË\n### A Música dos Ainur\n\nHavia Eru, o Único, que em Arda é chamado Ilúvatar; e ele criou primeiro os Ainur, os Sagrados, que eram filhos de seu pensamento, e eles estavam com ele antes que qualquer outra coisa fosse criada.\n\nE ele falou com eles, propondo-lhes temas musicais; e eles cantaram diante dele, e ele se alegrou. Por muito tempo cantaram apenas individualmente, ou apenas alguns juntos, enquanto os outros ouviam; pois cada um compreendia apenas aquela parte da mente de Ilúvatar da qual havia brotado, e no entendimento de seus irmãos cresciam lentamente.\n\nNo entanto, à medida que ouviam, iam alcançando uma compreensão mais profunda, e tornavam-se mais uníssonos e harmoniosos.\n\nE aconteceu que Ilúvatar reuniu todos os Ainur e declarou-lhes un tema grandioso, revelando coisas maiores e mais maravilhosas do que as que já havia mostrado; e a glória de seu início e o esplendor de seu fim deixaram os Ainur maravilhados, de modo que eles se curvaram diante de Ilúvatar e silenciaram.",
+    "editions": [
+      {
+        "id": "ed-sil-harper",
+        "publisher": "HarperCollins Brasil",
+        "year": 2019,
+        "isbn": "978-8595084377",
+        "pages": 496,
+        "coverType": "Capa Dura (Edição Especial)",
+        "priceBR": 79.9,
+        "pricePT": 24.9,
+        "linkBR": "https://www.amazon.com.br/dp/8595084377",
+        "linkPT": "https://www.amazon.es/dp/8595084377"
+      },
+      {
+        "id": "ed-sil-wook",
+        "publisher": "Europa-América (Portugal)",
+        "year": 2005,
+        "isbn": "978-9721045958",
+        "pages": 380,
+        "coverType": "Brochura",
+        "priceBR": 110,
+        "pricePT": 19.9,
+        "linkBR": "https://www.amazon.com.br/dp/9721045958",
+        "linkPT": "https://www.wook.pt/livro/o-silmarillion-j-r-r-tolkien/174984"
+      }
+    ],
+    "reviews": [
+      {
+        "id": "rev-3",
+        "username": "elven_wanderer",
+        "rating": 5,
+        "date": "2026-06-20",
+        "text": "Uma verdadeira mitologia! Ler a criação do mundo através da música (Ainulindalë) é uma das experiências mais bonitas da literatura de fantasia. Lindo e trágico."
+      }
+    ]
+  },
+  {
+    "id": "memorias-postumas",
+    "title": "Memórias Póstumas de Brás Cubas",
+    "author": "Machado de Assis",
+    "year": 1881,
+    "genres": [
+      "Clássicos",
+      "Realismo"
+    ],
+    "rating": 4.9,
+    "coverGradient": "from-amber-950 via-stone-900 to-zinc-950",
+    "synopsis": "Um defunto autor narra suas memórias direto do túmulo com ironia fina, pessimismo filosófico e uma profunda crítica à hipocrisia da sociedade burguesa do Rio de Janeiro do século XIX.",
+    "fullText": "## ÓBITO DO AUTOR\n\nAlgum tempo hesitei se devia abrir estas memórias pelo princípio ou pelo fim, isto é, se poria em primeiro lugar o meu nascimento ou a minha morte. Suposto o uso vulgar seja começar pelo nascimento, duas considerações me levaram a adotar diferente método: a primeira é que eu não sou propriamente um autor defunto, mas um defunto autor, para quem a campa foi outro berço;\n\na segunda é que o escrito ficaria assim mais galante e mais novo. Moisés, que também contou a sua morte, não a pós no introito, mas no cabo: diferença radical entre este livro e o Pentateuco.\n\nDito isto, expirei às duas horas da tarde de uma sexta-feira do mês de agosto de 1869, na minha bela chácara de Catumbi. Tinha uns sessenta e quatro anos, rijos e prósperos, era solteiro, possuía cerca de trezentos contos e fui acompanhado ao cemitério por onze amigos.",
+    "editions": [
+      {
+        "id": "ed-bras-todavia",
+        "publisher": "Editora Todavia",
+        "year": 2021,
+        "isbn": "978-6556920955",
+        "pages": 256,
+        "coverType": "Brochura",
+        "priceBR": 44.9,
+        "pricePT": 14.9,
+        "linkBR": "https://www.amazon.com.br/dp/6556920955",
+        "linkPT": "https://www.amazon.es/dp/6556920955"
+      },
+      {
+        "id": "ed-bras-antofagasta",
+        "publisher": "Antofagasta",
+        "year": 2019,
+        "isbn": "978-8554126384",
+        "pages": 416,
+        "coverType": "Capa Dura Ilustrada",
+        "priceBR": 89.9,
+        "pricePT": 29.9,
+        "linkBR": "https://www.amazon.com.br/dp/8554126384",
+        "linkPT": "https://www.amazon.es/dp/8554126384"
+      }
+    ],
+    "reviews": [
+      {
+        "id": "rev-4",
+        "username": "ironic_br",
+        "rating": 5,
+        "date": "2026-07-07",
+        "text": "A maior obra-prima da literatura brasileira. A ironia e o pessimismo de Brás Cubas são atemporais. Ler Machado de Assis é essencial."
+      }
+    ]
+  },
+  {
+    "id": "neuromancer",
+    "title": "Neuromancer",
+    "author": "William Gibson",
+    "year": 1984,
+    "genres": [
+      "Ficção Científica",
+      "Cyberpunk"
+    ],
+    "rating": 4.6,
+    "coverGradient": "from-cyan-950 via-zinc-900 to-emerald-950",
+    "synopsis": "A obra definitiva que definiu o subgênero cyberpunk. Case, um hacker decadente incapaz de se conectar à matriz, é contratado para um último trabalho por um empregador misterioso.",
+    "fullText": "## Capítulo I\n\nO céu acima do porto tinha a cor de televisão num canal fora do ar.\n\n— Não é que eu esteja morrendo por causa disso — ouviu alguém dizer enquanto passava cotovelando pela multidão do Chat. — É só que o meu corpo está com falta de droga.\n\nEra uma voz da Sprawl, daquelas de rádio antigo. Case tentou localizar o dono, mas a massa de corpos comprimidos sob as luzes de neon neon-vermelhas do bar o impedia. O Chat era um antro de marinheiros, contrabandistas e técnicos em eletrônica de segunda linha, todos bebendo cerveja barata e trocando chips adulterados na penumbra úmida de Chiba.\n\nCase olhou para o fundo do seu copo. Dois anos em Chiba City, e ele ainda se sentia um fantasma preso na periferia de sua própria mente.",
+    "editions": [
+      {
+        "id": "ed-neuro-aleluia",
+        "publisher": "Editora Aleph",
+        "year": 2016,
+        "isbn": "978-8576573005",
+        "pages": 320,
+        "coverType": "Capa Dura (30 Anos)",
+        "priceBR": 69.9,
+        "pricePT": 21,
+        "linkBR": "https://www.amazon.com.br/dp/8576573005",
+        "linkPT": "https://www.amazon.es/dp/8576573005"
+      }
+    ],
+    "reviews": [
+      {
+        "id": "rev-5",
+        "username": "cyber_case",
+        "rating": 5,
+        "date": "2026-07-01",
+        "text": "Incrível como o Gibson descreveu a internet e o ciberespaço antes mesmo deles existirem como conhecemos. A linguagem é densa e poética. Clássico absoluto."
+      }
+    ]
+  },
+  {
+    "id": "dracula",
+    "title": "Drácula",
+    "author": "Bram Stoker",
+    "year": 1897,
+    "genres": [
+      "Terror Gótico",
+      "Clássicos"
+    ],
+    "rating": 4.8,
+    "coverGradient": "from-cyan-950 via-zinc-900 to-emerald-950",
+    "coverImage": "/covers/cover-dracula.jpg",
+    "synopsis": "From the shadowed mists of Transylvania stalks Count Dracula, an ancient predator whose bloodlust defies the modern age. When the Count crosses the threshold into Victorian England, he brings with him not merely aristocratic menace, but a primal contagion—a seductive, chilling force that coils around innocent souls. As the vampire ensnares noblewomen and drains vitality from the civilized world, a disparate band of heroes—scientists, clergymen, adventurers, and journalists—are thrust into a desperate hunt. They must piece together scattered reports, decipher arcane lore, and ultimately confront the immortal evil lurking in the Carpathians. *Dracula* is not just a horror story; it is a terrifying collision between Romantic myth and rigid modernity, where ancient darkness threatens to consume the very soul of civilization.",
+    "fullText": "CHAPTER I. Jonathan Harker’s Journal\r\nCHAPTER II. Jonathan Harker’s Journal\r\nCHAPTER III. Jonathan Harker’s Journal\r\nCHAPTER IV. Jonathan Harker’s Journal\r\nCHAPTER V. Letters—Lucy and Mina\r\nCHAPTER VI. Mina Murray’s Journal\r\nCHAPTER VII. Cutting from “The Dailygraph,” 8 August\r\nCHAPTER VIII. Mina Murray’s Journal\r\nCHAPTER IX. Mina Murray’s Journal\r\nCHAPTER X. Mina Murray’s Journal\r\nCHAPTER XI. Lucy Westenra’s Diary\r\nCHAPTER XII. Dr. Seward’s Diary\r\nCHAPTER XIII. Dr. Seward’s Diary\r\nCHAPTER XIV. Mina Harker’s Journal\r\nCHAPTER XV. Dr. Seward’s Diary\r\nCHAPTER XVI. Dr. Seward’s Diary\r\nCHAPTER XVII. Dr. Seward’s Diary\r\nCHAPTER XVIII. Dr. Seward’s Diary\r\nCHAPTER XIX. Jonathan Harker’s Journal\r\nCHAPTER XX. Jonathan Harker’s Journal\r\nCHAPTER XXI. Dr. Seward’s Diary\r\nCHAPTER XXII. Jonathan Harker’s Journal\r\nCHAPTER XXIII. Dr. Seward’s Diary\r\nCHAPTER XXIV. Dr. Seward’s Phonograph Diary, spoken by Van Helsing\r\nCHAPTER XXV. Dr. Seward’s Diary\r\nCHAPTER XXVI. Dr. Seward’s Diary\r\nCHAPTER XXVII. Mina Harker’s Journal\r\n\r\n\r\n\r\n\r\nHow these papers have been placed in sequence will be made manifest in\r\nthe reading of them. All needless matters have been eliminated, so that\r\na history almost at variance with the possibilities of later-day belief\r\nmay stand forth as simple fact. There is throughout no statement of\r\npast things wherein memory may err, for all the records chosen are\r\nexactly contemporary, given from the standpoints and within the range\r\nof knowledge of those who made them.\r\n\r\n\r\n\r\n\r\nDRACULA\r\n\r\n\r\n\r\n\r\nCHAPTER I\r\n\r\nJONATHAN HARKER’S JOURNAL\r\n\r\n(_Kept in shorthand._)\r\n\r\n\r\n_3 May. Bistritz._--Left Munich at 8:35 P. M., on 1st May, arriving at\r\nVienna early next morning; should have arrived at 6:46, but train was an\r\nhour late. Buda-Pesth seems a wonderful place, from the glimpse which I\r\ngot of it from the train and the little I could walk through the\r\nstreets. I feared to go very far from the station, as we had arrived\r\nlate and would start as near the correct time as possible. The\r\nimpression I had was that we were leaving the West and entering the\r\nEast; the most western of splendid bridges over the Danube, which is\r\nhere of noble width and depth, took us among the traditions of Turkish\r\nrule.\r\n\r\nWe left in pretty good time, and came after nightfall to Klausenburgh.\r\nHere I stopped for the night at the Hotel Royale. I had for dinner, or\r\nrather supper, a chicken done up some way with red pepper, which was\r\nvery good but thirsty. (_Mem._, get recipe for Mina.) I asked the\r\nwaiter, and he said it was called “paprika hendl,” and that, as it was a\r\nnational dish, I should be able to get it anywhere along the\r\nCarpathians. I found my smattering of German very useful here; indeed, I\r\ndon’t know how I should be able to get on without it.\r\n\r\nHaving had some time at my disposal when in London, I had visited the\r\nBritish Museum, and made search among the books and maps in the library\r\nregarding Transylvania; it had struck me that some foreknowledge of the\r\ncountry could hardly fail to have some importance in dealing with a\r\nnobleman of that country. I find that the district he named is in the\r\nextreme east of the country, just on the borders of three states,\r\nTransylvania, Moldavia and Bukovina, in the midst of the Carpathian\r\nmountains; one of the wildest and least known portions of Europe. I was\r\nnot able to light on any map or work giving the exact locality of the\r\nCastle Dracula, as there are no maps of this country as yet to compare\r\nwith our own Ordnance Survey maps; but I found that Bistritz, the post\r\ntown named by Count Dracula, is a fairly well-known place. I shall enter\r\nhere some of my notes, as they may refresh my memory when I talk over my\r\ntravels with Mina.\r\n\r\nIn the population of Transylvania there are four distinct nationalities:\r\nSaxons in the South, and mixed with them the Wallachs, who are the\r\ndescendants of the Dacians; Magyars in the West, and Szekelys in the\r\nEast and North. I am going among the latter, who claim to be descended\r\nfrom Attila and the Huns. This may be so, for when the Magyars conquered\r\nthe country in the eleventh century they found the Huns settled in it. I\r\nread that every known superstition in the world is gathered into the\r\nhorseshoe of the Carpathians, as if it were the centre of some sort of\r\nimaginative whirlpool; if so my stay may be very interesting. (_Mem._, I\r\nmust ask the Count all about them.)\r\n\r\nI did not sleep well, though my bed was comfortable enough, for I had\r\nall sorts of queer dreams. There was a dog howling all night under my\r\nwindow, which may have had something to do with it; or it may have been\r\nthe paprika, for I had to drink up all the water in my carafe, and was\r\nstill thirsty. Towards morning I slept and was wakened by the continuous\r\nknocking at my door, so I guess I must have been sleeping soundly then.\r\nI had for breakfast more paprika, and a sort of porridge of maize flour\r\nwhich they said was “mamaliga,” and egg-plant stuffed with forcemeat, a\r\nvery excellent dish, which they call “impletata.” (_Mem._, get recipe\r\nfor this also.) I had to hurry breakfast, for the train started a little\r\nbefore eight, or rather it ought to have done so, for after rushing to\r\nthe station at 7:30 I had to sit in the carriage for more than an hour\r\nbefore we began to move. It seems to me that the further east you go the\r\nmore unpunctual are the trains. What ought they to be in China?\r\n\r\nAll day long we seemed to dawdle through a country which was full of\r\nbeauty of every kind. Sometimes we saw little towns or castles on the\r\ntop of steep hills such as we see in old missals; sometimes we ran by\r\nrivers and streams which seemed from the wide stony margin on each side\r\nof them to be subject to great floods. It takes a lot of water, and\r\nrunning strong, to sweep the outside edge of a river clear. At every\r\nstation there were groups of people, sometimes crowds, and in all sorts\r\nof attire. Some of them were just like the peasants at home or those I\r\nsaw coming through France and Germany, with short jackets and round hats\r\nand home-made trousers; but others were very picturesque. The women\r\nlooked pretty, except when you got near them, but they were very clumsy\r\nabout the waist. They had all full white sleeves of some kind or other,\r\nand most of them had big belts with a lot of strips of something\r\nfluttering from them like the dresses in a ballet, but of course there\r\nwere petticoats under them. The strangest figures we saw were the\r\nSlovaks, who were more barbarian than the rest, with their big cow-boy\r\nhats, great baggy dirty-white trousers, white linen shirts, and enormous\r\nheavy leather belts, nearly a foot wide, all studded over with brass\r\nnails. They wore high boots, with their trousers tucked into them, and\r\nhad long black hair and heavy black moustaches. They are very\r\npicturesque, but do not look prepossessing. On the stage they would be\r\nset down at once as some old Oriental band of brigands. They are,\r\nhowever, I am told, very harmless and rather wanting in natural\r\nself-assertion.\r\n\r\nIt was on the dark side of twilight when we got to Bistritz, which is a\r\nvery interesting old place. Being practically on the frontier--for the\r\nBorgo Pass leads from it into Bukovina--it has had a very stormy\r\nexistence, and it certainly shows marks of it. Fifty years ago a series\r\nof great fires took place, which made terrible havoc on five separate\r\noccasions. At the very beginning of the seventeenth century it underwent\r\na siege of three weeks and lost 13,000 people, the casualties of war\r\nproper being assisted by famine and disease.\r\n\r\nCount Dracula had directed me to go to the Golden Krone Hotel, which I\r\nfound, to my great delight, to be thoroughly old-fashioned, for of\r\ncourse I wanted to see all I could of the ways of the country. I was\r\nevidently expected, for when I got near the door I faced a\r\ncheery-looking elderly woman in the usual peasant dress--white\r\nundergarment with long double apron, front, and back, of coloured stuff\r\nfitting almost too tight for modesty. When I came close she bowed and\r\nsaid, “The Herr Englishman?” “Yes,” I said, “Jonathan Harker.” She\r\nsmiled, and gave some message to an elderly man in white shirt-sleeves,\r\nwho had followed her to the door. He went, but immediately returned with\r\na letter:--\r\n\r\n     “My Friend.--Welcome to the Carpathians. I am anxiously expecting\r\n     you. Sleep well to-night. At three to-morrow the diligence will\r\n     start for Bukovina; a place on it is kept for you. At the Borgo\r\n     Pass my carriage will await you and will bring you to me. I trust\r\n     that your journey from London has been a happy one, and that you\r\n     will enjoy your stay in my beautiful land.\r\n\r\n“Your friend,\r\n\r\n“DRACULA.”\r\n\r\n\r\n_4 May._--I found that my landlord had got a letter from the Count,\r\ndirecting him to secure the best place on the coach for me; but on\r\nmaking inquiries as to details he seemed somewhat reticent, and\r\npretended that he could not understand my German. This could not be\r\ntrue, because up to then he had understood it perfectly; at least, he\r\nanswered my questions exactly as if he did. He and his wife, the old\r\nlady who had received me, looked at each other in a frightened sort of\r\nway. He mumbled out that the money had been sent in a letter, and that\r\nwas all he knew. When I asked him if he knew Count Dracula, and could\r\ntell me anything of his castle, both he and his wife crossed themselves,\r\nand, saying that they knew nothing at all, simply refused to speak\r\nfurther. It was so near the time of starting that I had no time to ask\r\nany one else, for it was all very mysterious and not by any means\r\ncomforting.\r\n\r\nJust before I was leaving, the old lady came up to my room and said in a\r\nvery hysterical way:\r\n\r\n“Must you go? Oh! young Herr, must you go?” She was in such an excited\r\nstate that she seemed to have lost her grip of what German she knew, and\r\nmixed it all up with some other language which I did not know at all. I\r\nwas just able to follow her by asking many questions. When I told her\r\nthat I must go at once, and that I was engaged on important business,\r\nshe asked again:\r\n\r\n“Do you know what day it is?” I answered that it was the fourth of May.\r\nShe shook her head as she said again:\r\n\r\n“Oh, yes! I know that! I know that, but do you know what day it is?” On\r\nmy saying that I did not understand, she went on:\r\n\r\n“It is the eve of St. George’s Day. Do you not know that to-night, when\r\nthe clock strikes midnight, all the evil things in the world will have\r\nfull sway? Do you know where you are going, and what you are going to?”\r\nShe was in such evident distress that I tried to comfort her, but\r\nwithout effect. Finally she went down on her knees and implored me not\r\nto go; at least to wait a day or two before starting. It was all very\r\nridiculous but I did not feel comfortable. However, there was business\r\nto be done, and I could allow nothing to interfere with it. I therefore\r\ntried to raise her up, and said, as gravely as I could, that I thanked\r\nher, but my duty was imperative, and that I must go. She then rose and\r\ndried her eyes, and taking a crucifix from her neck offered it to me. I\r\ndid not know what to do, for, as an English Churchman, I have been\r\ntaught to regard such things as in some measure idolatrous, and yet it\r\nseemed so ungracious to refuse an old lady meaning so well and in such a\r\nstate of mind. She saw, I suppose, the doubt in my face, for she put the\r\nrosary round my neck, and said, “For your mother’s sake,” and went out\r\nof the room. I am writing up this part of the diary whilst I am waiting\r\nfor the coach, which is, of course, late; and the crucifix is still\r\nround my neck. Whether it is the old lady’s fear, or the many ghostly\r\ntraditions of this place, or the crucifix itself, I do not know, but I\r\nam not feeling nearly as easy in my mind as usual. If this book should\r\never reach Mina before I do, let it bring my good-bye. Here comes the\r\ncoach!\r\n\r\n       *       *   ",
+    "editions": [
+      {
+        "id": "ed-dracula-physical",
+        "publisher": "Edição Física Recomendada",
+        "year": 1897,
+        "isbn": "978-3161484345",
+        "pages": 264,
+        "coverType": "Brochura Clássica",
+        "priceBR": 29.9,
+        "pricePT": 8.99,
+        "linkBR": "https://www.amazon.com.br/s?k=Dr%C3%A1cula%20Bram%20Stoker&tag=gargbooks-20",
+        "linkPT": "https://www.amazon.es/s?k=Dr%C3%A1cula%20Bram%20Stoker&tag=gargbookspt-21"
+      }
+    ],
+    "reviews": [
+      {
+        "id": "rev-dracula-gut",
+        "username": "leitor_gutenberg",
+        "rating": 5,
+        "date": "2026-07-08",
+        "text": "Edição excelente traduzida localmente por IA. A leitura flui de forma incrível no e-reader da página!"
+      }
+    ],
+    "downloadFile": "/downloads/dracula.txt",
+    "translations": {
+      "en": {
+        "title": "Dracula",
+        "synopsis": "From the shadowed mists of Transylvania stalks Count Dracula, an ancient predator whose bloodlust defies the modern age. When the Count crosses the threshold into Victorian England, he brings with him not merely aristocratic menace, but a primal contagion—a seductive, chilling force that coils around innocent souls. As the vampire ensnares noblewomen and drains vitality from the civilized world, a disparate band of heroes—scientists, clergymen, adventurers, and journalists—are thrust into a desperate hunt. They must piece together scattered reports, decipher arcane lore, and ultimately confront the immortal evil lurking in the Carpathians. *Dracula* is not just a horror story; it is a terrifying collision between Romantic myth and rigid modernity, where ancient darkness threatens to consume the very soul of civilization.",
+        "fullText": "CHAPTER I. Jonathan Harker’s Journal\r\nCHAPTER II. Jonathan Harker’s Journal\r\nCHAPTER III. Jonathan Harker’s Journal\r\nCHAPTER IV. Jonathan Harker’s Journal\r\nCHAPTER V. Letters—Lucy and Mina\r\nCHAPTER VI. Mina Murray’s Journal\r\nCHAPTER VII. Cutting from “The Dailygraph,” 8 August\r\nCHAPTER VIII. Mina Murray’s Journal\r\nCHAPTER IX. Mina Murray’s Journal\r\nCHAPTER X. Mina Murray’s Journal\r\nCHAPTER XI. Lucy Westenra’s Diary\r\nCHAPTER XII. Dr. Seward’s Diary\r\nCHAPTER XIII. Dr. Seward’s Diary\r\nCHAPTER XIV. Mina Harker’s Journal\r\nCHAPTER XV. Dr. Seward’s Diary\r\nCHAPTER XVI. Dr. Seward’s Diary\r\nCHAPTER XVII. Dr. Seward’s Diary\r\nCHAPTER XVIII. Dr. Seward’s Diary\r\nCHAPTER XIX. Jonathan Harker’s Journal\r\nCHAPTER XX. Jonathan Harker’s Journal\r\nCHAPTER XXI. Dr. Seward’s Diary\r\nCHAPTER XXII. Jonathan Harker’s Journal\r\nCHAPTER XXIII. Dr. Seward’s Diary\r\nCHAPTER XXIV. Dr. Seward’s Phonograph Diary, spoken by Van Helsing\r\nCHAPTER XXV. Dr. Seward’s Diary\r\nCHAPTER XXVI. Dr. Seward’s Diary\r\nCHAPTER XXVII. Mina Harker’s Journal\r\n\r\n\r\n\r\n\r\nHow these papers have been placed in sequence will be made manifest in\r\nthe reading of them. All needless matters have been eliminated, so that\r\na history almost at variance with the possibilities of later-day belief\r\nmay stand forth as simple fact. There is throughout no statement of\r\npast things wherein memory may err, for all the records chosen are\r\nexactly contemporary, given from the standpoints and within the range\r\nof knowledge of those who made them.\r\n\r\n\r\n\r\n\r\nDRACULA\r\n\r\n\r\n\r\n\r\nCHAPTER I\r\n\r\nJONATHAN HARKER’S JOURNAL\r\n\r\n(_Kept in shorthand._)\r\n\r\n\r\n_3 May. Bistritz._--Left Munich at 8:35 P. M., on 1st May, arriving at\r\nVienna early next morning; should have arrived at 6:46, but train was an\r\nhour late. Buda-Pesth seems a wonderful place, from the glimpse which I\r\ngot of it from the train and the little I could walk through the\r\nstreets. I feared to go very far from the station, as we had arrived\r\nlate and would start as near the correct time as possible. The\r\nimpression I had was that we were leaving the West and entering the\r\nEast; the most western of splendid bridges over the Danube, which is\r\nhere of noble width and depth, took us among the traditions of Turkish\r\nrule.\r\n\r\nWe left in pretty good time, and came after nightfall to Klausenburgh.\r\nHere I stopped for the night at the Hotel Royale. I had for dinner, or\r\nrather supper, a chicken done up some way with red pepper, which was\r\nvery good but thirsty. (_Mem._, get recipe for Mina.) I asked the\r\nwaiter, and he said it was called “paprika hendl,” and that, as it was a\r\nnational dish, I should be able to get it anywhere along the\r\nCarpathians. I found my smattering of German very useful here; indeed, I\r\ndon’t know how I should be able to get on without it.\r\n\r\nHaving had some time at my disposal when in London, I had visited the\r\nBritish Museum, and made search among the books and maps in the library\r\nregarding Transylvania; it had struck me that some foreknowledge of the\r\ncountry could hardly fail to have some importance in dealing with a\r\nnobleman of that country. I find that the district he named is in the\r\nextreme east of the country, just on the borders of three states,\r\nTransylvania, Moldavia and Bukovina, in the midst of the Carpathian\r\nmountains; one of the wildest and least known portions of Europe. I was\r\nnot able to light on any map or work giving the exact locality of the\r\nCastle Dracula, as there are no maps of this country as yet to compare\r\nwith our own Ordnance Survey maps; but I found that Bistritz, the post\r\ntown named by Count Dracula, is a fairly well-known place. I shall enter\r\nhere some of my notes, as they may refresh my memory when I talk over my\r\ntravels with Mina.\r\n\r\nIn the population of Transylvania there are four distinct nationalities:\r\nSaxons in the South, and mixed with them the Wallachs, who are the\r\ndescendants of the Dacians; Magyars in the West, and Szekelys in the\r\nEast and North. I am going among the latter, who claim to be descended\r\nfrom Attila and the Huns. This may be so, for when the Magyars conquered\r\nthe country in the eleventh century they found the Huns settled in it. I\r\nread that every known superstition in the world is gathered into the\r\nhorseshoe of the Carpathians, as if it were the centre of some sort of\r\nimaginative whirlpool; if so my stay may be very interesting. (_Mem._, I\r\nmust ask the Count all about them.)\r\n\r\nI did not sleep well, though my bed was comfortable enough, for I had\r\nall sorts of queer dreams. There was a dog howling all night under my\r\nwindow, which may have had something to do with it; or it may have been\r\nthe paprika, for I had to drink up all the water in my carafe, and was\r\nstill thirsty. Towards morning I slept and was wakened by the continuous\r\nknocking at my door, so I guess I must have been sleeping soundly then.\r\nI had for breakfast more paprika, and a sort of porridge of maize flour\r\nwhich they said was “mamaliga,” and egg-plant stuffed with forcemeat, a\r\nvery excellent dish, which they call “impletata.” (_Mem._, get recipe\r\nfor this also.) I had to hurry breakfast, for the train started a little\r\nbefore eight, or rather it ought to have done so, for after rushing to\r\nthe station at 7:30 I had to sit in the carriage for more than an hour\r\nbefore we began to move. It seems to me that the further east you go the\r\nmore unpunctual are the trains. What ought they to be in China?\r\n\r\nAll day long we seemed to dawdle through a country which was full of\r\nbeauty of every kind. Sometimes we saw little towns or castles on the\r\ntop of steep hills such as we see in old missals; sometimes we ran by\r\nrivers and streams which seemed from the wide stony margin on each side\r\nof them to be subject to great floods. It takes a lot of water, and\r\nrunning strong, to sweep the outside edge of a river clear. At every\r\nstation there were groups of people, sometimes crowds, and in all sorts\r\nof attire. Some of them were just like the peasants at home or those I\r\nsaw coming through France and Germany, with short jackets and round hats\r\nand home-made trousers; but others were very picturesque. The women\r\nlooked pretty, except when you got near them, but they were very clumsy\r\nabout the waist. They had all full white sleeves of some kind or other,\r\nand most of them had big belts with a lot of strips of something\r\nfluttering from them like the dresses in a ballet, but of course there\r\nwere petticoats under them. The strangest figures we saw were the\r\nSlovaks, who were more barbarian than the rest, with their big cow-boy\r\nhats, great baggy dirty-white trousers, white linen shirts, and enormous\r\nheavy leather belts, nearly a foot wide, all studded over with brass\r\nnails. They wore high boots, with their trousers tucked into them, and\r\nhad long black hair and heavy black moustaches. They are very\r\npicturesque, but do not look prepossessing. On the stage they would be\r\nset down at once as some old Oriental band of brigands. They are,\r\nhowever, I am told, very harmless and rather wanting in natural\r\nself-assertion.\r\n\r\nIt was on the dark side of twilight when we got to Bistritz, which is a\r\nvery interesting old place. Being practically on the frontier--for the\r\nBorgo Pass leads from it into Bukovina--it has had a very stormy\r\nexistence, and it certainly shows marks of it. Fifty years ago a series\r\nof great fires took place, which made terrible havoc on five separate\r\noccasions. At the very beginning of the seventeenth century it underwent\r\na siege of three weeks and lost 13,000 people, the casualties of war\r\nproper being assisted by famine and disease.\r\n\r\nCount Dracula had directed me to go to the Golden Krone Hotel, which I\r\nfound, to my great delight, to be thoroughly old-fashioned, for of\r\ncourse I wanted to see all I could of the ways of the country. I was\r\nevidently expected, for when I got near the door I faced a\r\ncheery-looking elderly woman in the usual peasant dress--white\r\nundergarment with long double apron, front, and back, of coloured stuff\r\nfitting almost too tight for modesty. When I came close she bowed and\r\nsaid, “The Herr Englishman?” “Yes,” I said, “Jonathan Harker.” She\r\nsmiled, and gave some message to an elderly man in white shirt-sleeves,\r\nwho had followed her to the door. He went, but immediately returned with\r\na letter:--\r\n\r\n     “My Friend.--Welcome to the Carpathians. I am anxiously expecting\r\n     you. Sleep well to-night. At three to-morrow the diligence will\r\n     start for Bukovina; a place on it is kept for you. At the Borgo\r\n     Pass my carriage will await you and will bring you to me. I trust\r\n     that your journey from London has been a happy one, and that you\r\n     will enjoy your stay in my beautiful land.\r\n\r\n“Your friend,\r\n\r\n“DRACULA.”\r\n\r\n\r\n_4 May._--I found that my landlord had got a letter from the Count,\r\ndirecting him to secure the best place on the coach for me; but on\r\nmaking inquiries as to details he seemed somewhat reticent, and\r\npretended that he could not understand my German. This could not be\r\ntrue, because up to then he had understood it perfectly; at least, he\r\nanswered my questions exactly as if he did. He and his wife, the old\r\nlady who had received me, looked at each other in a frightened sort of\r\nway. He mumbled out that the money had been sent in a letter, and that\r\nwas all he knew. When I asked him if he knew Count Dracula, and could\r\ntell me anything of his castle, both he and his wife crossed themselves,\r\nand, saying that they knew nothing at all, simply refused to speak\r\nfurther. It was so near the time of starting that I had no time to ask\r\nany one else, for it was all very mysterious and not by any means\r\ncomforting.\r\n\r\nJust before I was leaving, the old lady came up to my room and said in a\r\nvery hysterical way:\r\n\r\n“Must you go? Oh! young Herr, must you go?” She was in such an excited\r\nstate that she seemed to have lost her grip of what German she knew, and\r\nmixed it all up with some other language which I did not know at all. I\r\nwas just able to follow her by asking many questions. When I told her\r\nthat I must go at once, and that I was engaged on important business,\r\nshe asked again:\r\n\r\n“Do you know what day it is?” I answered that it was the fourth of May.\r\nShe shook her head as she said again:\r\n\r\n“Oh, yes! I know that! I know that, but do you know what day it is?” On\r\nmy saying that I did not understand, she went on:\r\n\r\n“It is the eve of St. George’s Day. Do you not know that to-night, when\r\nthe clock strikes midnight, all the evil things in the world will have\r\nfull sway? Do you know where you are going, and what you are going to?”\r\nShe was in such evident distress that I tried to comfort her, but\r\nwithout effect. Finally she went down on her knees and implored me not\r\nto go; at least to wait a day or two before starting. It was all very\r\nridiculous but I did not feel comfortable. However, there was business\r\nto be done, and I could allow nothing to interfere with it. I therefore\r\ntried to raise her up, and said, as gravely as I could, that I thanked\r\nher, but my duty was imperative, and that I must go. She then rose and\r\ndried her eyes, and taking a crucifix from her neck offered it to me. I\r\ndid not know what to do, for, as an English Churchman, I have been\r\ntaught to regard such things as in some measure idolatrous, and yet it\r\nseemed so ungracious to refuse an old lady meaning so well and in such a\r\nstate of mind. She saw, I suppose, the doubt in my face, for she put the\r\nrosary round my neck, and said, “For your mother’s sake,” and went out\r\nof the room. I am writing up this part of the diary whilst I am waiting\r\nfor the coach, which is, of course, late; and the crucifix is still\r\nround my neck. Whether it is the old lady’s fear, or the many ghostly\r\ntraditions of this place, or the crucifix itself, I do not know, but I\r\nam not feeling nearly as easy in my mind as usual. If this book should\r\never reach Mina before I do, let it bring my good-bye. Here comes the\r\ncoach!\r\n\r\n       *       *   ",
+        "downloadFile": "/downloads/dracula-en.txt"
+      }
+    }
+  },
+  {
+    "id": "the-metamorphosis",
+    "title": "A Metamorfose",
+    "author": "Franz Kafka",
+    "year": 1915,
+    "genres": [
+      "Ficção Absurda",
+      "Clássicos"
+    ],
+    "rating": 4.8,
+    "coverGradient": "from-stone-900 via-red-950 to-neutral-900",
+    "coverImage": "https://covers.openlibrary.org/b/id/6889547-L.jpg",
+    "synopsis": "Gregor Samsa acorda uma manhã comum com um pesadelo biológico: transformou-se em um inseto monstruoso – ou talvez algo pior. Deixado à mercê de seu próprio corpo grotesco, ele é arremessado ao caos doméstico de sua família, que oscila entre o pavor, a repulsa e uma súbita (e pragmática) dependência. Isolado em seu quarto, Gregor precisa navegar não apenas as barreiras físicas de suas novas asas e patas, mas também o peso esmagador das expectativas humanas. Enquanto a vida familiar se desorganiza ao redor da sua metamorfose, ele é forçado a confrontar uma verdade desconfortável: talvez a transformação mais assustadora não seja ser um inseto, mas perder a utilidade humana.",
+    "fullText": "# I\n\nCerta manhã, quando Gregor Samsa despertou de sonhos agitados, viu-se transformado em sua cama num horrível *vermin*. Ele jazia sobre as costas que pareciam uma armadura, e se levantava um pouco a cabeça, podia vislumbrar seu ventre castanho, ligeiramente abaulado e dividido por arcos em seções rígidas.\n\nA roupa de cama mal conseguia cobri-lo e parecia pronta para deslizar a qualquer instante. Suas muitas pernas, pateticamente finas comparadas ao tamanho do restante de seu corpo, agitavam-se impotentemente enquanto ele observava.\n\n\"O que me aconteceu?\", pensou. Não era um sonho. Seu quarto, um cômodo humano de verdade, embora um pouco pequeno demais, repousava pacificamente entre suas quatro paredes familiares. Uma coleção de amostras têxteis estava espalhada sobre a mesa — Samsa era vendedor viajante — e acima delas pendia uma fotografia que ele havia cortado recentemente de uma revista ilustrada e colocado em uma bela moldura dourada. Ela retratava uma dama vestida com um chapéu de pele e um *boa* de pelúcia, sentada ereta, erguendo uma pesada luva de pelo que cobria todo o seu antebraço em direção ao observador.\n\nGregor então virou-se para olhar pela janela para o tempo monótono. Gotas de chuva podiam ser ouvidas batendo no vidro, o que o fazia sentir-se bastante melancólico.\n\n\"E se eu dormir um pouco mais e esquecer toda essa bobagem\", ponderou ele, mas era algo que não conseguia fazer porque estava acostumado a dormir do lado direito, e em seu estado atual não conseguia assumir aquela posição. Por mais forte que se jogasse para o lado direito, sempre voltava ao lugar de origem. Devo-ra ter tentado cem vezes, fechando os olhos para não ter que encarar as pernas desajeitadas, e só parou quando começou a sentir uma dor branda e surda ali que nunca havia sentido antes.\n\n\"Oh, Deus\", pensou ele, \"que carreira extenuante eu escolhi! Viajar dia após dia. Fazer negócios assim exige muito mais esforço do que fazer o seu próprio negócio em casa, e, além disso, há a maldição de viajar: preocupações com as conexões dos trens, comida ruim e irregular, contato constante com pessoas diferentes para que nunca se chegue a conhecer ninguém ou amigável. Tudo pode ir *para o inferno*!\"\n\nEle sentiu um leve coceira subindo em seu ventre; empurrou-se lentamente sobre as costas em direção ao cabeceira para poder levantar melhor a cabeça; localizou onde estava a coceira e viu que era coberta por muitas pequenas manchas brancas, sem saber o que fazer delas; e quando tentou sentir o lugar com uma de suas pernas, retirou-a rapidamente porque, assim que tocou, foi dominado por um arrepio frio.\n\nEle deslizou de volta à sua posição anterior. \"Levantar cedo o tempo todo\", pensou, \"isso te deixa burro. Você tem que dormir o suficiente. Outros vendedores viajantes vivem uma vida de luxo. Por exemplo, sempre que volto para a casa de hóspedes durante a manhã para copiar o contrato, esses senhores ainda estão sentados tomando seu café da manhã.\"\n\n\"Devo tentar isso com meu chefe; me expulsariam na hora. Mas quem sabe, talvez seja a melhor coisa para mim. Se não tivesse meus pais por quem pensar, teria entregado meu aviso há muito tempo, subiria até o chefe e diria exatamente o que penso, contaria tudo o que sei, faria-lhe saber o que sinto. Ele cairia direto da mesa! E é um tipo de negócio engraçado ficar lá em cima na sua mesa, falando para baixo dos seus subordinados de lá, especialmente quando você precisa chegar bem perto porque o chefe tem pouca audição. Bem, ainda há alguma esperança; assim que juntar dinheiro para pagar a dívida dos meus pais com ele — mais uns cinco ou seis anos, suponho —, é definitivamente isso que farei. É aí que darei a grande mudança. Primeiro de tudo, tenho que levantar, meu trem parte às cinco.\"\n\nE olhou para o despertador, tiquetaqueando sobre a cômoda.\n\n\"Deus no Céu!\", pensou ele. Eram seis e meia e os ponteiros moviam-se silenciosamente para frente; era até mais tarde do que meio-dia, mais como um quarto para as sete. O alarme não havia tocado? Ele podia ver da cama que estava ajustado para as quatro horas, como deveria estar; certamente devia ter tocado. Sim, mas será que era possível dormir tranquilamente por cima desse barulho de móveis sacudidos? Certo, ele não dormira pacificamente, mas provavelmente ainda mais profundamente por causa disso. O que deveria fazer agora? O próximo trem saía às sete; se conseguisse pegá-lo, teria que correr como um louco e a coleção de amostras ainda não estava embalada, e ele não se sentia particularmente fresco e animado. E mesmo que pegasse o trem, não escaparia da raiva do chefe, pois o assistente de escritório estaria lá para ver o trem das cinco sair, ele já teria entregado seu relatório sobre Gregor não estar presente há muito tempo. O assistente de escritório era o homem do chefe, sem espinha e sem entendimento. E se relatasse uma doença? Mas isso seria extremamente forçado e suspeito, pois em cinco anos de serviço Gregor nunca havia ficado doente nem uma única vez. Seu chefe certamente viria com o médico da seguradora médica, acusaria seus pais de terem um filho preguiçoso e aceitaria a recomendação do médico para não fazer nenhuma reclamação, já que o doutor acreditava que ninguém estava realmente doente, mas sim muitos eram *preguiçosos*. E além disso, estaria completamente errado neste caso? Gregor de fato, fora o sono excessivo após dormir por tanto tempo, sentia-se perfeitamente bem e até se sentia mais com fome do que o habitual.\n\nEnquanto ainda pensava apressadamente em tudo isso, incapaz de decidir sair da cama, o relógio bateu um quarto para as sete. Houve uma batida cautelosa na porta perto de sua cabeceira. \"Gregor\", alguém chamou — era sua mãe —, \"são seis e quinze. Não queria ir a algum lugar?\" Que voz gentil! Gregor ficou surpreso ao ouvir sua própria voz responder, mal se parecendo com a que tinha antes. Como se de muito profundo dentro dele, havia um guincho doloroso e incontrolável misturado a ela; as palavras podiam ser discernidas no início, mas depois havia uma espécie de eco que as tornava indefinidas, deixando o ouvinte incerto se ouvira direito ou não. Gregor queria dar uma resposta completa",
+    "editions": [
+      {
+        "id": "ed-the-metamorphosis-public",
+        "publisher": "Gutenberg Local Press",
+        "year": 2026,
+        "isbn": "978-0000000000",
+        "pages": 293,
+        "coverType": "Brochura Clássica",
+        "priceBR": 19.9,
+        "pricePT": 5.99,
+        "linkBR": "https://www.gutenberg.org/ebooks/5200",
+        "linkPT": "https://www.gutenberg.org/ebooks/5200"
+      }
+    ],
+    "reviews": [
+      {
+        "id": "rev-the-metamorphosis-gut",
+        "username": "leitor_gutenberg",
+        "rating": 5,
+        "date": "2026-07-08",
+        "text": "Edição excelente traduzida localmente por IA. A leitura flui de forma incrível no e-reader da página!"
+      }
+    ]
+  },
+  {
+    "id": "alice-s-adventures-in-wonderland",
+    "title": "Alice no País das Maravilhas",
+    "author": "Lewis Carroll",
+    "year": 1865,
+    "genres": [
+      "Fantasia",
+      "Clássicos"
+    ],
+    "rating": 4.8,
+    "coverGradient": "from-orange-950 via-amber-900 to-stone-950",
+    "synopsis": "Ao cair pela toca do coelho branco, Alice é lançada em um turbilhão insólito de maravilhas e maluquices. Em Wonderland, as regras são maleáveis, os habitantes são excêntricos (e muitas vezes ilógicos!), e o mundo desafia toda a sanidade que ela conhece. Entre cháadas loucas com a Lebre de Março, encontros enigmáticos com o Gato de Cheshire e perseguições frenéticas à Rainha de Copas tirânica, Alice precisa descobrir se essa paisagem bizarra é um sonho febril ou uma realidade completamente desordenada. Será que ela conseguirá manter sua identidade — e sua sanidade — diante do caos encantado?",
+    "fullText": "# CAPÍTULO I. Pelo Buraco do Coelho\n\nAlice estava começando a ficar muito cansada de sentar-se ao lado de sua irmã na margem, e de não ter o que fazer: uma ou duas vezes ela havia espiado no livro que sua irmã lia, mas ele não tinha ilustrações nem conversas; \"e qual é o proveito de um livro\", pensou Alice, \"sem figuras ou diálogos?\"\n\nAssim, ela ponderava em sua mente (tanto quanto conseguia, pois o dia quente a fazia sentir-se muito sonolenta e burra), se o prazer de fazer uma coroa de margaridas valeria o esforço de levantar-se e colher as flores, quando, de repente, um Coelho Branco de olhos rosados correu bem ao lado dela.\n\nNão havia nada *tão* extraordinário nisso; nem Alice achou muito estranho ouvir o Coelho dizer para si mesmo: \"Oh céus! Oh céus! Vou me atrasar!\" (quando pensou sobre isso depois, ocorreu-lhe que deveria ter ficado maravilhada com aquilo, mas naquele momento tudo lhe pareceu perfeitamente natural); mas quando o Coelho de fato *tirou um relógio do bolso do colete*, olhou para ele e então apressou o passo, Alice se levantou, pois lhe passou pela mente que nunca tinha visto um coelho com bolso de colete ou um relógio para tirar dele, e fervilhando de curiosidade, ela correu pelo campo atrás dele, e felizmente foi a tempo de vê-lo cair por um grande buraco de coelho sob a sebe.\n\nEm outro instante, Alice foi logo atrás dele, sem sequer pensar como diabos sairia dali novamente.\n\nO buraco do coelho seguia reto como um túnel por algum tempo, e então despencou subitamente, tão rápido que Alice não teve um momento para parar antes de se ver caindo em um poço muito profundo.\n\nOu o poço era muito fundo, ou ela caía muito devagar, pois tinha bastante tempo enquanto descia para observar ao redor e questionar o que aconteceria a seguir. Primeiro, tentou olhar para baixo e discernir aonde estava indo, mas estava escuro demais para ver qualquer coisa; depois olhou para as laterais do poço e notou que estavam preenchidas com armários e estantes de livros; ali e acolá viu mapas e quadros pendurados em tachas. Ela pegou um pote de uma das prateleiras enquanto passava; estava rotulado como \"MARMALADA DE LARANJA\", mas para sua grande desilusão, estava vazio: ela não gostava de deixar cair o pote por medo de matar alguém lá embaixo, então conseguiu colocá-lo em um dos armários enquanto caía ao lado dele.\n\n\"Bem!\", pensou Alice consigo mesma, \"depois de uma queda dessas, não vou pensar duas vezes em cair escada abaixo! Quão corajosos eles vão achar que sou quando chegar em casa! Ora, eu não diria nada sobre isso, mesmo que caísse do telhado da casa!\" (O que era muito provável).\n\nBaixo, baixo, baixo. A queda *nunca* iria acabar? \"Será que caí por quantos quilômetros até agora?\", disse ela em voz alta. \"Devo estar chegando perto do centro da Terra. Deixe-me ver: seriam quatro mil quilômetros para baixo, acho...\" (pois, veja bem, Alice havia aprendido várias coisas desse tipo em suas aulas na sala de aula, e embora este não fosse uma *muito* boa oportunidade para exibir seu conhecimento, já que não havia ninguém para ouvi-la, ainda assim era bom praticar dizer isso em voz alta) \"...sim, essa é a distância aproximada—mas aí me pergunto qual Latitude ou Longitude eu atingi?\" (Alice não tinha ideia do que fosse Latitude, nem Longitude, mas achava que eram palavras grandiosas para se usar.)\n\nLogo ela começou de novo. \"Será que vou cair direto *através* da Terra! Quão engraçado deve ser sair entre as pessoas que andam com a cabeça virada para baixo! As Antipatias, eu acho—\" (ela ficou bastante feliz por não haver ninguém ouvindo desta vez, pois soava nada como a palavra certa) \"—mas terei que perguntar a elas qual é o nome do país, sabe. Por favor, Senhora, isto é Nova Zelândia ou Austrália?\" (e ela tentou fazer uma reverência enquanto falava—imagine *reverenciar* enquanto cai no ar! Você acha que conseguiria?) \"E que menina ignorante elas vão pensar de mim por perguntar! Não, nunca adianta perguntar: talvez eu veja escrito em algum lugar.\"\n\nBaixo, baixo, baixo. Não havia mais nada a fazer, então Alice logo começou a falar novamente. \"Dinah vai sentir muita falta minha esta noite, suponho!\" (Dinah era o gato.) \"Espero que eles lembrem da sua tigela de leite na hora do chá. Dinah querida! Queria que você estivesse aqui comigo! Não há ratos no ar, receio, mas você poderia pegar um morcego, e isso é muito parecido com um rato, sabe. Mas os gatos comem morcegos, será?\" E ali Alice começou a ficar bastante sonolenta, e continuou dizendo para si mesma, de maneira sonhadora: \"Os gatos comem morcegos? Os gatos comem morcegos?\", e às vezes, \"Os morcegos comem gatos?\", pois, veja bem, como ela não conseguia responder a nenhuma das perguntas, não importava em qual direção as colocasse. Ela sentiu que estava cochilando, e acabara de começar a sonhar que estava andando de mãos dadas com Dinah, dizendo-lhe muito earnestemente: \"Agora, Dinah, diga-me a verdade: você já comeu um morcego?\" quando, subitamente, *tum! tum!* ela caiu sobre uma pilha de gravetos e folhas secas, e a queda havia terminado.\n\nAlice não se machucou nem um pouco, e saltou para ficar em pé num instante: olhou para cima, mas tudo estava escuro acima; à sua frente havia mais um longo corredor, e o Coelho Branco ainda podia ser visto, apressando-se por ele. Não havia momento a perder: Alice disparou como o vento, e foi justo a tempo de ouvi-lo dizer, ao virar uma esquina, \"Oh meus ouvidos e bigodes, que tarde está ficando!\" Ela estava logo atrás dele quando ele virou a esquina, mas o Coelho não podia mais ser visto: ela se viu em um longo e baixo salão, iluminado por uma fileira de lâmpadas penduradas do teto.\n\nHavia portas por toda parte no salão, mas todas estavam trancadas; e quando Alice havia percorrido todo um lado até o outro, tentando cada porta, caminhou tristemente pelo meio, perguntando-se como",
+    "editions": [
+      {
+        "id": "ed-alice-s-adventures-in-wonderland-physical",
+        "publisher": "Edição Física Recomendada",
+        "year": 1865,
+        "isbn": "978-316148411",
+        "pages": 255,
+        "coverType": "Brochura Clássica",
+        "priceBR": 29.9,
+        "pricePT": 8.99,
+        "linkBR": "https://www.amazon.com.br/s?k=Alice%20no%20Pa%C3%ADs%20das%20Maravilhas%20Lewis%20Carroll&tag=gargbooks-20",
+        "linkPT": "https://www.amazon.es/s?k=Alice%20no%20Pa%C3%ADs%20das%20Maravilhas%20Lewis%20Carroll&tag=gargbookspt-21"
+      }
+    ],
+    "reviews": [
+      {
+        "id": "rev-alice-s-adventures-in-wonderland-gut",
+        "username": "leitor_gutenberg",
+        "rating": 5,
+        "date": "2026-07-08",
+        "text": "Edição excelente traduzida localmente por IA. A leitura flui de forma incrível no e-reader da página!"
+      }
+    ]
+  },
+  {
+    "id": "frankenstein",
+    "title": "Frankenstein",
+    "author": "Mary Shelley",
+    "year": 1818,
+    "genres": [
+      "Terror Gótico",
+      "Ficção Científica"
+    ],
+    "rating": 4.8,
+    "coverGradient": "from-cyan-950 via-zinc-900 to-emerald-950",
+    "coverImage": "https://covers.openlibrary.org/b/id/12356249-L.jpg",
+    "synopsis": "Em um cenário gótico e sublime, Victor Frankenstein mergulha na ambição científica ao dar vida a sua criatura. O triunfo do conhecimento, contudo, revela ser uma maldição. Abandonado por seu criador, o ser monstruoso ascende de espectro a força avassaladora da natureza, vingativo e desesperado. Enquanto a ciência almeja transcender os limites da mortalidade, um drama épico se desenrola: o conflito entre o gênio sedento por glória e a monstruosidade que ele gerou. Será que Victor conseguirá domar sua criação antes que ela consuma não apenas sua vida, mas toda a humanidade?",
+    "fullText": "Eu havia recolhido minhas forças. Esta cidade permanecera fiel a mim, depois que toda a nação havia abandonado minha causa para aderir ao estandarte do Parlamento e da liberdade. A memória daquele infeliz rei e de seus companheiros — o amável Falkland, o insolente Goring, sua rainha e seu filho — conferia um interesse peculiar a cada parte da cidade que se poderia supor habitada por eles. O espírito dos tempos antigos encontrava ali uma morada, e nós nos deleitávamos em traçar suas pegadas. Se esses sentimentos não tivessem encontrado satisfação imaginária, a aparência da cidade já possuía em si mesma beleza suficiente para obter nossa admiração.\n\nOs colégios são antigos e pitorescos; as ruas são quase magníficas; e a adorável Isis, que flui ao lado deles por pradarias de exuberante verdura, se espalha numa placida extensão de águas, refletindo seu majestoso conjunto de torres, pináculos e cúpulas, emoldurado entre árvores centenárias.\n\nAproveitei esta cena, mas meu deleite foi amargado tanto pela memória do passado quanto pela antecipação do futuro. Eu fui formado para a felicidade pacífica. Durante meus dias de juventude, o descontentamento jamais visitou minha mente, e se fosse dominado pelo *ennui*, a visão da beleza na natureza ou o estudo daquilo que é excelente e sublime nas criações humanas sempre conseguia despertar meu coração e comunicar elasticidade aos meus espíritos. Mas eu sou uma árvore assolada; o prego penetrou em minha alma; e senti então que sobreviveria para exibir aquilo que logo deixaria de ser — um lamentável espetáculo de humanidade destruída, piedoso aos outros e intolerável a mim mesmo.\n\nPassamos um período considerável em Oxford, vagueando pelos seus arredores e tentando identificar cada ponto que pudesse se relacionar com o epítome mais animador da história inglesa. Nossas pequenas viagens de descoberta eram frequentemente prolongadas pelos sucessivos objetos que se apresentavam. Visitamos a tumba do ilustre Hampden e o campo onde aquele patriota caiu. Por um instante, minha alma foi elevada dos seus temores degradantes e miseráveis para contemplar as ideias divinas de liberdade e sacrifício de que esses lugares eram os monumentos e recordadores. Por um instante, ousava livrar-me das minhas correntes e olhar em volta com um espírito livre e altivo, mas o ferro havia corroído minha carne, e caí novamente, tremendo e sem esperança, no meu miserável eu.\n\nDeixamos Oxford com pesar e seguimos para Matlock, que foi nosso próximo lugar de repouso. O campo nos arredores desta vila assemelhava-se, em maior grau, à paisagem da Suíça; mas tudo ocorre em uma escala menor, e as colinas verdes carecem da coroa dos distantes Alpes brancos que sempre acompanham os pinheiros de minha terra natal. Visitamos a maravilhosa caverna e os pequenos gabinetes de história natural, onde as curiosidades são dispostas da mesma maneira que nas coleções de Servox e Chamounix. O último nome me fez estremecer quando Henry o pronunciou, e apressei-me em deixar Matlock, com o qual aquela terrível cena estava assim associada.\n\nDe Derby, ainda viajando para o norte, passamos dois meses em Cumberland e Westmorland. Quase podia imaginar-me entre os Alpes Suíços. Os pequenos remanescentes de neve que ainda persistiam nos lados setentrionais das montanhas, os lagos e o ímpeto dos riachos rochosos eram todos visões familiares e queridas para mim. Aqui também fizemos alguns conhecidos, que quase conseguiram me ludibriar em felicidade. O deleite de Clerval era proporcionalmente maior que o meu; sua mente se expandia na companhia de homens talentosos, e ele encontrava em sua própria natureza capacidades e recursos maiores do que poderia ter imaginado possuir enquanto se associava aos seus inferiores. “Eu poderia passar minha vida aqui”, disse a mim; “e entre estas montanhas mal lamentaria a Suíça e o Reno.”\n\nMas ele descobriu que a vida de um viajante é aquela que engloba muita dor em meio aos prazeres. Seus sentimentos estão sempre no limite; e quando começa a mergulhar no repouso, vê-se obrigado a abandonar aquilo em que descansa com prazer por algo novo, que novamente cativa sua atenção, e que ele também abandona por outras novidades.\n\nMal tínhamos visitado os diversos lagos de Cumberland e Westmorland e concebido um afeto por alguns dos habitantes, quando o período de nossa estadia com nosso amigo escocês se aproximou, e os deixamos seguir viagem. Por minha parte, não estava triste. Eu havia negligenciado minha promessa por algum tempo, e temia os efeitos da desilusão do demônio. Ele poderia permanecer na Suíça e exercer sua vingança sobre meus parentes. Essa ideia me perseguiu e atormentou a cada momento em que eu pudesse tirar repouso e paz de outra forma. Eu esperava minhas cartas com impaciência febril; se atrasadas, estava miserável e dominado por mil temores; e quando chegavam e via a inscrição de Elizabeth ou do meu pai, mal ousava ler e apurar meu destino. Às vezes pensava que o demônio me seguia e poderia acelerar minha negligência assassinando meu companheiro. Quando esses pensamentos me possuíam, não deixava Henry por um momento, mas seguia-o como sua sombra, para protegê-lo da fúria imaginada de seu destruidor. Sentia como se tivesse cometido algum grande crime, a consciência do qual me atormentava. Eu era inocente, mas havia, de fato, atraído uma terrível maldição sobre minha cabeça, tão mortal quanto a do crime.\n\nVisitei Edimburgo com olhos e mente lânguidos; e ainda assim aquela cidade poderia ter interessado o ser mais infeliz. Clerval não gostou tanto como Oxford, pois a antiguidade da última era mais agradável a ele. Mas a beleza e regularidade da nova cidade de Edimburgo, seu romântico castelo e seus arredores — os mais deleiteses do mundo: *Arthur’s Seat*, o Poço de St. Bernard, e as Colinas Pentland — compensaram-no pela mudança e encheram-no de alegria e admiração. Mas eu estava impaciente para chegar ao término de minha jornada.\n\nDeixamos Edimburgo em uma semana, passando por Coupar, St. Andrew’s, e ao longo das margens do Tay, até Perth, onde nosso amigo nos esperava. Mas não estava no humor de rir e conversar com estranhos ou entrar em seus sentimentos ou planos com o bom humor esperado de um convidado; e consequentemente disse a Clerval que desejava",
+    "editions": [
+      {
+        "id": "ed-frankenstein-public",
+        "publisher": "Gutenberg Local Press",
+        "year": 2026,
+        "isbn": "978-0000000000",
+        "pages": 293,
+        "coverType": "Brochura Clássica",
+        "priceBR": 19.9,
+        "pricePT": 5.99,
+        "linkBR": "https://www.gutenberg.org/ebooks/84",
+        "linkPT": "https://www.gutenberg.org/ebooks/84"
+      }
+    ],
+    "reviews": [
+      {
+        "id": "rev-frankenstein-gut",
+        "username": "leitor_gutenberg",
+        "rating": 5,
+        "date": "2026-07-08",
+        "text": "Edição excelente traduzida localmente por IA. A leitura flui de forma incrível no e-reader da página!"
+      }
+    ]
+  }
+]

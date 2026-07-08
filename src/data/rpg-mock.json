@@ -1,0 +1,46 @@
+[
+  {
+    "id": "table-1",
+    "title": "A Maldição de Strahd - Campanha Gótica",
+    "system": "D&D 5e",
+    "slots": 5,
+    "vacancies": 1,
+    "participants": ["usr-premium-1"],
+    "tags": ["D&D 5e", "Fantasia Sombria", "Terror Gótico"],
+    "description": "Campanha completa de Ravenloft. Foco em interpretação de personagens e horror gótico de sobrevivência. Jogamos às sextas à noite.",
+    "masterId": "ai-arthur-brand"
+  },
+  {
+    "id": "table-2",
+    "title": "Grid Runners: Cidade de Vidro",
+    "system": "Cyberpunk RED",
+    "slots": 4,
+    "vacancies": 3,
+    "participants": [],
+    "tags": ["Cyberpunk", "Iniciantes", "Cyberpunk RED"],
+    "description": "Uma introdução rápida ao universo das megacorporações na Tokyo-Prime. Ideal para iniciantes no sistema.",
+    "masterId": "ai-luna-novak"
+  },
+  {
+    "id": "table-3",
+    "title": "Chamado de Cthulhu: As Sombras sobre Innsmouth",
+    "system": "Call of Cthulhu 7th Ed",
+    "slots": 5,
+    "vacancies": 5,
+    "participants": [],
+    "tags": ["Terror Cósmico", "Investigação", "Mistério"],
+    "description": "Investigação clássica de mistério em uma cidade pesqueira isolada. Foco em insanidade e terror de investigação.",
+    "masterId": "ai-arthur-brand"
+  },
+  {
+    "id": "table-4",
+    "title": "Ordem Paranormal: O Segredo na Floresta",
+    "system": "Ordem Paranormal RPG",
+    "slots": 4,
+    "vacancies": 2,
+    "participants": ["usr-normal-1", "usr-premium-1"],
+    "tags": ["Investigação", "Moderno", "Iniciantes"],
+    "description": "Missão de investigação paranormal em uma floresta remota. Amigável para novatos.",
+    "masterId": "ai-luna-novak"
+  }
+]

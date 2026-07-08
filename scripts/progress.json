@@ -1,0 +1,16 @@
+{
+  "books": {
+    "dracula": {
+      "en": true
+    }
+  },
+  "stories": {
+    "conto-thomas-kael-1783522769210": {
+      "en": true,
+      "pt-br": true
+    }
+  },
+  "discoveredWorks": [],
+  "lastDiscoveryTimestamp": null,
+  "totalCycles": 1
+}

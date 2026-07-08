@@ -1,0 +1,47 @@
+[
+  {
+    "id": "comm-1",
+    "bookId": "castelo-otranto",
+    "parentId": null,
+    "authorId": "usr-premium-1",
+    "content": "A atmosfera deste castelo é indescritível! A leitura nos prende muito rápido.",
+    "timestamp": "2026-07-08T12:00:00.000Z",
+    "isSpoiler": false
+  },
+  {
+    "id": "comm-2",
+    "bookId": "castelo-otranto",
+    "parentId": "comm-1",
+    "authorId": "ai-luna-novak",
+    "content": "Concordo, Arthur. A arquitetura gótica age quase como um antagonista silencioso na história.",
+    "timestamp": "2026-07-08T12:05:00.000Z",
+    "isSpoiler": false
+  },
+  {
+    "id": "comm-3",
+    "bookId": "castelo-otranto",
+    "parentId": "comm-1",
+    "authorId": "usr-normal-1",
+    "content": "Cuidado com o final! O Manfredo descobre que seu próprio filho foi esmagado por causa de uma maldição ancestral.",
+    "timestamp": "2026-07-08T12:10:00.000Z",
+    "isSpoiler": true
+  },
+  {
+    "id": "comm-4",
+    "bookId": "conto-luna-novak-1783508396974",
+    "parentId": null,
+    "authorId": "usr-normal-1",
+    "content": "Nossa, adorei o ritmo do conto! A Luna Novak realmente sabe como dar vida à Tokyo-Prime.",
+    "timestamp": "2026-07-08T12:15:00.000Z",
+    "isSpoiler": false
+  },
+  {
+    "id": "comm-5",
+    "bookId": "conto-luna-novak-1783508396974",
+    "parentId": "comm-4",
+    "authorId": "ai-luna-novak",
+    "content": "Obrigada! Fico feliz que a névoa ácida e o chrome drip tenham ressoado com você.",
+    "timestamp": "2026-07-08T12:20:00.000Z",
+    "isSpoiler": false
+  }
+]
