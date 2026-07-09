@@ -105,6 +105,22 @@ export default function DetalheLivro() {
     }
   }, [book]);
 
+  // Reset language dynamically on book load
+  useEffect(() => {
+    if (!book) return;
+    const availableLangs = book.translations && Object.keys(book.translations).length > 0
+      ? Object.keys(book.translations)
+      : [book.language || "pt-br"];
+      
+    if (!availableLangs.includes(currentLang)) {
+      if (availableLangs.includes("pt-br")) {
+        setCurrentLang("pt-br");
+      } else if (availableLangs.length > 0) {
+        setCurrentLang(availableLangs[0]);
+      }
+    }
+  }, [book, currentLang]);
+
   // Persist style preferences on changes
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -297,8 +313,12 @@ export default function DetalheLivro() {
                 <path d="M50,50 A0.5,0.5 0 0,1 50,50.1 A1,1 0 0,1 49,49 A2,2 0 0,1 51,47 A4,4 0 0,1 55,51 A8,8 0 0,1 47,59 A16,16 0 0,1 31,43 A32,32 0 0,1 63,11 A64,64 0 0,1 -1,75" />
               </svg>
             </div>
-            <span className="px-3 py-0.5 text-[8px] font-mono uppercase tracking-wider self-start bg-black/60 border border-white/10 text-stone-300 rounded-full">
-              {book.isUserPublished ? "Original" : "Coleção"}
+            <span className={`px-3 py-0.5 text-[8px] font-mono uppercase tracking-wider self-start border rounded-full ${
+              book.publicDomain === false 
+                ? "bg-red-950/60 border-red-500/30 text-red-200"
+                : "bg-black/60 border border-white/10 text-stone-300"
+            }`}>
+              {book.publicDomain === false ? "© Direitos Reservados" : (book.isUserPublished ? "Original" : "Coleção")}
             </span>
             <div className="z-10 mt-auto">
               <h2 className="font-serif text-sm font-bold text-white leading-tight">
@@ -519,7 +539,9 @@ export default function DetalheLivro() {
                       { code: 'es', flag: '🇪🇸', label: 'ES' },
                       { code: 'fr', flag: '🇫🇷', label: 'FR' }
                     ].map((lang) => {
-                      const isAvailable = lang.code === 'pt-br' || (book?.translations && book.translations[lang.code]);
+                      const isAvailable = book?.translations && Object.keys(book.translations).length > 0
+                        ? !!book.translations[lang.code]
+                        : (book?.language ? book.language === lang.code : lang.code === 'pt-br');
                       return (
                         <button
                           key={lang.code}
@@ -530,9 +552,9 @@ export default function DetalheLivro() {
                               ? "bg-accent text-white font-bold ring-2 ring-accent/50 scale-105"
                               : isAvailable
                               ? "opacity-60 hover:opacity-100 hover:bg-white/5"
-                              : "opacity-20 cursor-not-allowed"
+                              : "opacity-30 border border-dashed border-white/20 cursor-not-allowed"
                           }`}
-                          title={`${lang.label} - ${isAvailable ? 'Disponível' : 'Traduzindo...'}`}
+                          title={`${lang.label} - ${isAvailable ? 'Disponível' : 'Em breve'}`}
                         >
                           {lang.flag}
                         </button>
@@ -542,14 +564,16 @@ export default function DetalheLivro() {
                 </div>
 
                 {/* Download option */}
-                <a
-                  href={downloadUrl || displayDownloadFile}
-                  download={`${displayTitle}.txt`}
-                  className="px-4 py-2 rounded-full border border-white/10 bg-white/5 hover:bg-accent hover:text-white transition-all uppercase tracking-widest font-mono font-bold cursor-pointer text-stone-300 hover:border-accent/40 text-[10px] flex items-center gap-1.5"
-                  title="Baixar obra completa em formato TXT"
-                >
-                  <span>📥</span> Baixar TXT Integral
-                </a>
+                {book.publicDomain !== false && (
+                  <a
+                    href={downloadUrl || displayDownloadFile}
+                    download={`${displayTitle}.txt`}
+                    className="px-4 py-2 rounded-full border border-white/10 bg-white/5 hover:bg-accent hover:text-white transition-all uppercase tracking-widest font-mono font-bold cursor-pointer text-stone-300 hover:border-accent/40 text-[10px] flex items-center gap-1.5"
+                    title="Baixar obra completa em formato TXT"
+                  >
+                    <span>📥</span> Baixar TXT Integral
+                  </a>
+                )}
               </div>
 
               {/* Instruction tooltip */}
@@ -600,90 +624,106 @@ export default function DetalheLivro() {
               )}
 
               {/* E-reader Book Text Container */}
-              <div
-                ref={textContainerRef}
-                onMouseUp={handleTextSelection}
-                className={`rounded-3xl p-8 md:p-14 border leading-[2.0] transition-all duration-300 relative select-text shadow-inner ${readerThemeClasses} ${
-                  serifFont ? "font-serif" : "font-sans"
-                }`}
-                style={{ fontSize: `${fontSize}px` }}
-              >
-                {/* Highlight Save Trigger Floating Button */}
-                {selectedText && selectionCoords && (
+              {book.publicDomain === false ? (
+                <div className={`rounded-3xl p-12 md:p-20 border transition-all duration-300 shadow-inner flex flex-col items-center justify-center text-center space-y-6 max-w-3xl mx-auto ${readerThemeClasses}`}>
+                  <span className="text-6xl animate-pulse">🔒</span>
+                  <h2 className="font-serif text-2xl font-bold">Obra sob Direitos Autorais Reservados</h2>
+                  <p className="text-xs max-w-md leading-relaxed opacity-85 font-mono">
+                    Esta obra comercial está protegida por leis de propriedade intelectual. A leitura online ou download do texto integral não estão autorizados.
+                  </p>
                   <button
-                    onClick={handleSaveHighlight}
-                    className="absolute z-40 bg-accent hover:bg-accent-hover text-white px-5 py-2.5 rounded-full text-xs font-bold font-sans shadow-xl border border-white/10 flex items-center gap-1.5 cursor-pointer"
-                    style={{
-                      left: `${selectionCoords.x}px`,
-                      top: `${selectionCoords.y}px`,
-                    }}
+                    onClick={() => setActiveTab("editions")}
+                    className="px-6 py-3 bg-accent text-white font-mono text-xs uppercase tracking-widest font-bold rounded-full hover:bg-accent-hover transition-all active:scale-95 shadow-md shadow-accent/25 cursor-pointer"
                   >
-                    🔖 Salvar Marcador
+                    Ver Edições Disponíveis na Amazon ➔
                   </button>
-                )}
+                </div>
+              ) : (
+                <div
+                  ref={textContainerRef}
+                  onMouseUp={handleTextSelection}
+                  className={`rounded-3xl p-8 md:p-14 border leading-[2.0] transition-all duration-300 relative select-text shadow-inner ${readerThemeClasses} ${
+                    serifFont ? "font-serif" : "font-sans"
+                  }`}
+                  style={{ fontSize: `${fontSize}px` }}
+                >
+                  {/* Highlight Save Trigger Floating Button */}
+                  {selectedText && selectionCoords && (
+                    <button
+                      onClick={handleSaveHighlight}
+                      className="absolute z-40 bg-accent hover:bg-accent-hover text-white px-5 py-2.5 rounded-full text-xs font-bold font-sans shadow-xl border border-white/10 flex items-center gap-1.5 cursor-pointer"
+                      style={{
+                        left: `${selectionCoords.x}px`,
+                        top: `${selectionCoords.y}px`,
+                      }}
+                    >
+                      🔖 Salvar Marcador
+                    </button>
+                  )}
 
-                {textLoading ? (
-                  <div className="py-20 text-center space-y-4 font-mono text-xs opacity-60">
-                    <span className="block animate-spin text-2xl text-accent">🌀</span>
-                    <span className="block uppercase tracking-widest">Carregando obra completa hospedada no servidor...</span>
-                  </div>
-                ) : (
-                  /* Renders paragraphs split by double newline */
-                  fullTextContent.split("\n\n").map((para, idx) => {
-                    const isHighlighted = savedParagraphIdx === idx;
-                    const isHeading2 = para.startsWith("##");
-                    const isHeading3 = para.startsWith("###");
+                  {textLoading ? (
+                    <div className="py-20 text-center space-y-4 font-mono text-xs opacity-60">
+                      <span className="block animate-spin text-2xl text-accent">🌀</span>
+                      <span className="block uppercase tracking-widest">Carregando obra completa hospedada no servidor...</span>
+                    </div>
+                  ) : (
+                    /* Renders paragraphs split by double newline */
+                    fullTextContent.split("\n\n").map((para, idx) => {
+                      const isHighlighted = savedParagraphIdx === idx;
+                      const isHeading2 = para.startsWith("##");
+                      const isHeading3 = para.startsWith("###");
 
-                    const markButton = (
-                      <button
-                        onClick={() => handleMarkPage(idx)}
-                        className={`opacity-0 group-hover/para:opacity-100 transition-opacity duration-300 p-1.5 rounded-xl hover:bg-white/5 text-stone-500 hover:text-accent cursor-pointer text-xs`}
-                        title="Marcar página aqui"
-                      >
-                        {isHighlighted ? "🔖" : "🏷️"}
-                      </button>
-                    );
+                      const markButton = (
+                        <button
+                          onClick={() => handleMarkPage(idx)}
+                          className={`opacity-0 group-hover/para:opacity-100 transition-opacity duration-300 p-1.5 rounded-xl hover:bg-white/5 text-stone-500 hover:text-accent cursor-pointer text-xs`}
+                          title="Marcar página aqui"
+                        >
+                          {isHighlighted ? "🔖" : "🏷️"}
+                        </button>
+                      );
 
-                    if (isHeading2) {
+                      if (isHeading2) {
+                        return (
+                          <div key={idx} className="group/para flex items-center justify-between gap-4 mt-8 mb-5 border-b border-current/10 pb-2">
+                            <h2 id={`para-${idx}`} className="font-bold text-2xl md:text-3xl leading-snug font-serif text-accent flex-1">
+                              {para.replace(/##\s*/, "")}
+                            </h2>
+                            {markButton}
+                          </div>
+                        );
+                      }
+                      if (isHeading3) {
+                        return (
+                          <div key={idx} className="group/para flex items-center justify-between gap-4 mt-6 mb-4">
+                            <h3 id={`para-${idx}`} className="font-semibold text-lg md:text-xl leading-snug font-serif text-accent/80 flex-1">
+                              {para.replace(/###\s*/, "")}
+                            </h3>
+                            {markButton}
+                          </div>
+                        );
+                      }
                       return (
-                        <div key={idx} className="group/para flex items-center justify-between gap-4 mt-8 mb-5 border-b border-current/10 pb-2">
-                          <h2 id={`para-${idx}`} className="font-bold text-2xl md:text-3xl leading-snug font-serif text-accent flex-1">
-                            {para.replace(/##\s*/, "")}
-                          </h2>
-                          {markButton}
+                        <div
+                          key={idx}
+                          className={`group/para flex gap-4 items-start py-2.5 rounded-2xl transition-all duration-300 ${
+                            isHighlighted
+                              ? "bg-accent/10 border border-accent/25 px-5 my-3 shadow-sm shadow-accent/5"
+                              : "hover:bg-white/[0.01] px-5 -mx-5"
+                          }`}
+                        >
+                          <p id={`para-${idx}`} className="mb-0 indent-8 text-justify flex-1">
+                            {para}
+                          </p>
+                          <div className="pt-0.5 select-none">
+                            {markButton}
+                          </div>
                         </div>
                       );
-                    }
-                    if (isHeading3) {
-                      return (
-                        <div key={idx} className="group/para flex items-center justify-between gap-4 mt-6 mb-4">
-                          <h3 id={`para-${idx}`} className="font-semibold text-lg md:text-xl leading-snug font-serif text-accent/80 flex-1">
-                            {para.replace(/###\s*/, "")}
-                          </h3>
-                          {markButton}
-                        </div>
-                      );
-                    }
-                    return (
-                      <div
-                        key={idx}
-                        className={`group/para flex gap-4 items-start py-2.5 rounded-2xl transition-all duration-300 ${
-                          isHighlighted
-                            ? "bg-accent/10 border border-accent/25 px-5 my-3 shadow-sm shadow-accent/5"
-                            : "hover:bg-white/[0.01] px-5 -mx-5"
-                        }`}
-                      >
-                        <p id={`para-${idx}`} className="mb-0 indent-8 text-justify flex-1">
-                          {para}
-                        </p>
-                        <div className="pt-0.5 select-none">
-                          {markButton}
-                        </div>
-                      </div>
-                    );
-                  })
-                )}
-              </div>
+                    })
+                  )}
+                </div>
+              )}
             </div>
           );
 

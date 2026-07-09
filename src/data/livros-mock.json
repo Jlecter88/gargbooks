@@ -54,7 +54,9 @@
         "text": "Muito interessante notar como Walpole estabeleceu tropos que usamos até hoje: castelos labirínticos, passagens secretas e vilões tirânicos. O ritmo é bem acelerado, quase como uma peça teatral."
       }
     ],
-    "downloadFile": "/downloads/castelo-otranto.txt"
+    "downloadFile": "/downloads/castelo-otranto.txt",
+    "publicDomain": true,
+    "language": "en"
   },
   {
     "id": "silmarillion",
@@ -103,7 +105,9 @@
         "date": "2026-06-20",
         "text": "Uma verdadeira mitologia! Ler a criação do mundo através da música (Ainulindalë) é uma das experiências mais bonitas da literatura de fantasia. Lindo e trágico."
       }
-    ]
+    ],
+    "publicDomain": false,
+    "language": "pt-br"
   },
   {
     "id": "memorias-postumas",
@@ -167,7 +171,9 @@
         "fullText": "## ÓBITO DO AUTOR\n\nAlgum tempo hesitei se devia abrir estas memórias pelo princípio ou pelo fim, isto é, se poria em primeiro lugar o meu nascimento ou a minha morte. Suposto o uso vulgar seja começar pelo nascimento, duas considerações me levaram a adotar diferente método: a primeira é que eu não sou propriamente um autor defunto, mas um defunto autor, para quem a campa foi outro berço;\n\na segunda é que o escrito ficaria assim mais galante e mais novo. Moisés, que também contou a sua morte, não a pós no introito, mas no cabo: diferença radical entre este livro e o Pentateuco.\n\nDito isto, expirei às duas horas da tarde de uma sexta-feira do mês de agosto de 1869, na minha bela chácara de Catumbi. Tinha uns sessenta e quatro anos, rijos e prósperos, era solteiro, possuía cerca de trezentos contos e fui acompanhado ao cemitério por onze amigos.",
         "downloadFile": "/downloads/memorias-postumas-pt-pt.txt"
       }
-    }
+    },
+    "publicDomain": true,
+    "language": "pt-br"
   },
   {
     "id": "neuromancer",
@@ -204,7 +210,9 @@
         "date": "2026-07-01",
         "text": "Incrível como o Gibson descreveu a internet e o ciberespaço antes mesmo deles existirem como conhecemos. A linguagem é densa e poética. Clássico absoluto."
       }
-    ]
+    ],
+    "publicDomain": false,
+    "language": "pt-br"
   },
   {
     "id": "dracula",
@@ -218,8 +226,8 @@
     "rating": 4.8,
     "coverGradient": "from-cyan-950 via-zinc-900 to-emerald-950",
     "coverImage": "/covers/cover-dracula.jpg",
-    "synopsis": "Em uma Londres vitoriana envolta em névoa e sombras góticas, surge o espectro ancestral: Drácula. Este vampiro sedutor, cuja beleza é tão perigosa quanto sua sede insaciável, atravessa os véus do tempo para reivindicar a linhagem de Harker. Ao se instalar na opulenta mansão, ele tece uma teia de mistério e horror, drenando não apenas o sangue, mas também a sanidade daqueles ao seu redor. Entre a fragilidade da jovem Mina Murray e a corajosa Joan, surge um duelo mortal entre a ciência iluminada e a escuridão primordial. Prepare-se para testemunhar como a paixão romântica se transforma no terror absoluto quando um Conde Transilvano decide que a vida em Londres será servida... à sua fome.",
-    "fullText": "# CAPÍTULO I. Diário de Jonathan Harker\n\n**CAPÍTULO II. Diário de Jonathan Harker**\n\n**CAPÍTULO III. Diário de Jonathan Harker**\n\n**CAPÍTULO IV. Diário de Jonathan Harker**\n\n**CAPÍTULO V. Cartas — Lucy e Mina**\n\n**CAPÍTULO VI. Diário de Mina Murray**\n\n**CAPÍTULO VII. Recortes do *The Dailygraph*, 8 de Agosto**\n\n**CAPÍTULO VIII. Diário de Mina Murray**\n\n**CAPÍTULO IX. Diário de Mina Murray**\n\n**CAPÍTULO X. Diário de Mina Murray**\n\n**CAPÍTULO XI. Diário de Lucy Westenra**\n\n**CAPÍTULO XII. Diário do Dr. Seward**\n\n**CAPÍTULO XIII. Diário do Dr. Seward**\n\n**CAPÍTULO XIV. Diário de Mina Harker**\n\n**CAPÍTULO XV. Diário do Dr. Seward**\n\n**CAPÍTULO XVI. Diário do Dr. Seward**\n\n**CAPÍTULO XVII. Diário do Dr. Seward**\n\n**CAPÍTULO XVIII. Diário do Dr. Seward**\n\n**CAPÍTULO XIX. Diário de Jonathan Harker**\n\n**CAPÍTULO XX. Diário de Jonathan Harker**\n\n**CAPÍTULO XXI. Diário do Dr. Seward**\n\n**CAPÍTULO XXII. Diário de Jonathan Harker**\n\n**CAPÍTULO XXIII. Diário do Dr. Seward**\n\n**CAPÍTULO XXIV. Diário Fonográfico do Dr. Seward, falado por Van Helsing**\n\n**CAPÍTULO XXV. Diário do Dr. Seward**\n\n**CAPÍTULO XXVI. Diário do Dr. Seward**\n\n**CAPÍTULO XXVII. Diário de Mina Harker**\n\n***\n\nA forma como estes papéis foram dispostos em sequência se fará manifesto na sua leitura. Todos os assuntos desnecessários foram eliminados, de modo que uma história quase em variação com as possibilidades da crença posterior possa surgir como simples fato. Não há, ao longo dos registros, nenhuma declaração de coisas passadas em que a memória possa errar, pois todos os documentos escolhidos são exatamente contemporâneos, fornecidos a partir dos pontos de vista e dentro do alcance do conhecimento daqueles que os elaboraram.\n\n***\n\n# DRÁCULA\n\n***\n\n**CAPÍTULO I**\n\n### **DIÁRIO DE JONATHAN HARKER**\n\n*(Mantido em abreviatura.)*\n\n*3 de maio. Bistritz.* — Parti de Munique às 20h35, no dia 1º de maio, chegando a Viena na manhã seguinte; deveria ter chegado às 6h46, mas o trem atrasou uma hora. Buda-Pesth parece um lugar maravilhoso, pelo vislumbre que tive dele do trem e pelo pouco que pude percorrer pelas ruas. Tive receio de me afastar muito da estação, pois chegamos tarde e começaríamos tão perto do horário correto quanto possível. A impressão que tive foi de que estávamos saindo do Oeste e entrando no Leste; a ponte mais ocidental dos esplêndidos pontes sobre o Danúbio, que aqui é de nobre largura e profundidade, nos introduziu nas tradições do domínio turco.\n\nPartimos com uma antecedência razoável e chegamos em Klausenburgh após o anoitecer. Aqui parei para a noite no *Hotel Royale*. Jantei, ou melhor, jantei um jantar, um frango preparado de alguma forma com pimenta vermelha, que estava muito bom, mas sedento. *(Mem.: pegar receita para Mina.)* Perguntei ao garçom e ele disse que se chamava “paprika hendl”, e que, por ser um prato nacional, eu conseguiria encontrá-lo em qualquer lugar pelos Cárpatos. Achei meu conhecimento rudimentar de alemão muito útil aqui; na verdade, não sei como conseguiria me virar sem ele.\n\nTendo tido algum tempo à disposição quando estive em Londres, visitei o Museu Britânico e fiz buscas entre os livros e mapas da biblioteca referentes à Transilvânia; tocou-me que algum conhecimento prévio sobre o país dificilmente deixaria de ter alguma importância ao lidar com um nobre daquela nação. Descobri que o distrito que ele nomeou fica no extremo leste do país, bem na fronteira de três estados — Transilvânia, Moldávia e Bukovina —, no meio das montanhas Cárpatas; uma das porções mais selvagens e menos conhecidas da Europa. Não consegui encontrar nenhum mapa ou obra que indicasse a localidade exata do Castelo Drácula, pois ainda não existem mapas deste país para comparar com nossos próprios mapas do *Ordnance Survey*; mas descobri que Bistritz, a cidade de correios nomeada pelo Conde Drácula, é um lugar razoavelmente conhecido. Anotarei aqui algumas das minhas observações, pois elas podem refrescar minha memória quando conversar sobre minhas viagens com Mina.\n\nNa população da Transilvânia há quatro nacionalidades distintas: Saxões ao Sul, misturados a eles os Valáquios, que são descendentes dos Dacos; Magiares a Oeste e Szekelys a Leste e Norte. Estou viajando entre estes últimos, que alegam ser descendentes de Átila e dos Hunos. Isso pode ser verdade, pois quando os Magiares conquistaram o país no século XI, encontraram os Hunos estabelecidos nele. Li que toda superstição conhecida no mundo se agrupa no ferradura dos Cárpatos, como se fosse o centro de alguma espécie de redemoinho imaginativo; se for assim, minha estadia pode ser muito interessante. *(Mem.: devo perguntar ao Conde sobre tudo isso.)*\n\nNão dormi bem, embora minha cama fosse suficientemente confortável, pois tive todos os tipos de sonhos estranhos. Havia um cão uivando a noite toda sob minha janela, o que talvez tivesse algo a ver com isso; ou pode ter sido a páprica, pois precisei beber toda a água da minha garrafa e ainda assim estava sedento. Perto da manhã dormi e fui despertado pelo batimento contínuo à minha porta, então suponho ter estado dormindo profundamente. No café da manhã tomei mais páprica e um tipo de mingau feito de farinha de milho que chamavam de “mamaliga”, e berinjela recheada com carne moída, um prato muito excelente, que eles chamam de “impletata”. *(Mem.: pegar receita para este também.)* Tive que apressar o café da manhã, pois o trem partiu um pouco antes das oito, ou melhor, deveria ter partido, pois depois de correr para a estação às 7h30 tive que ficar no vagão por mais de uma hora antes de começarmos a nos mover. Parece-me que quanto mais a leste",
+    "synopsis": "De fronteiras gélidas ao coração da Inglaterra vitoriana, uma sombra ancestral se arrasta: o Conde Drácula. Um vampiro imortal, sedento por sangue e poder, ele emerge das brumas do Leste Europeu para reivindicar suas vítimas. Entre a rigidez social de Londres e os sussurros macabros dos castelos góticos, um grupo heterogêneo — cientistas, clérigos, jovens nobres e uma jovem inocente com olhar desafiador — é lançado em uma caçada desesperada. Eles se unem para expor o monstro que se esgueira na noite, enfrentando sedução sobrenatural, loucura crescente e a terrível verdade de que a morte, para Drácula, é apenas um breve intervalo antes do próximo banquete sangrento. O horror não está apenas no sangue; reside na perdição da própria humanidade sob o domínio da escuridão eterna.",
+    "fullText": "CHAPTER I. Jonathan Harker’s Journal\r\nCHAPTER II. Jonathan Harker’s Journal\r\nCHAPTER III. Jonathan Harker’s Journal\r\nCHAPTER IV. Jonathan Harker’s Journal\r\nCHAPTER V. Letters—Lucy and Mina\r\nCHAPTER VI. Mina Murray’s Journal\r\nCHAPTER VII. Cutting from “The Dailygraph,” 8 August\r\nCHAPTER VIII. Mina Murray’s Journal\r\nCHAPTER IX. Mina Murray’s Journal\r\nCHAPTER X. Mina Murray’s Journal\r\nCHAPTER XI. Lucy Westenra’s Diary\r\nCHAPTER XII. Dr. Seward’s Diary\r\nCHAPTER XIII. Dr. Seward’s Diary\r\nCHAPTER XIV. Mina Harker’s Journal\r\nCHAPTER XV. Dr. Seward’s Diary\r\nCHAPTER XVI. Dr. Seward’s Diary\r\nCHAPTER XVII. Dr. Seward’s Diary\r\nCHAPTER XVIII. Dr. Seward’s Diary\r\nCHAPTER XIX. Jonathan Harker’s Journal\r\nCHAPTER XX. Jonathan Harker’s Journal\r\nCHAPTER XXI. Dr. Seward’s Diary\r\nCHAPTER XXII. Jonathan Harker’s Journal\r\nCHAPTER XXIII. Dr. Seward’s Diary\r\nCHAPTER XXIV. Dr. Seward’s Phonograph Diary, spoken by Van Helsing\r\nCHAPTER XXV. Dr. Seward’s Diary\r\nCHAPTER XXVI. Dr. Seward’s Diary\r\nCHAPTER XXVII. Mina Harker’s Journal\r\n\r\n\r\n\r\n\r\nHow these papers have been placed in sequence will be made manifest in\r\nthe reading of them. All needless matters have been eliminated, so that\r\na history almost at variance with the possibilities of later-day belief\r\nmay stand forth as simple fact. There is throughout no statement of\r\npast things wherein memory may err, for all the records chosen are\r\nexactly contemporary, given from the standpoints and within the range\r\nof knowledge of those who made them.\r\n\r\n\r\n\r\n\r\nDRACULA\r\n\r\n\r\n\r\n\r\nCHAPTER I\r\n\r\nJONATHAN HARKER’S JOURNAL\r\n\r\n(_Kept in shorthand._)\r\n\r\n\r\n_3 May. Bistritz._--Left Munich at 8:35 P. M., on 1st May, arriving at\r\nVienna early next morning; should have arrived at 6:46, but train was an\r\nhour late. Buda-Pesth seems a wonderful place, from the glimpse which I\r\ngot of it from the train and the little I could walk through the\r\nstreets. I feared to go very far from the station, as we had arrived\r\nlate and would start as near the correct time as possible. The\r\nimpression I had was that we were leaving the West and entering the\r\nEast; the most western of splendid bridges over the Danube, which is\r\nhere of noble width and depth, took us among the traditions of Turkish\r\nrule.\r\n\r\nWe left in pretty good time, and came after nightfall to Klausenburgh.\r\nHere I stopped for the night at the Hotel Royale. I had for dinner, or\r\nrather supper, a chicken done up some way with red pepper, which was\r\nvery good but thirsty. (_Mem._, get recipe for Mina.) I asked the\r\nwaiter, and he said it was called “paprika hendl,” and that, as it was a\r\nnational dish, I should be able to get it anywhere along the\r\nCarpathians. I found my smattering of German very useful here; indeed, I\r\ndon’t know how I should be able to get on without it.\r\n\r\nHaving had some time at my disposal when in London, I had visited the\r\nBritish Museum, and made search among the books and maps in the library\r\nregarding Transylvania; it had struck me that some foreknowledge of the\r\ncountry could hardly fail to have some importance in dealing with a\r\nnobleman of that country. I find that the district he named is in the\r\nextreme east of the country, just on the borders of three states,\r\nTransylvania, Moldavia and Bukovina, in the midst of the Carpathian\r\nmountains; one of the wildest and least known portions of Europe. I was\r\nnot able to light on any map or work giving the exact locality of the\r\nCastle Dracula, as there are no maps of this country as yet to compare\r\nwith our own Ordnance Survey maps; but I found that Bistritz, the post\r\ntown named by Count Dracula, is a fairly well-known place. I shall enter\r\nhere some of my notes, as they may refresh my memory when I talk over my\r\ntravels with Mina.\r\n\r\nIn the population of Transylvania there are four distinct nationalities:\r\nSaxons in the South, and mixed with them the Wallachs, who are the\r\ndescendants of the Dacians; Magyars in the West, and Szekelys in the\r\nEast and North. I am going among the latter, who claim to be desc",
     "editions": [
       {
         "id": "ed-dracula-physical",
@@ -230,8 +238,8 @@
         "coverType": "Brochura Clássica",
         "priceBR": 29.9,
         "pricePT": 8.99,
-        "linkBR": "https://www.amazon.com.br/s?k=Dr%C3%A1cula%20Bram%20Stoker&tag=gargbooks-20",
-        "linkPT": "https://www.amazon.es/s?k=Dr%C3%A1cula%20Bram%20Stoker&tag=gargbookspt-21"
+        "linkBR": "https://www.amazon.com.br/s?k=Dr%C3%A1cula%20Bram%20Stoker&tag=prycco-20",
+        "linkPT": "https://www.amazon.es/s?k=Dr%C3%A1cula%20Bram%20Stoker&tag=prycco-21"
       }
     ],
     "reviews": [
@@ -247,35 +255,20 @@
     "translations": {
       "en": {
         "title": "Dracula",
-        "synopsis": "From the shadowed mists of Transylvania stalks Count Dracula, an ancient predator whose bloodlust defies the modern age. When the Count crosses the threshold into Victorian England, he brings with him not merely aristocratic menace, but a primal contagion—a seductive, chilling force that coils around innocent souls. As the vampire ensnares noblewomen and drains vitality from the civilized world, a disparate band of heroes—scientists, clergymen, adventurers, and journalists—are thrust into a desperate hunt. They must piece together scattered reports, decipher arcane lore, and ultimately confront the immortal evil lurking in the Carpathians. *Dracula* is not just a horror story; it is a terrifying collision between Romantic myth and rigid modernity, where ancient darkness threatens to consume the very soul of civilization.",
-        "fullText": "CHAPTER I. Jonathan Harker’s Journal\r\nCHAPTER II. Jonathan Harker’s Journal\r\nCHAPTER III. Jonathan Harker’s Journal\r\nCHAPTER IV. Jonathan Harker’s Journal\r\nCHAPTER V. Letters—Lucy and Mina\r\nCHAPTER VI. Mina Murray’s Journal\r\nCHAPTER VII. Cutting from “The Dailygraph,” 8 August\r\nCHAPTER VIII. Mina Murray’s Journal\r\nCHAPTER IX. Mina Murray’s Journal\r\nCHAPTER X. Mina Murray’s Journal\r\nCHAPTER XI. Lucy Westenra’s Diary\r\nCHAPTER XII. Dr. Seward’s Diary\r\nCHAPTER XIII. Dr. Seward’s Diary\r\nCHAPTER XIV. Mina Harker’s Journal\r\nCHAPTER XV. Dr. Seward’s Diary\r\nCHAPTER XVI. Dr. Seward’s Diary\r\nCHAPTER XVII. Dr. Seward’s Diary\r\nCHAPTER XVIII. Dr. Seward’s Diary\r\nCHAPTER XIX. Jonathan Harker’s Journal\r\nCHAPTER XX. Jonathan Harker’s Journal\r\nCHAPTER XXI. Dr. Seward’s Diary\r\nCHAPTER XXII. Jonathan Harker’s Journal\r\nCHAPTER XXIII. Dr. Seward’s Diary\r\nCHAPTER XXIV. Dr. Seward’s Phonograph Diary, spoken by Van Helsing\r\nCHAPTER XXV. Dr. Seward’s Diary\r\nCHAPTER XXVI. Dr. Seward’s Diary\r\nCHAPTER XXVII. Mina Harker’s Journal\r\n\r\n\r\n\r\n\r\nHow these papers have been placed in sequence will be made manifest in\r\nthe reading of them. All needless matters have been eliminated, so that\r\na history almost at variance with the possibilities of later-day belief\r\nmay stand forth as simple fact. There is throughout no statement of\r\npast things wherein memory may err, for all the records chosen are\r\nexactly contemporary, given from the standpoints and within the range\r\nof knowledge of those who made them.\r\n\r\n\r\n\r\n\r\nDRACULA\r\n\r\n\r\n\r\n\r\nCHAPTER I\r\n\r\nJONATHAN HARKER’S JOURNAL\r\n\r\n(_Kept in shorthand._)\r\n\r\n\r\n_3 May. Bistritz._--Left Munich at 8:35 P. M., on 1st May, arriving at\r\nVienna early next morning; should have arrived at 6:46, but train was an\r\nhour late. Buda-Pesth seems a wonderful place, from the glimpse which I\r\ngot of it from the train and the little I could walk through the\r\nstreets. I feared to go very far from the station, as we had arrived\r\nlate and would start as near the correct time as possible. The\r\nimpression I had was that we were leaving the West and entering the\r\nEast; the most western of splendid bridges over the Danube, which is\r\nhere of noble width and depth, took us among the traditions of Turkish\r\nrule.\r\n\r\nWe left in pretty good time, and came after nightfall to Klausenburgh.\r\nHere I stopped for the night at the Hotel Royale. I had for dinner, or\r\nrather supper, a chicken done up some way with red pepper, which was\r\nvery good but thirsty. (_Mem._, get recipe for Mina.) I asked the\r\nwaiter, and he said it was called “paprika hendl,” and that, as it was a\r\nnational dish, I should be able to get it anywhere along the\r\nCarpathians. I found my smattering of German very useful here; indeed, I\r\ndon’t know how I should be able to get on without it.\r\n\r\nHaving had some time at my disposal when in London, I had visited the\r\nBritish Museum, and made search among the books and maps in the library\r\nregarding Transylvania; it had struck me that some foreknowledge of the\r\ncountry could hardly fail to have some importance in dealing with a\r\nnobleman of that country. I find that the district he named is in the\r\nextreme east of the country, just on the borders of three states,\r\nTransylvania, Moldavia and Bukovina, in the midst of the Carpathian\r\nmountains; one of the wildest and least known portions of Europe. I was\r\nnot able to light on any map or work giving the exact locality of the\r\nCastle Dracula, as there are no maps of this country as yet to compare\r\nwith our own Ordnance Survey maps; but I found that Bistritz, the post\r\ntown named by Count Dracula, is a fairly well-known place. I shall enter\r\nhere some of my notes, as they may refresh my memory when I talk over my\r\ntravels with Mina.\r\n\r\nIn the population of Transylvania there are four distinct nationalities:\r\nSaxons in the South, and mixed with them the Wallachs, who are the\r\ndescendants of the Dacians; Magyars in the West, and Szekelys in the\r\nEast and North. I am going among the latter, who claim to be descended\r\nfrom Attila and the Huns. This may be so, for when the Magyars conquered\r\nthe country in the eleventh century they found the Huns settled in it. I\r\nread that every known superstition in the world is gathered into the\r\nhorseshoe of the Carpathians, as if it were the centre of some sort of\r\nimaginative whirlpool; if so my stay may be very interesting. (_Mem._, I\r\nmust ask the Count all about them.)\r\n\r\nI did not sleep well, though my bed was comfortable enough, for I had\r\nall sorts of queer dreams. There was a dog howling all night under my\r\nwindow, which may have had something to do with it; or it may have been\r\nthe paprika, for I had to drink up all the water in my carafe, and was\r\nstill thirsty. Towards morning I slept and was wakened by the continuous\r\nknocking at my door, so I guess I must have been sleeping soundly then.\r\nI had for breakfast more paprika, and a sort of porridge of maize flour\r\nwhich they said was “mamaliga,” and egg-plant stuffed with forcemeat, a\r\nvery excellent dish, which they call “impletata.” (_Mem._, get recipe\r\nfor this also.) I had to hurry breakfast, for the train started a little\r\nbefore eight, or rather it ought to have done so, for after rushing to\r\nthe station at 7:30 I had to sit in the carriage for more than an hour\r\nbefore we began to move. It seems to me that the further east you go the\r\nmore unpunctual are the trains. What ought they to be in China?\r\n\r\nAll day long we seemed to dawdle through a country which was full of\r\nbeauty of every kind. Sometimes we saw little towns or castles on the\r\ntop of steep hills such as we see in old missals; sometimes we ran by\r\nrivers and streams which seemed from the wide stony margin on each side\r\nof them to be subject to great floods. It takes a lot of water, and\r\nrunning strong, to sweep the outside edge of a river clear. At every\r\nstation there were groups of people, sometimes crowds, and in all sorts\r\nof attire. Some of them were just like the peasants at home or those I\r\nsaw coming through France and Germany, with short jackets and round hats\r\nand home-made trousers; but others were very picturesque. The women\r\nlooked pretty, except when you got near them, but they were very clumsy\r\nabout the waist. They had all full white sleeves of some kind or other,\r\nand most of them had big belts with a lot of strips of something\r\nfluttering from them like the dresses in a ballet, but of course there\r\nwere petticoats under them. The strangest figures we saw were the\r\nSlovaks, who were more barbarian than the rest, with their big cow-boy\r\nhats, great baggy dirty-white trousers, white linen shirts, and enormous\r\nheavy leather belts, nearly a foot wide, all studded over with brass\r\nnails. They wore high boots, with their trousers tucked into them, and\r\nhad long black hair and heavy black moustaches. They are very\r\npicturesque, but do not look prepossessing. On the stage they would be\r\nset down at once as some old Oriental band of brigands. They are,\r\nhowever, I am told, very harmless and rather wanting in natural\r\nself-assertion.\r\n\r\nIt was on the dark side of twilight when we got to Bistritz, which is a\r\nvery interesting old place. Being practically on the frontier--for the\r\nBorgo Pass leads from it into Bukovina--it has had a very stormy\r\nexistence, and it certainly shows marks of it. Fifty years ago a series\r\nof great fires took place, which made terrible havoc on five separate\r\noccasions. At the very beginning of the seventeenth century it underwent\r\na siege of three weeks and lost 13,000 people, the casualties of war\r\nproper being assisted by famine and disease.\r\n\r\nCount Dracula had directed me to go to the Golden Krone Hotel, which I\r\nfound, to my great delight, to be thoroughly old-fashioned, for of\r\ncourse I wanted to see all I could of the ways of the country. I was\r\nevidently expected, for when I got near the door I faced a\r\ncheery-looking elderly woman in the usual peasant dress--white\r\nundergarment with long double apron, front, and back, of coloured stuff\r\nfitting almost too tight for modesty. When I came close she bowed and\r\nsaid, “The Herr Englishman?” “Yes,” I said, “Jonathan Harker.” She\r\nsmiled, and gave some message to an elderly man in white shirt-sleeves,\r\nwho had followed her to the door. He went, but immediately returned with\r\na letter:--\r\n\r\n     “My Friend.--Welcome to the Carpathians. I am anxiously expecting\r\n     you. Sleep well to-night. At three to-morrow the diligence will\r\n     start for Bukovina; a place on it is kept for you. At the Borgo\r\n     Pass my carriage will await you and will bring you to me. I trust\r\n     that your journey from London has been a happy one, and that you\r\n     will enjoy your stay in my beautiful land.\r\n\r\n“Your friend,\r\n\r\n“DRACULA.”\r\n\r\n\r\n_4 May._--I found that my landlord had got a letter from the Count,\r\ndirecting him to secure the best place on the coach for me; but on\r\nmaking inquiries as to details he seemed somewhat reticent, and\r\npretended that he could not understand my German. This could not be\r\ntrue, because up to then he had understood it perfectly; at least, he\r\nanswered my questions exactly as if he did. He and his wife, the old\r\nlady who had received me, looked at each other in a frightened sort of\r\nway. He mumbled out that the money had been sent in a letter, and that\r\nwas all he knew. When I asked him if he knew Count Dracula, and could\r\ntell me anything of his castle, both he and his wife crossed themselves,\r\nand, saying that they knew nothing at all, simply refused to speak\r\nfurther. It was so near the time of starting that I had no time to ask\r\nany one else, for it was all very mysterious and not by any means\r\ncomforting.\r\n\r\nJust before I was leaving, the old lady came up to my room and said in a\r\nvery hysterical way:\r\n\r\n“Must you go? Oh! young Herr, must you go?” She was in such an excited\r\nstate that she seemed to have lost her grip of what German she knew, and\r\nmixed it all up with some other language which I did not know at all. I\r\nwas just able to follow her by asking many questions. When I told her\r\nthat I must go at once, and that I was engaged on important business,\r\nshe asked again:\r\n\r\n“Do you know what day it is?” I answered that it was the fourth of May.\r\nShe shook her head as she said again:\r\n\r\n“Oh, yes! I know that! I know that, but do you know what day it is?” On\r\nmy saying that I did not understand, she went on:\r\n\r\n“It is the eve of St. George’s Day. Do you not know that to-night, when\r\nthe clock strikes midnight, all the evil things in the world will have\r\nfull sway? Do you know where you are going, and what you are going to?”\r\nShe was in such evident distress that I tried to comfort her, but\r\nwithout effect. Finally she went down on her knees and implored me not\r\nto go; at least to wait a day or two before starting. It was all very\r\nridiculous but I did not feel comfortable. However, there was business\r\nto be done, and I could allow nothing to interfere with it. I therefore\r\ntried to raise her up, and said, as gravely as I could, that I thanked\r\nher, but my duty was imperative, and that I must go. She then rose and\r\ndried her eyes, and taking a crucifix from her neck offered it to me. I\r\ndid not know what to do, for, as an English Churchman, I have been\r\ntaught to regard such things as in some measure idolatrous, and yet it\r\nseemed so ungracious to refuse an old lady meaning so well and in such a\r\nstate of mind. She saw, I suppose, the doubt in my face, for she put the\r\nrosary round my neck, and said, “For your mother’s sake,” and went out\r\nof the room. I am writing up this part of the diary whilst I am waiting\r\nfor the coach, which is, of course, late; and the crucifix is still\r\nround my neck. Whether it is the old lady’s fear, or the many ghostly\r\ntraditions of this place, or the crucifix itself, I do not know, but I\r\nam not feeling nearly as easy in my mind as usual. If this book should\r\never reach Mina before I do, let it bring my good-bye. Here comes the\r\ncoach!\r\n\r\n       *       *   ",
-        "downloadFile": "/downloads/dracula.txt"
+        "synopsis": "In the gothic chill of Victorian England, Jonathan Harker's harrowing journey to Transylvania unveils the ancient terror lurking within Count Dracula himself. This aristocratic predator—a creature steeped in hypnotic allure and lethal charisma—does not merely haunt castles; he infects life. As Dracula stalks across the Carpathians, dragging his vampiric hunger into modern society, he ensnares a disparate band of heroes: Mina Harker, whose intelligence mirrors her husband's peril; the steadfast Dr. Seward; the valiant Van Helsing; and Quincey Morris. Together, they must navigate fog-shrouded nights, decipher ancient lore, and confront a supernatural foe determined to drain the vitality from their world. It is a desperate race against the crimson tide, a battle where science collides violently with the eternal darkness, threatening to drag all of humanity into Dracula's immortal, blood-soaked embrace.",
+        "fullText": "CHAPTER I. Jonathan Harker’s Journal\r\nCHAPTER II. Jonathan Harker’s Journal\r\nCHAPTER III. Jonathan Harker’s Journal\r\nCHAPTER IV. Jonathan Harker’s Journal\r\nCHAPTER V. Letters—Lucy and Mina\r\nCHAPTER VI. Mina Murray’s Journal\r\nCHAPTER VII. Cutting from “The Dailygraph,” 8 August\r\nCHAPTER VIII. Mina Murray’s Journal\r\nCHAPTER IX. Mina Murray’s Journal\r\nCHAPTER X. Mina Murray’s Journal\r\nCHAPTER XI. Lucy Westenra’s Diary\r\nCHAPTER XII. Dr. Seward’s Diary\r\nCHAPTER XIII. Dr. Seward’s Diary\r\nCHAPTER XIV. Mina Harker’s Journal\r\nCHAPTER XV. Dr. Seward’s Diary\r\nCHAPTER XVI. Dr. Seward’s Diary\r\nCHAPTER XVII. Dr. Seward’s Diary\r\nCHAPTER XVIII. Dr. Seward’s Diary\r\nCHAPTER XIX. Jonathan Harker’s Journal\r\nCHAPTER XX. Jonathan Harker’s Journal\r\nCHAPTER XXI. Dr. Seward’s Diary\r\nCHAPTER XXII. Jonathan Harker’s Journal\r\nCHAPTER XXIII. Dr. Seward’s Diary\r\nCHAPTER XXIV. Dr. Seward’s Phonograph Diary, spoken by Van Helsing\r\nCHAPTER XXV. Dr. Seward’s Diary\r\nCHAPTER XXVI. Dr. Seward’s Diary\r\nCHAPTER XXVII. Mina Harker’s Journal\r\n\r\n\r\n\r\n\r\nHow these papers have been placed in sequence will be made manifest in\r\nthe reading of them. All needless matters have been eliminated, so that\r\na history almost at variance with the possibilities of later-day belief\r\nmay stand forth as simple fact. There is throughout no statement of\r\npast things wherein memory may err, for all the records chosen are\r\nexactly contemporary, given from the standpoints and within the range\r\nof knowledge of those who made them.\r\n\r\n\r\n\r\n\r\nDRACULA\r\n\r\n\r\n\r\n\r\nCHAPTER I\r\n\r\nJONATHAN HARKER’S JOURNAL\r\n\r\n(_Kept in shorthand._)\r\n\r\n\r\n_3 May. Bistritz._--Left Munich at 8:35 P. M., on 1st May, arriving at\r\nVienna early next morning; should have arrived at 6:46, but train was an\r\nhour late. Buda-Pesth seems a wonderful place, from the glimpse which I\r\ngot of it from the train and the little I could walk through the\r\nstreets. I feared to go very far from the station, as we had arrived\r\nlate and would start as near the correct time as possible. The\r\nimpression I had was that we were leaving the West and entering the\r\nEast; the most western of splendid bridges over the Danube, which is\r\nhere of noble width and depth, took us among the traditions of Turkish\r\nrule.\r\n\r\nWe left in pretty good time, and came after nightfall to Klausenburgh.\r\nHere I stopped for the night at the Hotel Royale. I had for dinner, or\r\nrather supper, a chicken done up some way with red pepper, which was\r\nvery good but thirsty. (_Mem._, get recipe for Mina.) I asked the\r\nwaiter, and he said it was called “paprika hendl,” and that, as it was a\r\nnational dish, I should be able to get it anywhere along the\r\nCarpathians. I found my smattering of German very useful here; indeed, I\r\ndon’t know how I should be able to get on without it.\r\n\r\nHaving had some time at my disposal when in London, I had visited the\r\nBritish Museum, and made search among the books and maps in the library\r\nregarding Transylvania; it had struck me that some foreknowledge of the\r\ncountry could hardly fail to have some importance in dealing with a\r\nnobleman of that country. I find that the district he named is in the\r\nextreme east of the country, just on the borders of three states,\r\nTransylvania, Moldavia and Bukovina, in the midst of the Carpathian\r\nmountains; one of the wildest and least known portions of Europe. I was\r\nnot able to light on any map or work giving the exact locality of the\r\nCastle Dracula, as there are no maps of this country as yet to compare\r\nwith our own Ordnance Survey maps; but I found that Bistritz, the post\r\ntown named by Count Dracula, is a fairly well-known place. I shall enter\r\nhere some of my notes, as they may refresh my memory when I talk over my\r\ntravels with Mina.\r\n\r\nIn the population of Transylvania there are four distinct nationalities:\r\nSaxons in the South, and mixed with them the Wallachs, who are the\r\ndescendants of the Dacians; Magyars in the West, and Szekelys in the\r\nEast and North. I am going among the latter, who claim to be desc",
+        "downloadFile": "/downloads/dracula-en.txt"
       },
       "pt-br": {
         "title": "Drácula",
-        "synopsis": "Em uma Londres vitoriana envolta em névoa e sombras góticas, surge o espectro ancestral: Drácula. Este vampiro sedutor, cuja beleza é tão perigosa quanto sua sede insaciável, atravessa os véus do tempo para reivindicar a linhagem de Harker. Ao se instalar na opulenta mansão, ele tece uma teia de mistério e horror, drenando não apenas o sangue, mas também a sanidade daqueles ao seu redor. Entre a fragilidade da jovem Mina Murray e a corajosa Joan, surge um duelo mortal entre a ciência iluminada e a escuridão primordial. Prepare-se para testemunhar como a paixão romântica se transforma no terror absoluto quando um Conde Transilvano decide que a vida em Londres será servida... à sua fome.",
-        "fullText": "# CAPÍTULO I. Diário de Jonathan Harker\n\n**CAPÍTULO II. Diário de Jonathan Harker**\n\n**CAPÍTULO III. Diário de Jonathan Harker**\n\n**CAPÍTULO IV. Diário de Jonathan Harker**\n\n**CAPÍTULO V. Cartas — Lucy e Mina**\n\n**CAPÍTULO VI. Diário de Mina Murray**\n\n**CAPÍTULO VII. Recortes do *The Dailygraph*, 8 de Agosto**\n\n**CAPÍTULO VIII. Diário de Mina Murray**\n\n**CAPÍTULO IX. Diário de Mina Murray**\n\n**CAPÍTULO X. Diário de Mina Murray**\n\n**CAPÍTULO XI. Diário de Lucy Westenra**\n\n**CAPÍTULO XII. Diário do Dr. Seward**\n\n**CAPÍTULO XIII. Diário do Dr. Seward**\n\n**CAPÍTULO XIV. Diário de Mina Harker**\n\n**CAPÍTULO XV. Diário do Dr. Seward**\n\n**CAPÍTULO XVI. Diário do Dr. Seward**\n\n**CAPÍTULO XVII. Diário do Dr. Seward**\n\n**CAPÍTULO XVIII. Diário do Dr. Seward**\n\n**CAPÍTULO XIX. Diário de Jonathan Harker**\n\n**CAPÍTULO XX. Diário de Jonathan Harker**\n\n**CAPÍTULO XXI. Diário do Dr. Seward**\n\n**CAPÍTULO XXII. Diário de Jonathan Harker**\n\n**CAPÍTULO XXIII. Diário do Dr. Seward**\n\n**CAPÍTULO XXIV. Diário Fonográfico do Dr. Seward, falado por Van Helsing**\n\n**CAPÍTULO XXV. Diário do Dr. Seward**\n\n**CAPÍTULO XXVI. Diário do Dr. Seward**\n\n**CAPÍTULO XXVII. Diário de Mina Harker**\n\n***\n\nA forma como estes papéis foram dispostos em sequência se fará manifesto na sua leitura. Todos os assuntos desnecessários foram eliminados, de modo que uma história quase em variação com as possibilidades da crença posterior possa surgir como simples fato. Não há, ao longo dos registros, nenhuma declaração de coisas passadas em que a memória possa errar, pois todos os documentos escolhidos são exatamente contemporâneos, fornecidos a partir dos pontos de vista e dentro do alcance do conhecimento daqueles que os elaboraram.\n\n***\n\n# DRÁCULA\n\n***\n\n**CAPÍTULO I**\n\n### **DIÁRIO DE JONATHAN HARKER**\n\n*(Mantido em abreviatura.)*\n\n*3 de maio. Bistritz.* — Parti de Munique às 20h35, no dia 1º de maio, chegando a Viena na manhã seguinte; deveria ter chegado às 6h46, mas o trem atrasou uma hora. Buda-Pesth parece um lugar maravilhoso, pelo vislumbre que tive dele do trem e pelo pouco que pude percorrer pelas ruas. Tive receio de me afastar muito da estação, pois chegamos tarde e começaríamos tão perto do horário correto quanto possível. A impressão que tive foi de que estávamos saindo do Oeste e entrando no Leste; a ponte mais ocidental dos esplêndidos pontes sobre o Danúbio, que aqui é de nobre largura e profundidade, nos introduziu nas tradições do domínio turco.\n\nPartimos com uma antecedência razoável e chegamos em Klausenburgh após o anoitecer. Aqui parei para a noite no *Hotel Royale*. Jantei, ou melhor, jantei um jantar, um frango preparado de alguma forma com pimenta vermelha, que estava muito bom, mas sedento. *(Mem.: pegar receita para Mina.)* Perguntei ao garçom e ele disse que se chamava “paprika hendl”, e que, por ser um prato nacional, eu conseguiria encontrá-lo em qualquer lugar pelos Cárpatos. Achei meu conhecimento rudimentar de alemão muito útil aqui; na verdade, não sei como conseguiria me virar sem ele.\n\nTendo tido algum tempo à disposição quando estive em Londres, visitei o Museu Britânico e fiz buscas entre os livros e mapas da biblioteca referentes à Transilvânia; tocou-me que algum conhecimento prévio sobre o país dificilmente deixaria de ter alguma importância ao lidar com um nobre daquela nação. Descobri que o distrito que ele nomeou fica no extremo leste do país, bem na fronteira de três estados — Transilvânia, Moldávia e Bukovina —, no meio das montanhas Cárpatas; uma das porções mais selvagens e menos conhecidas da Europa. Não consegui encontrar nenhum mapa ou obra que indicasse a localidade exata do Castelo Drácula, pois ainda não existem mapas deste país para comparar com nossos próprios mapas do *Ordnance Survey*; mas descobri que Bistritz, a cidade de correios nomeada pelo Conde Drácula, é um lugar razoavelmente conhecido. Anotarei aqui algumas das minhas observações, pois elas podem refrescar minha memória quando conversar sobre minhas viagens com Mina.\n\nNa população da Transilvânia há quatro nacionalidades distintas: Saxões ao Sul, misturados a eles os Valáquios, que são descendentes dos Dacos; Magiares a Oeste e Szekelys a Leste e Norte. Estou viajando entre estes últimos, que alegam ser descendentes de Átila e dos Hunos. Isso pode ser verdade, pois quando os Magiares conquistaram o país no século XI, encontraram os Hunos estabelecidos nele. Li que toda superstição conhecida no mundo se agrupa no ferradura dos Cárpatos, como se fosse o centro de alguma espécie de redemoinho imaginativo; se for assim, minha estadia pode ser muito interessante. *(Mem.: devo perguntar ao Conde sobre tudo isso.)*\n\nNão dormi bem, embora minha cama fosse suficientemente confortável, pois tive todos os tipos de sonhos estranhos. Havia um cão uivando a noite toda sob minha janela, o que talvez tivesse algo a ver com isso; ou pode ter sido a páprica, pois precisei beber toda a água da minha garrafa e ainda assim estava sedento. Perto da manhã dormi e fui despertado pelo batimento contínuo à minha porta, então suponho ter estado dormindo profundamente. No café da manhã tomei mais páprica e um tipo de mingau feito de farinha de milho que chamavam de “mamaliga”, e berinjela recheada com carne moída, um prato muito excelente, que eles chamam de “impletata”. *(Mem.: pegar receita para este também.)* Tive que apressar o café da manhã, pois o trem partiu um pouco antes das oito, ou melhor, deveria ter partido, pois depois de correr para a estação às 7h30 tive que ficar no vagão por mais de uma hora antes de começarmos a nos mover. Parece-me que quanto mais a leste",
+        "synopsis": "De fronteiras gélidas ao coração da Inglaterra vitoriana, uma sombra ancestral se arrasta: o Conde Drácula. Um vampiro imortal, sedento por sangue e poder, ele emerge das brumas do Leste Europeu para reivindicar suas vítimas. Entre a rigidez social de Londres e os sussurros macabros dos castelos góticos, um grupo heterogêneo — cientistas, clérigos, jovens nobres e uma jovem inocente com olhar desafiador — é lançado em uma caçada desesperada. Eles se unem para expor o monstro que se esgueira na noite, enfrentando sedução sobrenatural, loucura crescente e a terrível verdade de que a morte, para Drácula, é apenas um breve intervalo antes do próximo banquete sangrento. O horror não está apenas no sangue; reside na perdição da própria humanidade sob o domínio da escuridão eterna.",
+        "fullText": "CHAPTER I. Jonathan Harker’s Journal\r\nCHAPTER II. Jonathan Harker’s Journal\r\nCHAPTER III. Jonathan Harker’s Journal\r\nCHAPTER IV. Jonathan Harker’s Journal\r\nCHAPTER V. Letters—Lucy and Mina\r\nCHAPTER VI. Mina Murray’s Journal\r\nCHAPTER VII. Cutting from “The Dailygraph,” 8 August\r\nCHAPTER VIII. Mina Murray’s Journal\r\nCHAPTER IX. Mina Murray’s Journal\r\nCHAPTER X. Mina Murray’s Journal\r\nCHAPTER XI. Lucy Westenra’s Diary\r\nCHAPTER XII. Dr. Seward’s Diary\r\nCHAPTER XIII. Dr. Seward’s Diary\r\nCHAPTER XIV. Mina Harker’s Journal\r\nCHAPTER XV. Dr. Seward’s Diary\r\nCHAPTER XVI. Dr. Seward’s Diary\r\nCHAPTER XVII. Dr. Seward’s Diary\r\nCHAPTER XVIII. Dr. Seward’s Diary\r\nCHAPTER XIX. Jonathan Harker’s Journal\r\nCHAPTER XX. Jonathan Harker’s Journal\r\nCHAPTER XXI. Dr. Seward’s Diary\r\nCHAPTER XXII. Jonathan Harker’s Journal\r\nCHAPTER XXIII. Dr. Seward’s Diary\r\nCHAPTER XXIV. Dr. Seward’s Phonograph Diary, spoken by Van Helsing\r\nCHAPTER XXV. Dr. Seward’s Diary\r\nCHAPTER XXVI. Dr. Seward’s Diary\r\nCHAPTER XXVII. Mina Harker’s Journal\r\n\r\n\r\n\r\n\r\nHow these papers have been placed in sequence will be made manifest in\r\nthe reading of them. All needless matters have been eliminated, so that\r\na history almost at variance with the possibilities of later-day belief\r\nmay stand forth as simple fact. There is throughout no statement of\r\npast things wherein memory may err, for all the records chosen are\r\nexactly contemporary, given from the standpoints and within the range\r\nof knowledge of those who made them.\r\n\r\n\r\n\r\n\r\nDRACULA\r\n\r\n\r\n\r\n\r\nCHAPTER I\r\n\r\nJONATHAN HARKER’S JOURNAL\r\n\r\n(_Kept in shorthand._)\r\n\r\n\r\n_3 May. Bistritz._--Left Munich at 8:35 P. M., on 1st May, arriving at\r\nVienna early next morning; should have arrived at 6:46, but train was an\r\nhour late. Buda-Pesth seems a wonderful place, from the glimpse which I\r\ngot of it from the train and the little I could walk through the\r\nstreets. I feared to go very far from the station, as we had arrived\r\nlate and would start as near the correct time as possible. The\r\nimpression I had was that we were leaving the West and entering the\r\nEast; the most western of splendid bridges over the Danube, which is\r\nhere of noble width and depth, took us among the traditions of Turkish\r\nrule.\r\n\r\nWe left in pretty good time, and came after nightfall to Klausenburgh.\r\nHere I stopped for the night at the Hotel Royale. I had for dinner, or\r\nrather supper, a chicken done up some way with red pepper, which was\r\nvery good but thirsty. (_Mem._, get recipe for Mina.) I asked the\r\nwaiter, and he said it was called “paprika hendl,” and that, as it was a\r\nnational dish, I should be able to get it anywhere along the\r\nCarpathians. I found my smattering of German very useful here; indeed, I\r\ndon’t know how I should be able to get on without it.\r\n\r\nHaving had some time at my disposal when in London, I had visited the\r\nBritish Museum, and made search among the books and maps in the library\r\nregarding Transylvania; it had struck me that some foreknowledge of the\r\ncountry could hardly fail to have some importance in dealing with a\r\nnobleman of that country. I find that the district he named is in the\r\nextreme east of the country, just on the borders of three states,\r\nTransylvania, Moldavia and Bukovina, in the midst of the Carpathian\r\nmountains; one of the wildest and least known portions of Europe. I was\r\nnot able to light on any map or work giving the exact locality of the\r\nCastle Dracula, as there are no maps of this country as yet to compare\r\nwith our own Ordnance Survey maps; but I found that Bistritz, the post\r\ntown named by Count Dracula, is a fairly well-known place. I shall enter\r\nhere some of my notes, as they may refresh my memory when I talk over my\r\ntravels with Mina.\r\n\r\nIn the population of Transylvania there are four distinct nationalities:\r\nSaxons in the South, and mixed with them the Wallachs, who are the\r\ndescendants of the Dacians; Magyars in the West, and Szekelys in the\r\nEast and North. I am going among the latter, who claim to be desc",
         "downloadFile": "/downloads/dracula-pt-br.txt"
-      },
-      "pt-pt": {
-        "title": "Drácula",
-        "synopsis": "Em transição entre o romantismo gótico e o terror moderno, emerge a figura imortal e sedutora de Drácula. Quando este vampiro ancestral atravessa os oceanos para a Inglaterra vitoriana, ele não procura apenas um novo lar; busca uma nova fonte de sangue fresco para saciar a sua sede milenar. A jovem e ingénua Mina Harker torna-se o alvo perfeito desta criatura sobrenaturalmente bela. Mas à medida que Drácula tece a sua rede de sedução e terror, ele arrasta consigo os seus amigos — Jonathan Harker, Lucy Westenra e Seward — mergulhando-os num pânico crescente. Será que a força da ciência, do amor ou apenas o poder implacável da maldição pode detê-lo? Prepare-se para testemunhar o renascimento do horror clássico em sua forma mais arrepiante.",
-        "fullText": "# CAPÍTULO I. Diário de Jonathan Harker\n\n# CAPÍTULO II. Diário de Jonathan Harker\n\n# CAPÍTULO III. Diário de Jonathan Harker\n\n# CAPÍTULO IV. Diário de Jonathan Harker\n\n# CAPÍTULO V. Cartas — Lucy e Mina\n\n# CAPÍTULO VI. Diário de Mina Murray\n\n# CAPÍTULO VII. Extraído do *Dailygraph*, 8 de Agosto\n\n# CAPÍTULO VIII. Diário de Mina Murray\n\n# CAPÍTULO IX. Diário de Mina Murray\n\n# CAPÍTULO X. Diário de Mina Murray\n\n# CAPÍTULO XI. Diário de Lucy Westenra\n\n# CAPÍTULO XII. Diário do Dr Seward\n\n# CAPÍTULO XIII. Diário do Dr Seward\n\n# CAPÍTULO XIV. Diário de Mina Harker\n\n# CAPÍTULO XV. Diário do Dr Seward\n\n# CAPÍTULO XVI. Diário do Dr Seward\n\n# CAPÍTULO XVII. Diário do Dr Seward\n\n# CAPÍTULO XVIII. Diário do Dr Seward\n\n# CAPÍTULO XIX. Diário de Jonathan Harker\n\n# CAPÍTULO XX. Diário de Jonathan Harker\n\n# CAPÍTULO XXI. Diário do Dr Seward\n\n# CAPÍTULO XXII. Diário de Jonathan Harker\n\n# CAPÍTULO XXIII. Diário do Dr Seward\n\n# CAPÍTULO XXIV. Diário Fonográfico do Dr Seward, falado por Van Helsing\n\n# CAPÍTULO XXV. Diário do Dr Seward\n\n# CAPÍTULO XXVI. Diário do Dr Seward\n\n# CAPÍTULO XXVII. Diário de Mina Harker\n\n***\n\nA forma como estes papéis foram dispostos em sequência tornar-se-á manifesta na sua leitura. Todos os assuntos desnecessários foram eliminados, de modo que uma história quase em dissonância com as possibilidades da crença posterior pode apresentar-se como mero facto. Não há ao longo do texto nenhuma afirmação de fatos passados onde a memória possa falhar, pois todos os registos escolhidos são exatamente contemporâneos, dados dos pontos de vista e no âmbito de conhecimento daqueles que os elaboraram.\n\n***\n\n# DRACULA\n\n***\n\n## CAPÍTULO I\n\n### DIÁRIO DE JONATHAN HARKER\n\n*(Escrito em abreviatura.)*\n\n**3 de Maio. Bistritz.** — Parti de Munique às 20h35, a 1 de Maio, chegando a Viena na manhã seguinte; devia ter chegado às 6h46, mas o comboio atrasou uma hora. Buda-Pesth parece um lugar maravilhoso, pelo vislumbre que apanhei dele no comboio e pelo pouco que consegui percorrer pelas ruas. Tive receio de me afastar muito da estação, visto termos chegado tarde e íamos partir o mais perto possível do horário correto. A impressão que tive foi a de estarmos a deixar o Oeste e a entrar no Este; a ponte mais ocidental dos esplêndidos pontes sobre o Danúbio, que é aqui de nobre largura e profundidade, levou-nos entre as tradições do domínio turco.\n\nPartimos com tempo razoável, e chegámos após o anoitecer a Klausenburgh. Aqui parei para a noite no Hotel Royale. Jantei, ou melhor, ceei, um frango preparado de alguma forma com pimenta vermelha, que estava muito bom mas sedento. *(Mem.: Obter receita para Mina.)* Perguntei ao empregado e ele disse que se chamava “paprika hendl”, e que, por ser um prato nacional, conseguiria encontrá-lo em qualquer lugar ao longo dos Cárpatos. Achei o meu conhecimento rudimentar de alemão muito útil aqui; na verdade, não sei como me safaria sem ele.\n\nTendo tido algum tempo à minha disposição quando estive em Londres, visitei o Museu Britânico e fiz buscas entre os livros e mapas da biblioteca relativamente à Transilvânia; atingiu-me a ideia de que algum conhecimento prévio do país dificilmente poderia não ter alguma importância ao lidar com um nobre desse país. Descobri que o distrito que ele nomeou situa-se na extrema esteira do país, justo nas fronteiras de três estados — Transilvânia, Moldávia e Bukovina —, em meio às montanhas dos Cárpatos; uma das porções mais selvagens e menos conhecidas da Europa. Não consegui encontrar nenhum mapa ou obra que indicasse a localização exata do Castelo Drácula, pois ainda não existem mapas deste país para comparar com os nossos mapas do *Ordnance Survey*; mas descobri que Bistritz, a cidade de correios nomeada pelo Conde Drácula, é um lugar bastante conhecido. Irei aqui anotar algumas das minhas observações, pois poderão refrescar a minha memória quando falar das minhas viagens com Mina.\n\nNa população da Transilvânia existem quatro nacionalidades distintas: os Saxões ao Sul, e misturados com eles os Valáquios, que são descendentes dos Dacianos; os Magiares a Oeste, e os Szekelys no Este e Norte. Estou a dirigir-me entre estes últimos, que afirmam ser descendentes de Átila e dos Hunos. Isto poderá ser verdade, pois quando os Magiares conquistaram o país no século XI encontraram os Hunos estabelecidos nele. Li que toda superstição conhecida no mundo se aglomera na ferradura dos Cárpatos, como se fosse o centro de algum tipo de redemoinho imaginativo; se for assim, a minha estadia pode ser muito interessante. *(Mem.: Devo perguntar ao Conde tudo sobre elas.)*\n\nNão dormi bem, embora a minha cama fosse suficientemente confortável, pois tive todos os tipos de sonhos estranhos. Havia um cão a uivar a noite toda sob a minha janela, o que poderá ter tido alguma relação com isso; ou talvez tenha sido a paprika, pois tive de beber toda a água da minha garrafa e ainda assim estava sedento. Perto da manhã dormi e fui despertado por uma batida contínua à porta, pelo que suponho que estivesse a dormir profundamente. Para o pequeno-almoço comi mais paprika, e um tipo de papa de farinha de milho que chamavam “mamaliga”, e beringela recheada com carne picada, um prato muito excelente, que chamam “impletata”. *(Mem.: Obter receita para isto também.)* Tive de apressar o pequeno-almoço, pois o comboio partiu pouco antes das oito, ou melhor, *deveria* tê-lo feito, porque depois de correr à estação às 7h30 tive de ficar no vagão por mais de uma hora antes de começarmos a mover. Parece-me que quanto mais para leste se vai, mais atrasados são os comboios. O que serão eles na China?\n\nDurante o dia parecemos vaguear",
-        "downloadFile": "/downloads/dracula-pt-pt.txt"
-      },
-      "es": {
-        "title": "Drácula",
-        "synopsis": "En el corazón gótico de Transilvania, surge una sombra ancestral: Drácula. Este apuesto y seductor Conde es más que un noble; es un vampiro milenario cuya sed insaciable por la sangre humana lo ata al mundo. Cuando este ser inmortal cruza los umbrales de Londres, arrastra consigo una plaga de terror e intriga. La joven y vibrante Mina Harker se convierte en su involuntaria presa, mientras Jonathan Harker, el viajero que fue testigo de sus horrores, busca desesperadamente poner fin a la maldición. En medio de un baile de fatalidad, amor prohibido y horror sobrenatural, descubrimos si el ingenio humano puede doblegar al mal más antiguo... o si Drácula reclamará una víctima eterna.",
-        "fullText": "# *DRÁCULA*\n\n## CAPÍTULO I. Diario de Jonathan Harker\n\n*(Escrito en abreviatura.)*\n\n***3 de mayo. Bistritz.*** —Dejé Múnich a las 8:35 de la noche, el día primero de mayo, y llegué a Viena temprano a la mañana siguiente; debí haber arribado a las 6:46, pero el tren se retrasó una hora. Buda-Pesth parece un lugar maravilloso, por lo que pude vislumbrar desde el tren y por lo poco que caminé por sus calles. Temía alejarme demasiado de la estación, pues habíamos llegado tarde y debíamos partir tan cerca del horario correcto como fuera posible. La impresión que me causó fue que estábamos dejando Occidente para entrar en Oriente; el más occidental de espléndidos puentes sobre el Danubio, que aquí es de noble anchura y profundidad, nos condujo entre las tradiciones del dominio turco.\n\nPartimos con bastante antelación y llegamos a Klausenburgh después del anochecer. Aquí me alojé esa noche en el Hotel Royale. Cené, o más bien, la cena, un pollo preparado de alguna manera con pimiento rojo, que estaba muy bueno, aunque sedante. *(Mem.: conseguir receta para Mina).* Le pregunté al camarero y él dijo que se llamaba “paprika hendl”, y que, como es un plato nacional, podría encontrarlo en cualquier parte a lo largo de los Cárpatos. Encontré que mi conocimiento rudimentario del alemán fue muy útil aquí; de hecho, no sé cómo podría desenvolverse sin ello.\n\nHabiendo tenido tiempo libre cuando estuve en Londres, visité el Museo Británico y busqué entre los libros y mapas de la biblioteca sobre Transilvania; me impactó que algún conocimiento previo del país difícilmente pudiera ser inútil al tratar con un noble de esa tierra. Descubrí que el distrito que él nombró se sitúa en el extremo oriental del país, justo en las fronteras de tres estados: Transilvania, Moldavia y Bucovina, en medio de las montañas de los Cárpatos; una de las porciones más salvajes y menos conocidas de Europa. No logré encontrar ningún mapa o obra que diera la localización exacta del Castillo de Drácula, ya que aún no hay mapas de este país para comparar con nuestros propios mapas del *Ordnance Survey*; pero encontré que Bistritz, el pueblo de correos nombrado por el Conde Drácula, es un lugar bastante conocido. Incluiré aquí algunas de mis notas, pues podrían refrescarme la memoria cuando hable de mis viajes con Mina.\n\nEn la población de Transilvania hay cuatro nacionalidades distintas: sajones en el Sur, y mezclados con ellos los vâlacos, que son descendientes de los dacios; magyares en el Oeste, y szekelys en el Este y Norte. Estoy dirigiéndome entre estos últimos, quienes afirman ser descendientes de Atila y de los hunos. Esto puede ser cierto, pues cuando los magyares conquistaron el país en el siglo once encontraron a los hunos asentados allí. Leí que toda superstición conocida en el mundo se ha reunido en el herradura de los Cárpatos, como si fuera el centro de algún tipo de remolino imaginativo; si es así, mi estancia puede ser muy interesante. *(Mem.: debo preguntarle al Conde todo sobre ellas).*\n\nNo dormí bien, aunque mi cama era bastante cómoda, pues tuve todo tipo de sueños extraños. Había un perro aullando toda la noche bajo mi ventana, lo cual pudo tener algo que ver; o quizás fue el pimentón, ya que tuve que beberme toda el agua de mi jarra y seguía sintiéndome sediento. Hacia la mañana dormí y me despertó el golpeteo continuo en mi puerta, así que supongo que debía haber estado durmiendo profundamente. Para el desayuno tomé más pimentón y una especie de papilla de harina de maíz que decían ser “mamaliga”, y berenjena rellena de carne picada, un plato muy excelente, al que llaman “impletata”. *(Mem.: conseguir receta para esto también).* Tuve que apurar el desayuno, pues el tren partió poco antes de las ocho, o más bien debía hacerlo, ya que después de correr a la estación a las 7:30 tuve que estar sentado en el vagón por más de una hora antes de que comenzáramos a movernos. Me parece a mí que cuanto más al este se va, más impuntuales son los trenes. ¿Qué serán en China?\n\nTodo el día parecíamos pasear por un país lleno de belleza de toda clase. A veces veíamos pueblos pequeños o castillos en la cima de laderas escarpadas tal como vemos en viejos misales; otras veces pasábamos junto a ríos y arroyos que, desde el amplio margen pedregoso de cada lado, parecían propensos a grandes crecidas. Se necesita mucha agua, y correr con fuerza, para barrer la orilla exterior de un río. En cada estación había grupos de gente, a veces multitudes, y vestidos de toda manera. Algunos eran exactamente como los campesinos de casa o aquellos que vi al atravesar Francia y Alemania, con chaquetas cortas y sombreros redondos y pantalones hechos en casa; pero otros eran muy pintorescos. Las mujeres se veían bonitas, salvo cuando te acercabas a ellas, pero eran muy torpes en la cintura. Todas tenían mangas blancas enteras de alguna forma o otra, y la mayoría llevaba grandes cinturones con muchas tiras de algo ondeando desde ellos como los vestidos en un ballet, pero por supuesto había polainas debajo. Las figuras más extrañas que vimos eran los eslovacos, que eran más bárbaros que el resto, con sus grandes sombreros de vaquero, enormes pantalones sucios de color blanco, camisas de lino blancas y enormes cinturones gruesos de cuero, casi un pie de ancho, todos adornados con clavos de latón. Llevaban botas altas, con los pantalones metidos en ellas, y tenían cabello negro largo y gruesas patillas negras. Son muy pintorescos, pero no parecen afables. En el escenario se les colocaría enseguida como alguna vieja banda oriental de bandidos. Sin embargo, me han dicho que son muy inofensivos y algo carecen de autoafirmación natural.\n\nFue al lado oscuro del crepúsculo cuando llegamos a Bistritz, un lugar viejo y muy interesante. Al estar prácticamente en la frontera —pues el Paso Borgo conduce desde él hacia Bucovina— ha tenido una existencia muy turbulenta, y ciertamente muestra sus huellas. Hace cincuenta años tuvo lugar una serie de grandes incendios que causaron terribles estragos en cinco ocasiones separadas. A principios del siglo XVII sufrió un asedio de tres semanas y perdió a 13.000 personas; las",
-        "downloadFile": "/downloads/dracula-es.txt"
-      },
-      "fr": {
-        "title": "Dracula",
-        "synopsis": "Dans l'ombre gothique de la Transylvanie, le mystérieux Comte Dracula émerge : un vampire ancestral dont l'aura charismatique masque une soif insatiable de sang. Arrivé en Angleterre, il sème la terreur et la corruption parmi les habitants d'Edgar, aspirant à posséder leurs âmes et leur vitalité. Face à cette menace surnaturelle, un groupe hétéroclite — scientifiques intrépides, aristocrates résilients et jeunes femmes vulnérables — se mobilise. Ils doivent unir le savoir, la foi et la bravoure pour traquer la créature immortelle. Une course contre la nuit commence : une lutte acharnée entre l'obscurité éternelle du Comte et la lumière obstinée de l'humanité.",
-        "fullText": "# DRACULA\n\n## Chapitre I. Journal de Jonathan Harker\n\n(_Tenue en abrégé._)\n\n_3 mai. Bistritz._—Quitté Munich à 20h35, le 1er mai, arrivant à Vienne tôt le lendemain ; j'aurais dû arriver à 6h46, mais le train a accusé un retard d'une heure. Buda-Pécs me semble être un lieu merveilleux, d'après l'aperçu que j'en ai eu depuis le train et ce peu que j'ai pu parcourir dans les rues. J'avais peur de m'éloigner trop du poste, car nous étions arrivés tard et allions partir à l'heure la plus proche possible. L'impression qui m'a frappé est que nous quittions l'Ouest pour entrer dans l'Est ; le pont le plus occidental sur le Danube, qui ici est d'une noble largeur et profondeur, nous a plongés au cœur des traditions de la domination turque.\n\nNous sommes partis avec un délai assez convenable, et après le coucher du soleil, nous sommes arrivés à Klausenburgh. C'est là que je me suis arrêté pour la nuit à l'*Hotel Royale*. Pour le dîner, ou plutôt pour le souper, j'ai eu un poulet préparé d'une manière avec du piment rouge, qui était très bon mais assoiffant. (_Mém., trouver la recette pour Mina._) J'ai demandé au serveur, et il a dit qu'on l'appelait « *paprika hendl* », et que, puisqu'il s'agissait d'un plat national, je devrais pouvoir le trouver partout à travers les Carpates. J'ai trouvé ma connaissance de l'allemand très utile ici ; en vérité, je ne sais pas comment je pourrais m'en passer.\n\nAyant eu du temps à ma disposition lorsque j'étais à Londres, j'avais visité le British Museum et fait des recherches parmi les livres et les cartes dans la bibliothèque concernant la Transylvanie ; il m'est apparu qu'une certaine connaissance de ce pays ne pouvait guère manquer d'importance pour traiter avec un noble de cette contrée. Je constate que le district dont il parle se situe à l'extrême est du pays, juste aux frontières de trois États : la Transylvanie, la Moldavie et la Bucovine, au milieu des montagnes des Carpates ; une des portions les plus sauvages et les moins connues d'Europe. Il ne m'a pas été possible de trouver sur aucune carte ou œuvre donnant l'emplacement exact du Château Dracula, car il n'existe pas encore de cartes de ce pays à comparer avec nos propres cartes *Ordnance Survey* ; mais j'ai découvert que Bistritz, la ville de poste nommée par le Comte Dracula, est un lieu assez connu. Je vais noter ici quelques-unes de mes réflexions, car elles pourront rafraîchir ma mémoire lorsque parlerai de mes voyages à Mina.\n\nDans la population de la Transylvanie, il y a quatre nationalités distinctes : les Saxons au Sud, et mélangés à eux les Wallachs, qui sont les descendants des Daciens ; les Hongrois (Magyars) à l'Ouest, et les Székelys à l'Est et au Nord. Je vais parmi ces derniers, qui prétendent descendre d'Attila et des Huns. Cela peut être vrai, car lorsque les Hongrois ont conquis le pays au XIe siècle, ils y ont trouvé les Huns installés. J'ai lu que toute superstition connue au monde est rassemblée dans le fer à cheval des Carpates, comme si c'était le centre d'un certain tourbillon imaginatif ; si tel est le cas, mon séjour pourrait être très intéressant. (_Mém., je dois tout lui demander au Comte._)\n\nJe n'ai pas bien dormi, même si mon lit était assez confortable, car j'ai eu toutes sortes de rêves étranges. Il y avait un chien qui hurlait toute la nuit sous ma fenêtre, ce qui a pu y contribuer ; ou peut-être était-ce le paprika, car j'ai dû boire toute l'eau de ma carafe, et j'étais toujours assoiffé. Vers le matin, je me suis endormi et ai été réveillé par les coups constants frappés à ma porte, ce qui me fait supposer que j'étais en train de dormir profondément. Pour le petit-déjeuner, j'ai mangé plus de paprika, et une sorte de bouillie de farine de maïs qu'ils appelaient « *mamaliga* », ainsi que des aubergines farcies de viande hachée, un plat très excellent qu'ils nomment « *impletata* ». (_Mém., trouver la recette pour celle-ci aussi._) J'ai dû me dépêcher du petit-déjeuner, car le train a commencé un peu avant huit heures, ou plutôt il aurait dû le faire, car après être couru à la gare à 7h30, j'ai dû rester dans la voiture plus d'une heure avant que nous ne commencions à bouger. Il me semble que plus on va à l'Est, plus les trains sont peu ponctuels. Que doivent-ils être en Chine ?\n\nToute la journée, il semblait que nous traînions à travers un pays rempli de beauté de toutes sortes. Parfois, nous voyions de petits bourgs ou des châteaux au sommet de collines abruptes comme on en voit dans les vieux missels ; parfois, nous passions près de rivières et de ruisseaux qui semblaient, vu la large margelle pierreuse de chaque côté, sujets à de grandes crues. Il faut beaucoup d'eau, et courant fort, pour nettoyer le bord extérieur d'une rivière. À chaque gare se trouvaient des groupes de gens, parfois des foules, vêtus de toutes sortes de tenues. Certains ressemblaient aux paysans d'à la maison ou à ceux que j'ai vus en provenance de France et d'Allemagne, avec de courtes vestes et des chapeaux ronds et des pantalons faits maison ; mais d'autres étaient très pittoresques. Les femmes étaient jolies, sauf quand on s'en rapprochait, mais elles étaient très maladroites à la taille. Elles avaient toutes des manches blanches amples d'une manière ou d'une autre, et la plupart d'entre elles portaient de grandes ceintures avec beaucoup de bandes de quelque chose qui volait autour d'elles comme les robes dans un ballet, mais bien sûr, il y avait des jupons en dessous. Les figures les plus étranges que nous avons vues étaient les Slovaks, qui étaient plus barbares que le reste, avec leurs grands chapeaux de cow-boy, de grands pantalons sales blancs, des chemises en lin blanc et d'énormes lourdes ceintures de cuir, près d'un pied de",
-        "downloadFile": "/downloads/dracula-fr.txt"
       }
-    }
+    },
+    "isFullTextComplete": false,
+    "publicDomain": true,
+    "language": "en"
   },
   {
     "id": "the-metamorphosis",
@@ -346,7 +339,9 @@
         "fullText": "# I\n\nUn matin, alors que Gregor Samsa se réveillait d'un rêve tourmenté, il se trouva transformé dans son lit en un horrible *vermine*. Il gisait sur le dos, une carapace quasi armurale, et s'il relevait légèrement la tête, il pouvait apercevoir son ventre brun, légèrement bombé et divisé par des arcs en sections rigides.\n\nLes draps peinaient à le recouvrir et semblaient prêts à glisser à tout instant. Ses nombreuses pattes, pitoyablement fines comparées à la taille du reste de lui, s'agitaient impuissantes tandis qu'il observait.\n\n« Qu'est-il arrivé ? » pensa-t-il. Ce n'était pas un rêve. Sa chambre, une véritable pièce humaine bien que légèrement trop petite, reposait paisiblement entre ses quatre murs familiers. Une collection d'échantillons de textiles était étalée sur la table – Samsa était vendeur ambulant – et au-dessus, pendait une photographie qu'il venait de découper dans un magazine illustré et qu'il avait placée dans un joli cadre doré. Elle représentait une dame vêtue d'un chapeau de fourrure et d'une écharpe de fourrure qui était assise droite, levant une lourde manchette de fourrure qui couvrait tout son avant-bras vers le spectateur.\n\nGregor se tourna ensuite pour regarder par la fenêtre la météo morose. Des gouttes de pluie frappaient la vitre, ce qui lui rendait profondément mélancolique.\n\n« Et si je dormais encore un peu plus longtemps et oubliais toutes ces sottises », pensa-t-il, mais c'était une chose qu'il ne pouvait accomplir car il était habitué à dormir sur le côté droit, et dans son état présent, il ne parvenait pas à prendre cette position. Aussi fort qu'il se lançait sur sa droite, il roulait toujours vers l'endroit où il était. Il devait avoir essayé cent fois, fermant les yeux pour ne pas devoir regarder ces pattes en lutte, et n'arrêtait que lorsqu'il commençait à sentir une douleur légère et sourde là, qu'il n'avait jamais éprouvée auparavant.\n\n« Oh, mon Dieu », pensa-t-il, « quelle carrière éreintante j'ai choisie ! Voyager jour après jour. Faire des affaires de cette manière demande beaucoup plus d'efforts que de faire son propre commerce à la maison, et en plus il y a la malédiction du voyage : les soucis liés aux correspondances de train, une nourriture mauvaise et irrégulière, le contact constant avec différentes personnes au point de ne jamais pouvoir connaître personne ou devenir ami avec eux. Tout cela peut aller en enfer ! » Il sentit une légère démangeaison sur son ventre ; il se poussa lentement sur le dos vers la tête de lit pour mieux lever sa tête ; localisa l'irritation et vit qu'elle était couverte de nombreuses petites taches blanches dont il ne savait pas quoi penser ; et lorsqu'il tenta de tâter l'endroit avec une de ses pattes, il la retira rapidement car dès qu'il la toucha, il fut saisi d'un frisson froid.\n\nIl glissa à nouveau dans sa position antérieure. « Se lever si tôt tout le temps », pensa-t-il, « ça te rend stupide. Il faut que tu dormes suffisamment. D'autres vendeurs ambulants vivent dans le luxe. Par exemple, chaque fois que je retourne à la pension en matinée pour recopier le contrat, ces messieurs sont toujours assis là en train de prendre leur petit-déjeuner. »\n\n« Je devrais juste essayer ça avec mon patron ; on me ferait virer sur-le-champ. Mais qui sait, peut-être serait-ce la meilleure chose pour moi. Si je n'avais pas mes parents à qui penser, j'aurais démissionné depuis longtemps, je serais allé voir le patron et lui aurais dit exactement ce que je pense, tout ce que je voudrais lui dire, pour qu'il sache ce que je ressens. Il tomberait de sa chaise ! Et c'est une affaire amusante d'être assis là sur sa chaise, parlant en surplomb à ses subordonnés depuis cet endroit, surtout quand il faut se rapprocher parce que le patron est malentendant. Eh bien, il y a encore un espoir ; une fois que j'aurai mis de côté l'argent pour rembourser la dette de mes parents envers lui – d'autres cinq ou six ans je suppose – c'est définitivement ce que je ferai. C'est à ce moment-là que je ferai le grand changement. Pour commencer, cependant, il faut que je me lève, mon train part à cinq heures. »\n\nEt il regarda l'horloge de réveil, qui tic-tacait sur la commode.\n\n« Dieu au ciel ! » pensa-t-il. Il était six heures et demie, et les aiguilles bougeaient tranquillement vers l'avant ; c'était même plus tard que six heures et demie, plutôt près des sept heures. L'horloge n'avait pas sonné ? Il pouvait voir depuis le lit qu'elle avait été réglée pour quatre heures comme il se devait ; elle devait certainement avoir sonné. Oui, mais était-il possible de dormir tranquillement à travers ce bruit qui fait vibrer les meubles ? Vrai, il ne dormait pas paisiblement, mais probablement encore plus profondément à cause de cela. Qu'allait-il faire maintenant ? Le prochain train partait à sept heures ; s'il le rattrapait, il devrait se dépêcher comme un fou et la collection d'échantillons n'était toujours pas faite, et il ne se sentait pas du tout particulièrement frais et dynamique. Et même s'il prenait le train, il n'éviterait pas la colère de son patron, car l'assistant de bureau aurait vu le train des cinq heures partir, il aurait déposé son rapport sur le fait que Gregor n'était pas là depuis longtemps. L'assistant de bureau était l'homme du patron : sans colonne vertébrale et sans compréhension. Et si il déclarait tomber malade ? Mais ce serait extrêmement forcé et suspect car en cinq années de service, Gregor ne s'était jamais encore rendu malade une seule fois. Son patron viendrait certainement avec le médecin de la compagnie d'assurance maladie, accuser ses parents d'avoir un fils paresseux, et accepter la recommandation du docteur de ne faire aucune réclamation parce que le docteur croyait que personne n'était vraiment malade, mais beaucoup étaient fainéants. Et en plus, aurait-il eu totalement tort dans ce cas ? Gregor se sentait effectivement, à part une somnolence excessive après avoir dormi si longtemps, complètement bien et même avait faim bien plus qu'à l'accoutumée.\n\nIl était encore en train de réfléchir précipit",
         "downloadFile": "/downloads/the-metamorphosis-fr.txt"
       }
-    }
+    },
+    "publicDomain": true,
+    "language": "en"
   },
   {
     "id": "alice-s-adventures-in-wonderland",
@@ -371,8 +366,8 @@
         "coverType": "Brochura Clássica",
         "priceBR": 29.9,
         "pricePT": 8.99,
-        "linkBR": "https://www.amazon.com.br/s?k=Alice%20no%20Pa%C3%ADs%20das%20Maravilhas%20Lewis%20Carroll&tag=gargbooks-20",
-        "linkPT": "https://www.amazon.es/s?k=Alice%20no%20Pa%C3%ADs%20das%20Maravilhas%20Lewis%20Carroll&tag=gargbookspt-21"
+        "linkBR": "https://www.amazon.com.br/s?k=Alice%20no%20Pa%C3%ADs%20das%20Maravilhas%20Lewis%20Carroll&tag=prycco-20",
+        "linkPT": "https://www.amazon.es/s?k=Alice%20no%20Pa%C3%ADs%20das%20Maravilhas%20Lewis%20Carroll&tag=prycco-21"
       }
     ],
     "reviews": [
@@ -416,7 +411,9 @@
         "fullText": "# CHAPITRES\n\n**CHAPITRE I.** *Le Trou de Lapin* (ou *La Grotte du Lapin*)\n**CHAPITRE II.** *L'Étang des Larmes*\n**CHAPITRE III.** Une Course de Cadence et une Longue Histoire\n**CHAPITRE IV.** Le Lapin Envoie un Petit Bill\n**CHAPITRE V.** Conseil d'un Héron (ou d'une Chenille)\n**CHAPITRE VI.** Porc et Poivre\n**CHAPITRE VII.** Une Fête Théière Folle\n**CHAPITRE VIII.** Le Terrain de Croquet de la Reine\n**CHAPITRE IX.** L'Histoire du Tortue-Mer\n**CHAPITRE X.** La Quadrille du Homard\n**CHAPITRE XI.** Qui a Volé les Tartes ?\n**CHAPITRE XII.** Les Preuves d'Alice\n\n***\n\n## CHAPITRE I. Le Trou de Lapin\n\nAlice commençait à s'ennuyer terriblement de rester assise près de sa sœur sur la berge, et n'avoir rien à faire : elle avait jeté un coup d'œil par-ci par-là au livre que lisait sa sœur, mais il ne contenait ni images ni conversations. « Et à quoi sert un livre », pensa Alice, « sans images ou sans dialogues ? »\n\nAlors, elle réfléchissait dans son propre esprit (aussi bien qu'elle le pouvait, car la chaleur lui donnait une sensation de torpeur et d'inanité), si le plaisir de faire une guirlande de marguerites valait la peine de se lever pour les cueillir, quand soudain un Lapin Blanc aux yeux roses passa près d'elle.\n\nIl n'y avait rien de *si* remarquable dans cela ; Alice ne pensa pas non plus qu'il était *tellement* déplacé d'entendre le Lapin se dire à lui-même : « Oh, mon Dieu ! Oh, mon Dieu ! Je serai en retard ! » (quand elle y réfléchit après, il lui vint à l'esprit que cela aurait dû la surprendre, mais au moment où tout semblait tout à fait naturel) ; mais quand le Lapin sortit effectivement une montre de sa poche de gilet, regarda-la, puis s'empressa en avant, Alice se redressa brusquement, car il lui traversa l'esprit qu'elle n'avait jamais vu un lapin possédant soit une poche de gilet, soit une montre à en tirer. Embrasée par la curiosité, elle courut sur le champ après lui, et fut heureusement juste à temps pour le voir plonger dans un grand terrier sous les haies.\n\nUn instant plus tard, Alice le suivit sans hésiter, ne s'arrêtant jamais pour se demander comment au monde elle allait ressortir.\n\nLe trou de lapin continuait droit comme un tunnel un certain temps, puis plongea brusquement vers le bas, si soudainement qu'Alice n'eut pas un instant pour penser à se retenir avant de se retrouver en chute dans un puits très profond.\n\nSoit le puits était extrêmement profond, soit elle tombait très lentement, car elle avait amplement le temps, tandis qu'elle descendait, de regarder autour d'elle et de s'interroger sur ce qui allait se passer ensuite. D'abord, elle tenta de regarder vers le bas pour discerner ce qui l'attendait, mais c'était trop sombre pour voir quoi que ce soit ; puis elle regarda les parois du puits et remarqua qu'elles étaient remplies d'armoires et d'étagères à livres ; par-ci par-là, elle apercevait des cartes et des tableaux accrochés à des chevilles. Elle décrocha un bocal d'une des étagères en passant ; il était étiqueté « MARMALADE D'ORANGE », mais à sa grande déception, il était vide : elle n'aimait pas faire tomber le bocal de peur de tuer quelqu'un en dessous, alors parvint à le placer dans une armoire tandis qu'elle passait devant.\n\n« Eh bien ! » pensa Alice, « après une chute pareille, je ne penserai rien au fait de tomber par des escaliers ! Comme ils vont me trouver courageuse chez moi ! Pourquoi, je n'en dirais pas un mot, même si je tombais du toit de la maison ! » (Ce qui était fort probable.)\n\nBas, bas, bas. La chute ne cesserait-elle *jamais* ? « Je me demande à combien de miles j'ai chuté à ce stade ? » dit-elle à voix haute. « Il faut que je sois près du centre de la Terre. Voyons voir : ça ferait quatre mille miles, je crois — » (car, voyez-vous, Alice avait appris plusieurs choses de ce genre dans ses leçons en salle de classe, et bien que ce ne fût pas une *très* bonne occasion d'étaler ses connaissances, car personne n'était là pour l'écouter, c'était quand même une bonne pratique de les énoncer) « — oui, c'est à peu près la bonne distance — mais je me demande quelle Latitude ou Longitude j'ai ? » (Alice n'avait aucune idée de ce qu'était la Latitude, ni la Longitude, mais pensait que c'étaient de beaux mots à prononcer.)\n\nBientôt, elle reprit. « Je me demande si je ne vais pas tomber *à travers* la Terre ! Comme ce sera drôle de sortir parmi les gens qui marchent avec la tête en bas ! Les Antipathies, je crois — » (elle était plutôt heureuse qu'il n'y ait personne pour écouter cette fois, car cela ne sonnait pas du tout comme le mot juste) « — mais il faudra que je leur demande comment s'appelle le pays, vous savez. S'il vous plaît, Madame, est-ce la Nouvelle-Zélande ou l'Australie ? » (et elle essaya une révérence en parlant — imaginez *révérencer* en tombant dans les airs ! Croyez-vous que vous pourriez y arriver ?) « Et quelle petite gamine ignorante ils vont penser de moi pour poser cette question ! Non, cela ne marchera pas : peut-être verrai-je ça écrit quelque part. »\n\nBas, bas, bas. Il n'y avait plus rien à faire, alors Alice recommença à parler bientôt. « Dinah me manquera beaucoup ce soir, je pense ! » (Dinah était le chat.) « J'espère qu'ils se souviendront de sa coupelle de lait à l'heure du thé. Ma chère Dinah ! J'aimerais que tu sois là avec moi ! Il n'y a pas de souris dans les airs, je crains, mais tu pourrais attraper un chauve-souris, et ça ressemble beaucoup à une",
         "downloadFile": "/downloads/alice-s-adventures-in-wonderland-fr.txt"
       }
-    }
+    },
+    "publicDomain": true,
+    "language": "en"
   },
   {
     "id": "frankenstein",
@@ -487,7 +484,9 @@
         "fullText": "J'avais rassemblé mes forces. Cette cité demeurait fidèle à moi, après que la nation entière eût délaissé ma cause pour se joindre au standard du Parlement et de la liberté. Le souvenir de ce malheureux roi et de ses compagnons, l'aimable Falkland, le insolent Goring, sa reine et son fils, conférait un intérêt singulier à chaque partie de cette ville qu'on aurait pu croire habitée par eux. L'esprit des jours anciens avait trouvé refuge ici, et nous nous réjouissions de retracer ses pas. Si ces sentiments n'avaient pas trouvé une gratification imaginaire, l'apparence même de la cité eût été suffisamment belle pour susciter notre admiration.\n\nLes collèges sont antiques et pittoresques ; les rues sont presque magnifiques ; et la charmante Isis, qui coule à ses côtés au travers de prairies d'exquise verdure, se déploie en une étendue placide d'eaux, reflétant son assemblage majestueux de tours, de flèches et de dômes, étreint par des arbres séculaires.\n\nJ'appréciais cette scène, mais mon jouissance était aigrie à la fois par le souvenir du passé et par l'anticipation du futur. J'étais fait pour un bonheur paisible. Durant mes jours de jeunesse, le mécontentement ne vint jamais visiter mon esprit, et si je m'abandonnais au *ennui*, la vue de ce qui est beau dans la nature ou l'étude de ce qui est excellent et sublime dans les productions de l'homme pouvait toujours intéresser mon cœur et communiquer une élasticité à mes esprits. Mais moi, je suis un arbre maudit ; le boulon a pénétré mon âme ; et j'eus alors le sentiment que je survivrais pour exhiber ce que j'allais bientôt cesser d'être — un spectacle misérable d'humanité déchue, pitoyable aux yeux des autres et intolérable à mes propres.\n\nNous passâmes une période considérable à Oxford, errant parmi ses environs et essayant d'identifier chaque lieu qui pourrait se rapporter à l'époque la plus animée de l'histoire anglaise. Nos petites voyages de découverte étaient souvent prolongés par les objets successifs qui se présentaient. Nous visitâmes la tombe du illustre Hampden et le champ où ce patriote était tombé. Un instant, mon âme fut élevée de ses craintes dégradantes et misérables pour contempler les idées divines de liberté et de sacrifice de lesquelles ces scènes étaient les monuments et les souvenances. Pendant un instant, osai-je me débarrasser de mes chaînes et regarder autour de moi avec un esprit libre et hautain, mais le fer avait rongé ma chair, et je retombai aussitôt, tremblant et désespéré, dans mon misérable moi.\n\nNous quittâmes Oxford avec regret et nous nous rendîmes à Matlock, qui fut notre prochain lieu de repos. La campagne aux abords de ce village ressemblait, dans une plus grande mesure, au paysage suisse ; mais tout est à une échelle inférieure, et les collines vertes manquent de la couronne des Alpes blanches lointaines qui accompagnent toujours les montagnes de pin de ma patrie. Nous visitâmes la merveilleuse grotte et les petits cabinets d'histoire naturelle, où les curiosités sont disposées de la même manière que dans les collections de Servoz et Chamounix. Ce dernier nom me fit trembler lorsque Henry le prononça, et nous hâta de quitter Matlock, avec lequel cette terrible scène était ainsi associée.\n\nDepuis Derby, continuant notre voyage vers le nord, nous passâmes deux mois en Cumberland et Westmorland. Je pouvais désormais presque m'imaginer parmi les montagnes suisses. Les petites plaques de neige qui persistaient encore sur les flancs septentrionaux des montagnes, les lacs, et le fracas des ruisseaux rocheux étaient tous des vues familières et chères à mon cœur. C'est ici aussi que nous fîmes quelques connaissances, qui faillirent presque me tromper vers le bonheur. Le délice de Clerval était proportionnellement plus grand que le mien ; son esprit s'épanouissait en compagnie d'hommes talentueux, et il découvrit dans sa propre nature des capacités et des ressources supérieures à ce qu'il eût pu imaginer posséder lorsqu'il associait avec ses inférieurs. « Je pourrais passer ma vie ici », me dit-il ; « et parmi ces montagnes, je ne regretterais guère la Suisse et le Rhin. »\n\nMais il apprit que la vie d'un voyageur est une vie qui inclut beaucoup de douleur au milieu des plaisirs. Ses sentiments sont perpétuellement en tension ; et quand il commence à sombrer dans le repos, il se trouve obligé de quitter ce sur quoi il repose dans le plaisir pour quelque chose de nouveau, qui engage à son tour son attention, et qu'il abandonne également pour d'autres nouveautés.\n\nNous avions à peine visité les divers lacs du Cumberland et de Westmorland, et commencé à éprouver une affection pour certains habitants, lorsque la période de notre séjour avec notre ami écossais approcha, et nous le laissâmes continuer son voyage. Pour ma part, je n'étais pas désolé. J'avais négligé ma promesse depuis quelque temps, et craignais les effets de la déception du démon. Il pourrait rester en Suisse et exercer sa vengeance sur mes proches. Cette idée me poursuivait et me tourmentait à chaque moment où j'aurais pu arracher un repos et une paix. J'attendais mes lettres avec une impatience fiévreuse ; si elles étaient retardées, j'étais misérable et accablé par mille peurs ; et lorsqu'elles arrivaient et que je voyais l'inscription d'Elizabeth ou de mon père, j'osais à peine lire et connaître mon sort. Parfois, je pensais que le fiacre me suivait et pouvait précipiter ma négligence en tuant mon compagnon. Lorsque ces pensées m'assaillaient, je ne quittais pas Henry un instant, mais le suivais comme son ombre, pour le protéger de la rage supposée de son destructeur. J'avais l'impression d'avoir commis un grand crime, dont la conscience me hantait. J'étais innocent, mais j'avais certes attiré une horrible malédiction sur ma tête, aussi mortelle que celle du crime.\n\nJe visitai Édimbourg avec des yeux et un esprit languissants ; et pourtant cette cité aurait pu intéresser le plus malheureux des êtres. Clerval ne l'aimait pas autant qu'Oxford, car l'antiquité de la première ville lui plaisait davantage. Mais la beauté et la régularité de la nouvelle ville d'Édimbourg, son château romantique et ses environs — les plus charmants du monde, *Arthur’s Seat*, la Fontaine de Saint-Bernard (*St.",
         "downloadFile": "/downloads/frankenstein-fr.txt"
       }
-    }
+    },
+    "publicDomain": true,
+    "language": "en"
   },
   {
     "id": "pride-and-prejudice",
@@ -546,8 +545,8 @@
         "coverType": "Brochura Clássica",
         "priceBR": 29.9,
         "pricePT": 8.99,
-        "linkBR": "https://www.amazon.com.br/s?k=Orgulho%20e%20Preconceito%20Jane%20Austen&tag=gargbooks-20",
-        "linkPT": "https://www.amazon.es/s?k=Orgulho%20e%20Preconceito%20Jane%20Austen&tag=gargbookspt-21"
+        "linkBR": "https://www.amazon.com.br/s?k=Orgulho%20e%20Preconceito%20Jane%20Austen&tag=prycco-20",
+        "linkPT": "https://www.amazon.es/s?k=Orgulho%20e%20Preconceito%20Jane%20Austen&tag=prycco-21"
       }
     ],
     "reviews": [
@@ -558,7 +557,9 @@
         "date": "2026-07-08",
         "text": "Edição excelente traduzida localmente por IA. A leitura flui de forma incrível no e-reader da página!"
       }
-    ]
+    ],
+    "publicDomain": true,
+    "language": "en"
   },
   {
     "id": "moby-dick",
@@ -616,8 +617,8 @@
         "coverType": "Brochura Clássica",
         "priceBR": 29.9,
         "pricePT": 8.99,
-        "linkBR": "https://www.amazon.com.br/s?k=Moby%20Dick%20Herman%20Melville&tag=gargbooks-20",
-        "linkPT": "https://www.amazon.es/s?k=Moby%20Dick%20Herman%20Melville&tag=gargbookspt-21"
+        "linkBR": "https://www.amazon.com.br/s?k=Moby%20Dick%20Herman%20Melville&tag=prycco-20",
+        "linkPT": "https://www.amazon.es/s?k=Moby%20Dick%20Herman%20Melville&tag=prycco-21"
       }
     ],
     "reviews": [
@@ -628,7 +629,9 @@
         "date": "2026-07-08",
         "text": "Edição excelente traduzida localmente por IA. A leitura flui de forma incrível no e-reader da página!"
       }
-    ]
+    ],
+    "publicDomain": true,
+    "language": "en"
   },
   {
     "id": "a-tale-of-two-cities",
@@ -686,8 +689,8 @@
         "coverType": "Brochura Clássica",
         "priceBR": 29.9,
         "pricePT": 8.99,
-        "linkBR": "https://www.amazon.com.br/s?k=Um%20Conto%20de%20Duas%20Cidades%20Charles%20Dickens&tag=gargbooks-20",
-        "linkPT": "https://www.amazon.es/s?k=Um%20Conto%20de%20Duas%20Cidades%20Charles%20Dickens&tag=gargbookspt-21"
+        "linkBR": "https://www.amazon.com.br/s?k=Um%20Conto%20de%20Duas%20Cidades%20Charles%20Dickens&tag=prycco-20",
+        "linkPT": "https://www.amazon.es/s?k=Um%20Conto%20de%20Duas%20Cidades%20Charles%20Dickens&tag=prycco-21"
       }
     ],
     "reviews": [
@@ -698,7 +701,9 @@
         "date": "2026-07-08",
         "text": "Edição excelente traduzida localmente por IA. A leitura flui de forma incrível no e-reader da página!"
       }
-    ]
+    ],
+    "publicDomain": true,
+    "language": "en"
   },
   {
     "id": "the-picture-of-dorian-gray",
@@ -756,8 +761,8 @@
         "coverType": "Brochura Clássica",
         "priceBR": 29.9,
         "pricePT": 8.99,
-        "linkBR": "https://www.amazon.com.br/s?k=O%20Retrato%20de%20Dorian%20Gray%20Oscar%20Wilde&tag=gargbooks-20",
-        "linkPT": "https://www.amazon.es/s?k=O%20Retrato%20de%20Dorian%20Gray%20Oscar%20Wilde&tag=gargbookspt-21"
+        "linkBR": "https://www.amazon.com.br/s?k=O%20Retrato%20de%20Dorian%20Gray%20Oscar%20Wilde&tag=prycco-20",
+        "linkPT": "https://www.amazon.es/s?k=O%20Retrato%20de%20Dorian%20Gray%20Oscar%20Wilde&tag=prycco-21"
       }
     ],
     "reviews": [
@@ -768,7 +773,9 @@
         "date": "2026-07-08",
         "text": "Edição excelente traduzida localmente por IA. A leitura flui de forma incrível no e-reader da página!"
       }
-    ]
+    ],
+    "publicDomain": true,
+    "language": "en"
   },
   {
     "id": "the-war-of-the-worlds",
@@ -827,8 +834,8 @@
         "coverType": "Brochura Clássica",
         "priceBR": 29.9,
         "pricePT": 8.99,
-        "linkBR": "https://www.amazon.com.br/s?k=A%20Guerra%20dos%20Mundos%20H.G.%20Wells&tag=gargbooks-20",
-        "linkPT": "https://www.amazon.es/s?k=A%20Guerra%20dos%20Mundos%20H.G.%20Wells&tag=gargbookspt-21"
+        "linkBR": "https://www.amazon.com.br/s?k=A%20Guerra%20dos%20Mundos%20H.G.%20Wells&tag=prycco-20",
+        "linkPT": "https://www.amazon.es/s?k=A%20Guerra%20dos%20Mundos%20H.G.%20Wells&tag=prycco-21"
       }
     ],
     "reviews": [
@@ -839,7 +846,9 @@
         "date": "2026-07-08",
         "text": "Edição excelente traduzida localmente por IA. A leitura flui de forma incrível no e-reader da página!"
       }
-    ]
+    ],
+    "publicDomain": true,
+    "language": "en"
   },
   {
     "id": "dr-jekyll-and-mr-hyde",
@@ -897,8 +906,8 @@
         "coverType": "Brochura Clássica",
         "priceBR": 29.9,
         "pricePT": 8.99,
-        "linkBR": "https://www.amazon.com.br/s?k=O%20M%C3%A9dico%20e%20o%20Monstro%20R.L.%20Stevenson&tag=gargbooks-20",
-        "linkPT": "https://www.amazon.es/s?k=O%20M%C3%A9dico%20e%20o%20Monstro%20R.L.%20Stevenson&tag=gargbookspt-21"
+        "linkBR": "https://www.amazon.com.br/s?k=O%20M%C3%A9dico%20e%20o%20Monstro%20R.L.%20Stevenson&tag=prycco-20",
+        "linkPT": "https://www.amazon.es/s?k=O%20M%C3%A9dico%20e%20o%20Monstro%20R.L.%20Stevenson&tag=prycco-21"
       }
     ],
     "reviews": [
@@ -909,7 +918,9 @@
         "date": "2026-07-08",
         "text": "Edição excelente traduzida localmente por IA. A leitura flui de forma incrível no e-reader da página!"
       }
-    ]
+    ],
+    "publicDomain": true,
+    "language": "en"
   },
   {
     "id": "heart-of-darkness",
@@ -967,8 +978,8 @@
         "coverType": "Brochura Clássica",
         "priceBR": 29.9,
         "pricePT": 8.99,
-        "linkBR": "https://www.amazon.com.br/s?k=Cora%C3%A7%C3%A3o%20das%20Trevas%20Joseph%20Conrad&tag=gargbooks-20",
-        "linkPT": "https://www.amazon.es/s?k=Cora%C3%A7%C3%A3o%20das%20Trevas%20Joseph%20Conrad&tag=gargbookspt-21"
+        "linkBR": "https://www.amazon.com.br/s?k=Cora%C3%A7%C3%A3o%20das%20Trevas%20Joseph%20Conrad&tag=prycco-20",
+        "linkPT": "https://www.amazon.es/s?k=Cora%C3%A7%C3%A3o%20das%20Trevas%20Joseph%20Conrad&tag=prycco-21"
       }
     ],
     "reviews": [
@@ -979,7 +990,9 @@
         "date": "2026-07-08",
         "text": "Edição excelente traduzida localmente por IA. A leitura flui de forma incrível no e-reader da página!"
       }
-    ]
+    ],
+    "publicDomain": true,
+    "language": "en"
   },
   {
     "id": "the-time-machine",
@@ -1038,8 +1051,8 @@
         "coverType": "Brochura Clássica",
         "priceBR": 29.9,
         "pricePT": 8.99,
-        "linkBR": "https://www.amazon.com.br/s?k=A%20M%C3%A1quina%20do%20Tempo%20H.G.%20Wells&tag=gargbooks-20",
-        "linkPT": "https://www.amazon.es/s?k=A%20M%C3%A1quina%20do%20Tempo%20H.G.%20Wells&tag=gargbookspt-21"
+        "linkBR": "https://www.amazon.com.br/s?k=A%20M%C3%A1quina%20do%20Tempo%20H.G.%20Wells&tag=prycco-20",
+        "linkPT": "https://www.amazon.es/s?k=A%20M%C3%A1quina%20do%20Tempo%20H.G.%20Wells&tag=prycco-21"
       }
     ],
     "reviews": [
@@ -1050,7 +1063,9 @@
         "date": "2026-07-08",
         "text": "Edição excelente traduzida localmente por IA. A leitura flui de forma incrível no e-reader da página!"
       }
-    ]
+    ],
+    "publicDomain": true,
+    "language": "en"
   },
   {
     "id": "romeo-and-juliet",
@@ -1109,8 +1124,8 @@
         "coverType": "Brochura Clássica",
         "priceBR": 29.9,
         "pricePT": 8.99,
-        "linkBR": "https://www.amazon.com.br/s?k=Romeu%20e%20Julieta%20William%20Shakespeare&tag=gargbooks-20",
-        "linkPT": "https://www.amazon.es/s?k=Romeu%20e%20Julieta%20William%20Shakespeare&tag=gargbookspt-21"
+        "linkBR": "https://www.amazon.com.br/s?k=Romeu%20e%20Julieta%20William%20Shakespeare&tag=prycco-20",
+        "linkPT": "https://www.amazon.es/s?k=Romeu%20e%20Julieta%20William%20Shakespeare&tag=prycco-21"
       }
     ],
     "reviews": [
@@ -1121,7 +1136,9 @@
         "date": "2026-07-08",
         "text": "Edição excelente traduzida localmente por IA. A leitura flui de forma incrível no e-reader da página!"
       }
-    ]
+    ],
+    "publicDomain": true,
+    "language": "en"
   },
   {
     "id": "crime-and-punishment",
@@ -1179,8 +1196,8 @@
         "coverType": "Brochura Clássica",
         "priceBR": 29.9,
         "pricePT": 8.99,
-        "linkBR": "https://www.amazon.com.br/s?k=Crime%20e%20Castigo%20Fyodor%20Dostoevsky&tag=gargbooks-20",
-        "linkPT": "https://www.amazon.es/s?k=Crime%20e%20Castigo%20Fyodor%20Dostoevsky&tag=gargbookspt-21"
+        "linkBR": "https://www.amazon.com.br/s?k=Crime%20e%20Castigo%20Fyodor%20Dostoevsky&tag=prycco-20",
+        "linkPT": "https://www.amazon.es/s?k=Crime%20e%20Castigo%20Fyodor%20Dostoevsky&tag=prycco-21"
       }
     ],
     "reviews": [
@@ -1191,7 +1208,9 @@
         "date": "2026-07-08",
         "text": "Edição excelente traduzida localmente por IA. A leitura flui de forma incrível no e-reader da página!"
       }
-    ]
+    ],
+    "publicDomain": true,
+    "language": "en"
   },
   {
     "id": "the-adventures-of-sherlock-holmes",
@@ -1249,8 +1268,8 @@
         "coverType": "Brochura Clássica",
         "priceBR": 29.9,
         "pricePT": 8.99,
-        "linkBR": "https://www.amazon.com.br/s?k=As%20Aventuras%20de%20Sherlock%20Holmes%20Arthur%20Conan%20Doyle&tag=gargbooks-20",
-        "linkPT": "https://www.amazon.es/s?k=As%20Aventuras%20de%20Sherlock%20Holmes%20Arthur%20Conan%20Doyle&tag=gargbookspt-21"
+        "linkBR": "https://www.amazon.com.br/s?k=As%20Aventuras%20de%20Sherlock%20Holmes%20Arthur%20Conan%20Doyle&tag=prycco-20",
+        "linkPT": "https://www.amazon.es/s?k=As%20Aventuras%20de%20Sherlock%20Holmes%20Arthur%20Conan%20Doyle&tag=prycco-21"
       }
     ],
     "reviews": [
@@ -1261,7 +1280,9 @@
         "date": "2026-07-08",
         "text": "Edição excelente traduzida localmente por IA. A leitura flui de forma incrível no e-reader da página!"
       }
-    ]
+    ],
+    "publicDomain": true,
+    "language": "en"
   },
   {
     "id": "treasure-island",
@@ -1319,8 +1340,8 @@
         "coverType": "Brochura Clássica",
         "priceBR": 29.9,
         "pricePT": 8.99,
-        "linkBR": "https://www.amazon.com.br/s?k=A%20Ilha%20do%20Tesouro%20R.L.%20Stevenson&tag=gargbooks-20",
-        "linkPT": "https://www.amazon.es/s?k=A%20Ilha%20do%20Tesouro%20R.L.%20Stevenson&tag=gargbookspt-21"
+        "linkBR": "https://www.amazon.com.br/s?k=A%20Ilha%20do%20Tesouro%20R.L.%20Stevenson&tag=prycco-20",
+        "linkPT": "https://www.amazon.es/s?k=A%20Ilha%20do%20Tesouro%20R.L.%20Stevenson&tag=prycco-21"
       }
     ],
     "reviews": [
@@ -1331,7 +1352,9 @@
         "date": "2026-07-08",
         "text": "Edição excelente traduzida localmente por IA. A leitura flui de forma incrível no e-reader da página!"
       }
-    ]
+    ],
+    "publicDomain": true,
+    "language": "en"
   },
   {
     "id": "the-jungle-book",
@@ -1389,8 +1412,8 @@
         "coverType": "Brochura Clássica",
         "priceBR": 29.9,
         "pricePT": 8.99,
-        "linkBR": "https://www.amazon.com.br/s?k=O%20Livro%20da%20Selva%20Rudyard%20Kipling&tag=gargbooks-20",
-        "linkPT": "https://www.amazon.es/s?k=O%20Livro%20da%20Selva%20Rudyard%20Kipling&tag=gargbookspt-21"
+        "linkBR": "https://www.amazon.com.br/s?k=O%20Livro%20da%20Selva%20Rudyard%20Kipling&tag=prycco-20",
+        "linkPT": "https://www.amazon.es/s?k=O%20Livro%20da%20Selva%20Rudyard%20Kipling&tag=prycco-21"
       }
     ],
     "reviews": [
@@ -1401,7 +1424,9 @@
         "date": "2026-07-08",
         "text": "Edição excelente traduzida localmente por IA. A leitura flui de forma incrível no e-reader da página!"
       }
-    ]
+    ],
+    "publicDomain": true,
+    "language": "en"
   },
   {
     "id": "the-count-of-monte-cristo",
@@ -1459,8 +1484,8 @@
         "coverType": "Brochura Clássica",
         "priceBR": 29.9,
         "pricePT": 8.99,
-        "linkBR": "https://www.amazon.com.br/s?k=O%20Conde%20de%20Monte%20Cristo%20Alexandre%20Dumas&tag=gargbooks-20",
-        "linkPT": "https://www.amazon.es/s?k=O%20Conde%20de%20Monte%20Cristo%20Alexandre%20Dumas&tag=gargbookspt-21"
+        "linkBR": "https://www.amazon.com.br/s?k=O%20Conde%20de%20Monte%20Cristo%20Alexandre%20Dumas&tag=prycco-20",
+        "linkPT": "https://www.amazon.es/s?k=O%20Conde%20de%20Monte%20Cristo%20Alexandre%20Dumas&tag=prycco-21"
       }
     ],
     "reviews": [
@@ -1471,7 +1496,9 @@
         "date": "2026-07-08",
         "text": "Edição excelente traduzida localmente por IA. A leitura flui de forma incrível no e-reader da página!"
       }
-    ]
+    ],
+    "publicDomain": true,
+    "language": "en"
   },
   {
     "id": "the-odyssey",
@@ -1529,8 +1556,8 @@
         "coverType": "Brochura Clássica",
         "priceBR": 29.9,
         "pricePT": 8.99,
-        "linkBR": "https://www.amazon.com.br/s?k=A%20Odisseia%20Homer&tag=gargbooks-20",
-        "linkPT": "https://www.amazon.es/s?k=A%20Odisseia%20Homer&tag=gargbookspt-21"
+        "linkBR": "https://www.amazon.com.br/s?k=A%20Odisseia%20Homer&tag=prycco-20",
+        "linkPT": "https://www.amazon.es/s?k=A%20Odisseia%20Homer&tag=prycco-21"
       }
     ],
     "reviews": [
@@ -1541,7 +1568,9 @@
         "date": "2026-07-08",
         "text": "Edição excelente traduzida localmente por IA. A leitura flui de forma incrível no e-reader da página!"
       }
-    ]
+    ],
+    "publicDomain": true,
+    "language": "en"
   },
   {
     "id": "don-quixote",
@@ -1599,8 +1628,8 @@
         "coverType": "Brochura Clássica",
         "priceBR": 29.9,
         "pricePT": 8.99,
-        "linkBR": "https://www.amazon.com.br/s?k=Dom%20Quixote%20Miguel%20de%20Cervantes&tag=gargbooks-20",
-        "linkPT": "https://www.amazon.es/s?k=Dom%20Quixote%20Miguel%20de%20Cervantes&tag=gargbookspt-21"
+        "linkBR": "https://www.amazon.com.br/s?k=Dom%20Quixote%20Miguel%20de%20Cervantes&tag=prycco-20",
+        "linkPT": "https://www.amazon.es/s?k=Dom%20Quixote%20Miguel%20de%20Cervantes&tag=prycco-21"
       }
     ],
     "reviews": [
@@ -1611,7 +1640,9 @@
         "date": "2026-07-08",
         "text": "Edição excelente traduzida localmente por IA. A leitura flui de forma incrível no e-reader da página!"
       }
-    ]
+    ],
+    "publicDomain": true,
+    "language": "en"
   },
   {
     "id": "twenty-thousand-leagues-under-the-seas",
@@ -1671,8 +1702,8 @@
         "coverType": "Brochura Clássica",
         "priceBR": 29.9,
         "pricePT": 8.99,
-        "linkBR": "https://www.amazon.com.br/s?k=Twenty%20Thousand%20Leagues%20Under%20the%20Seas%20Jules%20Verne&tag=gargbooks-20",
-        "linkPT": "https://www.amazon.es/s?k=Twenty%20Thousand%20Leagues%20Under%20the%20Seas%20Jules%20Verne&tag=gargbookspt-21"
+        "linkBR": "https://www.amazon.com.br/s?k=Twenty%20Thousand%20Leagues%20Under%20the%20Seas%20Jules%20Verne&tag=prycco-20",
+        "linkPT": "https://www.amazon.es/s?k=Twenty%20Thousand%20Leagues%20Under%20the%20Seas%20Jules%20Verne&tag=prycco-21"
       }
     ],
     "reviews": [
@@ -1683,6 +1714,8 @@
         "date": "2026-07-09",
         "text": "Edição excelente traduzida localmente por IA. A leitura flui de forma incrível no e-reader da página!"
       }
-    ]
+    ],
+    "publicDomain": true,
+    "language": "en"
   }
 ]

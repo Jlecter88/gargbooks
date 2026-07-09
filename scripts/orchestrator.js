@@ -57,7 +57,23 @@ const TITLE_MAP = {
   "The Count of Monte Cristo":  { "en": "The Count of Monte Cristo",  "pt-br": "O Conde de Monte Cristo",          "pt-pt": "O Conde de Monte Cristo",         "es": "El Conde de Montecristo",         "fr": "Le Comte de Monte-Cristo" },
   "The Odyssey":                { "en": "The Odyssey",                "pt-br": "A Odisseia",                       "pt-pt": "A Odisseia",                      "es": "La Odisea",                       "fr": "L'Odyssée" },
   "Don Quixote":                { "en": "Don Quixote",                "pt-br": "Dom Quixote",                      "pt-pt": "Dom Quixote",                     "es": "Don Quijote de la Mancha",        "fr": "Don Quichotte" },
-  "Neuromancer":                { "en": "Neuromancer",                "pt-br": "Neuromancer",                      "pt-pt": "Neuromancer",                     "es": "Neuromante",                      "fr": "Neuromancien" }
+  "Neuromancer":                { "en": "Neuromancer",                "pt-br": "Neuromancer",                      "pt-pt": "Neuromancer",                     "es": "Neuromante",                      "fr": "Neuromancien" },
+  // === DOMÍNIO PÚBLICO (obras brasileiras em português) ===
+  "Dom Casmurro":               { "en": "Dom Casmurro",              "pt-br": "Dom Casmurro",                     "pt-pt": "Dom Casmurro",                    "es": "Dom Casmurro",                   "fr": "Dom Casmurro" },
+  "Memórias Póstumas de Brás Cubas": { "en": "The Posthumous Memoirs of Brás Cubas", "pt-br": "Memórias Póstumas de Brás Cubas", "pt-pt": "Memórias Póstumas de Brás Cubas", "es": "Memorias Póstumas de Blas Cubas", "fr": "Mémoires posthumes de Bras Cubas" },
+  "Quincas Borba":              { "en": "Quincas Borba",             "pt-br": "Quincas Borba",                    "pt-pt": "Quincas Borba",                   "es": "Quincas Borba",                  "fr": "Quincas Borba" },
+  "O Alienista":                { "en": "The Alienist",              "pt-br": "O Alienista",                      "pt-pt": "O Alienista",                     "es": "El Alienista",                   "fr": "L'Alieniste" },
+  "Iracema":                    { "en": "Iracema",                   "pt-br": "Iracema",                          "pt-pt": "Iracema",                         "es": "Iracema",                        "fr": "Iracema" },
+  "O Guarani":                  { "en": "The Guarani",               "pt-br": "O Guarani",                        "pt-pt": "O Guarani",                       "es": "El Guaraní",                     "fr": "Le Guarani" },
+  "Senhora":                    { "en": "Senhora",                   "pt-br": "Senhora",                          "pt-pt": "Senhora",                         "es": "Señora",                         "fr": "Senhora" },
+  "O Cortiço":                  { "en": "The Slum",                  "pt-br": "O Cortiço",                        "pt-pt": "O Cortiço",                       "es": "El Cortijo",                     "fr": "Le Taudis" },
+  "O Navio Negreiro":           { "en": "The Slave Ship",            "pt-br": "O Navio Negreiro",                  "pt-pt": "O Navio Negreiro",                 "es": "El Buque Negrero",               "fr": "Le Navire Négrier" },
+  "Noite na Taverna":           { "en": "Night in the Tavern",       "pt-br": "Noite na Taverna",                  "pt-pt": "Noite na Taverna",                 "es": "Noche en la Taberna",             "fr": "Nuit à la Taverne" },
+  "A Moreninha":                { "en": "The Little Brunette",       "pt-br": "A Moreninha",                      "pt-pt": "A Moreninha",                     "es": "La Morenita",                    "fr": "La Brune" },
+  "O Sertanejo":                { "en": "The Backlander",            "pt-br": "O Sertanejo",                      "pt-pt": "O Sertanejo",                     "es": "El Sertanejo",                   "fr": "Le Sertanejo" },
+  "Lucíola":                    { "en": "Lucíola",                   "pt-br": "Lucíola",                          "pt-pt": "Lucíola",                         "es": "Lucíola",                        "fr": "Lucíola" },
+  "Diva":                       { "en": "Diva",                      "pt-br": "Diva",                             "pt-pt": "Diva",                            "es": "Diva",                           "fr": "Diva" },
+  "Til":                        { "en": "Til",                       "pt-br": "Til",                              "pt-pt": "Til",                             "es": "Til",                            "fr": "Til" }
 };
 
 // ============================================================================
@@ -162,6 +178,75 @@ const GUTENBERG_WORKS = [
   { id: 996,  title: "Don Quixote",                      author: "Miguel de Cervantes",   year: 1605, genres: ["Aventura", "Sátira"] }
 ];
 
+// ============================================================================
+// CATÁLOGO DE OBRAS DO DOMÍNIO PÚBLICO BRASILEIRO (obras em pt-br)
+// Os arquivos TXT são baixados de http://www.dominiopublico.gov.br/download/texto/<id>.txt
+// Com fallback para Gutendex (pt) se o DP estiver indisponível
+// ============================================================================
+const DOMINIO_PUBLICO_WORKS = [
+  // Machado de Assis (1839-1908)
+  { id: "bn000067", title: "Dom Casmurro",                    author: "Machado de Assis",      year: 1899, genres: ["Romance", "Clássicos Brasileiros", "Realismo"] },
+  { id: "bn000068", title: "Memórias Póstumas de Brás Cubas", author: "Machado de Assis",      year: 1881, genres: ["Romance", "Clássicos Brasileiros", "Realismo"] },
+  { id: "bn000069", title: "Quincas Borba",                   author: "Machado de Assis",      year: 1891, genres: ["Romance", "Clássicos Brasileiros", "Realismo"] },
+  { id: "bn000070", title: "O Alienista",                     author: "Machado de Assis",      year: 1882, genres: ["Conto", "Clássicos Brasileiros", "Realismo"] },
+  { id: "bn000082", title: "Helena",                          author: "Machado de Assis",      year: 1876, genres: ["Romance", "Clássicos Brasileiros", "Realismo"] },
+  { id: "bn000083", title: "Iaiá Garcia",                     author: "Machado de Assis",      year: 1878, genres: ["Romance", "Clássicos Brasileiros", "Realismo"] },
+  { id: "bn000084", title: "Esaú e Jacó",                     author: "Machado de Assis",      year: 1904, genres: ["Romance", "Clássicos Brasileiros", "Realismo"] },
+  { id: "bn000085", title: "Memorial de Aires",               author: "Machado de Assis",      year: 1908, genres: ["Romance", "Clássicos Brasileiros", "Realismo"] },
+  { id: "bn000086", title: "Ressurreição",                    author: "Machado de Assis",      year: 1872, genres: ["Romance", "Clássicos Brasileiros", "Romantismo"] },
+  { id: "bn000087", title: "A Mão e a Luva",                  author: "Machado de Assis",      year: 1874, genres: ["Romance", "Clássicos Brasileiros", "Romantismo"] },
+  { id: "bn000088", title: "Várias Histórias",                author: "Machado de Assis",      year: 1896, genres: ["Conto", "Clássicos Brasileiros", "Realismo"] },
+  { id: "bn000089", title: "Páginas Recolhidas",              author: "Machado de Assis",      year: 1899, genres: ["Conto", "Clássicos Brasileiros", "Realismo"] },
+  { id: "bn000090", title: "Relíquias de Casa Velha",         author: "Machado de Assis",      year: 1906, genres: ["Conto", "Clássicos Brasileiros", "Realismo"] },
+  // José de Alencar (1829-1877)
+  { id: "bn000071", title: "Iracema",                         author: "José de Alencar",       year: 1865, genres: ["Romance", "Clássicos Brasileiros", "Indianismo"] },
+  { id: "bn000072", title: "O Guarani",                       author: "José de Alencar",       year: 1857, genres: ["Romance", "Clássicos Brasileiros", "Indianismo"] },
+  { id: "bn000073", title: "Senhora",                         author: "José de Alencar",       year: 1875, genres: ["Romance", "Clássicos Brasileiros"] },
+  { id: "bn000078", title: "Lucíola",                         author: "José de Alencar",       year: 1862, genres: ["Romance", "Clássicos Brasileiros", "Romantismo"] },
+  { id: "bn000079", title: "Diva",                            author: "José de Alencar",       year: 1864, genres: ["Romance", "Clássicos Brasileiros", "Romantismo"] },
+  { id: "bn000080", title: "Til",                             author: "José de Alencar",       year: 1872, genres: ["Romance", "Clássicos Brasileiros", "Regionalismo"] },
+  { id: "bn000081", title: "O Sertanejo",                     author: "José de Alencar",       year: 1875, genres: ["Romance", "Clássicos Brasileiros", "Regionalismo"] },
+  { id: "bn000091", title: "Ubirajara",                       author: "José de Alencar",       year: 1874, genres: ["Romance", "Clássicos Brasileiros", "Indianismo"] },
+  { id: "bn000092", title: "As Minas de Prata",               author: "José de Alencar",       year: 1865, genres: ["Romance", "Clássicos Brasileiros", "Histórico"] },
+  { id: "bn000093", title: "Sonhos D'Ouro",                   author: "José de Alencar",       year: 1872, genres: ["Romance", "Clássicos Brasileiros", "Romantismo"] },
+  { id: "bn000094", title: "Encarnação",                      author: "José de Alencar",       year: 1877, genres: ["Romance", "Clássicos Brasileiros", "Romantismo"] },
+  // Aluísio Azevedo (1857-1913)
+  { id: "bn000074", title: "O Cortiço",                       author: "Aluísio Azevedo",       year: 1890, genres: ["Romance", "Clássicos Brasileiros", "Naturalismo"] },
+  { id: "bn000095", title: "O Mulato",                        author: "Aluísio Azevedo",       year: 1881, genres: ["Romance", "Clássicos Brasileiros", "Naturalismo"] },
+  { id: "bn000096", title: "Casa de Pensão",                  author: "Aluísio Azevedo",       year: 1884, genres: ["Romance", "Clássicos Brasileiros", "Naturalismo"] },
+  { id: "bn000097", title: "O Livro de uma Sogra",            author: "Aluísio Azevedo",       year: 1895, genres: ["Romance", "Clássicos Brasileiros", "Humor"] },
+  // Castro Alves (1847-1871)
+  { id: "bn000075", title: "O Navio Negreiro",                author: "Castro Alves",          year: 1880, genres: ["Poesia", "Clássicos Brasileiros", "Abolicionista"] },
+  { id: "bn000098", title: "Espumas Flutuantes",              author: "Castro Alves",          year: 1870, genres: ["Poesia", "Clássicos Brasileiros", "Romantismo"] },
+  { id: "bn000099", title: "Hinos do Equador",                author: "Castro Alves",          year: 1875, genres: ["Poesia", "Clássicos Brasileiros", "Abolicionista"] },
+  { id: "bn000100", title: "Gonzaga ou a Revolução de Minas", author: "Castro Alves",          year: 1875, genres: ["Poesia", "Clássicos Brasileiros", "Histórico"] },
+  // Álvares de Azevedo (1831-1852)
+  { id: "bn000076", title: "Noite na Taverna",                author: "Álvares de Azevedo",    year: 1855, genres: ["Conto", "Clássicos Brasileiros", "Romantismo Gótico"] },
+  { id: "bn000101", title: "Lira dos Vinte Anos",             author: "Álvares de Azevedo",    year: 1853, genres: ["Poesia", "Clássicos Brasileiros", "Romantismo"] },
+  { id: "bn000102", title: "Macário",                         author: "Álvares de Azevedo",    year: 1855, genres: ["Drama", "Clássicos Brasileiros", "Romantismo"] },
+  // Outros autores brasileiros
+  { id: "bn000077", title: "A Moreninha",                     author: "Joaquim Manuel de Macedo", year: 1844, genres: ["Romance", "Clássicos Brasileiros", "Romantismo"] },
+  { id: "bn000103", title: "O Moço Loiro",                    author: "Joaquim Manuel de Macedo", year: 1845, genres: ["Romance", "Clássicos Brasileiros", "Romantismo"] },
+  { id: "bn000104", title: "Os Dois Amores",                  author: "Joaquim Manuel de Macedo", year: 1848, genres: ["Romance", "Clássicos Brasileiros", "Romantismo"] },
+  { id: "bn000105", title: "Marília de Dirceu",               author: "Tomás Antônio Gonzaga",  year: 1792, genres: ["Poesia", "Clássicos Brasileiros", "Arcadismo"] },
+  { id: "bn000106", title: "Cartas Chilenas",                 author: "Tomás Antônio Gonzaga",  year: 1789, genres: ["Poesia", "Clássicos Brasileiros", "Sátira"] },
+  { id: "bn000107", title: "O Uruguay",                       author: "Basílio da Gama",        year: 1769, genres: ["Poesia", "Clássicos Brasileiros", "Épico"] },
+  { id: "bn000108", title: "Caramuru",                        author: "Frei José de Santa Rita Durão", year: 1781, genres: ["Poesia", "Clássicos Brasileiros", "Épico"] },
+  { id: "bn000109", title: "I-Juca-Pirama",                   author: "Gonçalves Dias",         year: 1851, genres: ["Poesia", "Clássicos Brasileiros", "Indianismo"] },
+  { id: "bn000110", title: "Os Timbiras",                     author: "Gonçalves Dias",         year: 1857, genres: ["Poesia", "Clássicos Brasileiros", "Épico"] },
+  { id: "bn000111", title: "Primeiros Cantos",                author: "Gonçalves Dias",         year: 1846, genres: ["Poesia", "Clássicos Brasileiros", "Romantismo"] },
+  { id: "bn000112", title: "As Primaveras",                   author: "Casimiro de Abreu",      year: 1859, genres: ["Poesia", "Clássicos Brasileiros", "Romantismo"] },
+  { id: "bn000113", title: "Suspiros Poéticos e Saudades",    author: "Gonçalves de Magalhães", year: 1836, genres: ["Poesia", "Clássicos Brasileiros", "Romantismo"] },
+  { id: "bn000114", title: "A Confederação dos Tamoios",      author: "Gonçalves de Magalhães",  year: 1856, genres: ["Poesia", "Clássicos Brasileiros", "Épico"] },
+  { id: "bn000115", title: "A Escrava Isaura",                author: "Bernardo Guimarães",     year: 1875, genres: ["Romance", "Clássicos Brasileiros", "Romantismo"] },
+  { id: "bn000116", title: "O Seminarista",                   author: "Bernardo Guimarães",     year: 1872, genres: ["Romance", "Clássicos Brasileiros", "Romantismo"] },
+  { id: "bn000117", title: "Inocência",                       author: "Visconde de Taunay",     year: 1872, genres: ["Romance", "Clássicos Brasileiros", "Regionalismo"] },
+  { id: "bn000118", title: "O Ateneu",                        author: "Raul Pompeia",           year: 1888, genres: ["Romance", "Clássicos Brasileiros", "Realismo"] },
+  { id: "bn000119", title: "Canções Sem Palavras",            author: "Raul Pompeia",           year: 1881, genres: ["Conto", "Clássicos Brasileiros", "Realismo"] }
+];
+
+const DP_URL_TEMPLATE = "http://www.dominiopublico.gov.br/download/texto/{id}.txt";
+
 // Presets de gradientes caso a geração de imagem falhe
 const GRADIENT_PRESETS = [
   "from-stone-900 via-red-950 to-neutral-900",
@@ -204,7 +289,11 @@ function loadProgress() {
     // Último timestamp de auto-discovery
     lastDiscoveryTimestamp: null,
     // Total de ciclos executados
-    totalCycles: 0
+    totalCycles: 0,
+    // Contagem de contos por persona (para round-robin)
+    personaCounts: {},
+    // Timestamp do último deploy automático
+    lastDeployTimestamp: null
   };
 }
 
@@ -407,79 +496,218 @@ async function fetchOpenLibraryCover(title, author) {
   return null;
 }
 
+async function fetchDominioPublicoBook(dpId, workTitle, workAuthor) {
+  const url = DP_URL_TEMPLATE.replace('{id}', dpId);
+  log(`Buscando texto da obra ID ${dpId} no Domínio Público...`);
+  try {
+    const response = await fetch(url, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+      }
+    });
+    if (!response.ok) {
+      throw new Error(`Erro: ${response.status}`);
+    }
+    const text = await response.text();
+    let cleanText = text;
+    const dpStart = text.indexOf("===|===|===");
+    if (dpStart !== -1) {
+      cleanText = text.substring(dpStart + 11);
+    }
+    const dpEnd = cleanText.indexOf("===|===|===");
+    if (dpEnd !== -1) {
+      cleanText = cleanText.substring(0, dpEnd);
+    }
+    return cleanText.trim();
+  } catch (err) {
+    log(`Falha no DP: ${err.message}. Buscando fallback no Gutendex (pt)...`, "WARN");
+    // Fallback: busca a obra no Gutendex em português
+    try {
+      const searchUrl = `https://gutendex.com/books/?languages=pt&search=${encodeURIComponent(workTitle)}`;
+      const searchRes = await fetch(searchUrl);
+      if (searchRes.ok) {
+        const searchData = await searchRes.json();
+        if (searchData.results && searchData.results.length > 0) {
+          const gutenbergId = searchData.results[0].id;
+          log(`Fallback: encontrada obra #${gutenbergId} no Gutenberg (pt). Baixando...`);
+          const gutenText = await fetchGutenbergBook(gutenbergId);
+          return cleanGutenbergText(gutenText);
+        }
+      }
+    } catch (fallbackErr) {
+      log(`Fallback também falhou: ${fallbackErr.message}`, "WARN");
+    }
+    throw new Error(`Não foi possível baixar "${workTitle}" de nenhuma fonte.`);
+  }
+}
+
+async function fetchDominioPublicoSearch() {
+  log("Buscando obras populares no Domínio Público via Gutendex (idioma pt)...");
+  try {
+    // Usa Gutendex para encontrar obras em português como fallback
+    const url = 'https://gutendex.com/books/?languages=pt&copyright=true&sort=popular&page=1';
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`Gutendex PT search error: ${response.status}`);
+    const data = await response.json();
+    return data.results || [];
+  } catch (err) {
+    log(`Falha na busca Gutendex PT: ${err.message}`, "WARN");
+    return [];
+  }
+}
+
 // ============================================================================
-// AUTO-DISCOVERY — Buscar novos títulos do Gutenberg automaticamente
+// HELPER: Dividir texto completo em segmentos de ~4000 caracteres
+// ============================================================================
+function splitIntoChunks(fullText, chunkSize = 4000) {
+  const chunks = [];
+  for (let i = 0; i < fullText.length; i += chunkSize) {
+    chunks.push(fullText.substring(i, i + chunkSize));
+  }
+  return chunks;
+}
+
+function getChunkProgress(progress, bookId, totalChunks) {
+  if (!progress.books[bookId]) progress.books[bookId] = {};
+  const bp = progress.books[bookId];
+  if (!bp.chunks) {
+    // Inicializa chunks como false (não traduzido) para cada idioma
+    bp.chunks = {};
+    for (const lang of LANGUAGES) {
+      bp.chunks[lang.code] = new Array(totalChunks).fill(false);
+    }
+  }
+  if (!bp.totalChunks) bp.totalChunks = totalChunks;
+  return bp;
+}
+
+function isBookFullyTranslated(progress, bookId, langCode) {
+  const bp = progress.books[bookId];
+  if (!bp || !bp.chunks || !bp.chunks[langCode]) return false;
+  return bp.chunks[langCode].every(done => done === true);
+}
+
+function getNextUntranslatedChunk(progress, bookId, langCode) {
+  const bp = progress.books[bookId];
+  if (!bp || !bp.chunks || !bp.chunks[langCode]) return -1;
+  const chunks = bp.chunks[langCode];
+  for (let i = 0; i < chunks.length; i++) {
+    if (!chunks[i]) return i;
+  }
+  return -1;
+}
+
+// ============================================================================
+// AUTO-DISCOVERY — Buscar novos títulos (Gutenberg + Domínio Público)
 // ============================================================================
 async function discoverNewWorks(progress) {
   log("=================================================");
-  log("INICIANDO AUTO-DISCOVERY (Gutenberg Popular)", "DISCOVERY");
+  log("INICIANDO AUTO-DISCOVERY (Gutenberg + Domínio Público)", "DISCOVERY");
   log("=================================================");
 
-  try {
-    // Busca livros populares do Gutenberg via API
-    const url = 'https://gutendex.com/books/?sort=popular&languages=en&copyright=true&page=1';
-    log(`Consultando catálogo Gutendex: ${url}`);
-    const response = await fetch(url);
-    if (!response.ok) throw new Error(`Gutendex API error: ${response.status}`);
-    
-    const data = await response.json();
-    if (!data.results || data.results.length === 0) {
-      log("Nenhum resultado do Gutendex.", "WARN");
-      return;
-    }
+  let newCount = 0;
 
-    const existingIds = new Set([
-      ...GUTENBERG_WORKS.map(w => w.id),
+  // ---- ETAPA 1: Gutenberg (EN) ----
+  try {
+    const url = 'https://gutendex.com/books/?sort=popular&languages=en&copyright=true&page=1';
+    log(`Consultando catálogo Gutendex EN: ${url}`);
+    const response = await fetch(url);
+    if (response.ok) {
+      const data = await response.json();
+      if (data.results && data.results.length > 0) {
+        const existingIds = new Set([
+          ...GUTENBERG_WORKS.map(w => w.id),
+          ...(progress.discoveredWorks || []).map(w => w.id)
+        ]);
+
+        for (const book of data.results) {
+          if (existingIds.has(book.id)) continue;
+
+          const deathYear = book.authors && book.authors.length > 0 ? book.authors[0].death_year : null;
+          if (!deathYear || deathYear >= 1954) continue;
+
+          const authorName = book.authors && book.authors.length > 0 ? book.authors[0].name : "Unknown";
+          const birthYear = book.authors && book.authors.length > 0 ? book.authors[0].birth_year : null;
+          const subjects = book.subjects || [];
+          const genres = subjects.slice(0, 3).map(s => {
+            if (s.toLowerCase().includes('fiction')) return 'Ficção';
+            if (s.toLowerCase().includes('horror')) return 'Terror';
+            if (s.toLowerCase().includes('science')) return 'Ficção Científica';
+            if (s.toLowerCase().includes('adventure')) return 'Aventura';
+            if (s.toLowerCase().includes('romance')) return 'Romance';
+            if (s.toLowerCase().includes('mystery')) return 'Mistério';
+            return 'Clássicos';
+          });
+
+          const newWork = {
+            id: book.id,
+            title: book.title.split(';')[0].split(':')[0].trim(),
+            author: authorName.split(',').reverse().join(' ').trim(),
+            year: birthYear ? birthYear + 25 : 1850,
+            genres: [...new Set(genres), 'Clássicos'],
+            discovered: true,
+            source: 'gutenberg'
+          };
+
+          progress.discoveredWorks.push(newWork);
+          existingIds.add(book.id);
+          newCount++;
+          log(`Descoberta Gutenberg: "${newWork.title}" por ${newWork.author} (#${newWork.id})`);
+          if (newCount >= 5) break;
+        }
+      }
+    }
+  } catch (err) {
+    log(`Falha no Auto-Discovery Gutenberg: ${err.message}`, "WARN");
+  }
+
+  // ---- ETAPA 2: Domínio Público (PT-BR) ----
+  try {
+    const dpResults = await fetchDominioPublicoSearch();
+    const existingDpIds = new Set([
+      ...DOMINIO_PUBLICO_WORKS.map(w => w.id),
       ...(progress.discoveredWorks || []).map(w => w.id)
     ]);
 
-    let newCount = 0;
-    for (const book of data.results) {
-      if (existingIds.has(book.id)) continue;
-      
-      // Extrair ano de nascimento do autor para estimar domínio público
-      const authorName = book.authors && book.authors.length > 0 ? book.authors[0].name : "Unknown";
-      const birthYear = book.authors && book.authors.length > 0 ? book.authors[0].birth_year : null;
+    for (const book of dpResults) {
+      const dpId = `dp-auto-${book.id}`;
+      if (existingDpIds.has(dpId)) continue;
+
       const deathYear = book.authors && book.authors.length > 0 ? book.authors[0].death_year : null;
-      
-      // Critério conservador: autor morreu antes de 1954 (70 anos de domínio público)
       if (!deathYear || deathYear >= 1954) continue;
 
+      const authorName = book.authors && book.authors.length > 0 ? book.authors[0].name : "Unknown";
       const subjects = book.subjects || [];
-      const genres = subjects.slice(0, 3).map(s => {
-        if (s.toLowerCase().includes('fiction')) return 'Ficção';
-        if (s.toLowerCase().includes('horror')) return 'Terror';
-        if (s.toLowerCase().includes('science')) return 'Ficção Científica';
-        if (s.toLowerCase().includes('adventure')) return 'Aventura';
+      const genres = subjects.slice(0, 2).map(s => {
         if (s.toLowerCase().includes('romance')) return 'Romance';
-        if (s.toLowerCase().includes('mystery')) return 'Mistério';
-        return 'Clássicos';
+        if (s.toLowerCase().includes('conto')) return 'Conto';
+        if (s.toLowerCase().includes('poesia')) return 'Poesia';
+        return 'Clássicos Brasileiros';
       });
 
       const newWork = {
-        id: book.id,
-        title: book.title.split(';')[0].split(':')[0].trim(), // Limpa subtítulos
-        author: authorName.split(',').reverse().join(' ').trim(), // "Austen, Jane" -> "Jane Austen"
-        year: birthYear ? birthYear + 25 : 1850, // Estimativa conservadora
-        genres: [...new Set(genres), 'Clássicos'],
-        discovered: true
+        id: dpId,
+        title: book.title.split(';')[0].split(':')[0].trim(),
+        author: authorName.split(',').reverse().join(' ').trim(),
+        year: 1880,
+        genres: [...new Set(genres), 'Clássicos Brasileiros'],
+        discovered: true,
+        source: 'dominio-publico'
       };
 
       progress.discoveredWorks.push(newWork);
-      existingIds.add(book.id);
+      existingDpIds.add(dpId);
       newCount++;
-      log(`Descoberta: "${newWork.title}" por ${newWork.author} (Gutenberg #${newWork.id})`);
-
-      if (newCount >= 10) break; // Limita a 10 novas por ciclo de discovery
+      log(`Descoberta DP: "${newWork.title}" por ${newWork.author} (pt-br)`);
+      if (newCount >= 10) break;
     }
-
-    progress.lastDiscoveryTimestamp = new Date().toISOString();
-    saveProgress(progress);
-    log(`Auto-Discovery concluído: ${newCount} novas obras adicionadas ao catálogo.`);
-
   } catch (err) {
-    log(`Falha no Auto-Discovery: ${err.message}`, "ERROR");
+    log(`Falha no Auto-Discovery DP: ${err.message}`, "WARN");
   }
+
+  progress.lastDiscoveryTimestamp = new Date().toISOString();
+  saveProgress(progress);
+  log(`Auto-Discovery concluído: ${newCount} novas obras adicionadas ao catálogo.`);
 }
 
 // ============================================================================
@@ -510,58 +738,83 @@ function getLocalizedTitle(originalTitle, langCode) {
 }
 
 // ============================================================================
-// ESTEIRA A: DOMÍNIO PÚBLICO — Multi-Idioma Incremental
+// ESTEIRA A: DOMÍNIO PÚBLICO — OBRAS COMPLETAS POR BLOCOS (Multi-Idioma)
 // ============================================================================
 async function runEsteiraA(progress) {
   log("=================================================");
-  log("INICIANDO ESTEIRA A (Domínio Público — Multi-Idioma)", "ESTEIRA_A");
+  log("INICIANDO ESTEIRA A (Obras Completas — Blocos de 4k)", "ESTEIRA_A");
   log("=================================================");
 
   try {
-    // Combina catálogo fixo + descobertas
-    const allWorks = [...GUTENBERG_WORKS, ...(progress.discoveredWorks || [])];
-    
-    // Encontra a próxima tarefa: obra + idioma que ainda não foi processado
+    // Combina catálogos fixos + descobertas
+    const gutenbergWorks = GUTENBERG_WORKS.map(w => ({ ...w, source: 'gutenberg' }));
+    const dpWorks = DOMINIO_PUBLICO_WORKS.map(w => ({ ...w, source: 'dominio-publico' }));
+    const allWorks = [...gutenbergWorks, ...dpWorks, ...(progress.discoveredWorks || [])];
+
+    // 1. PROCURAR TRADUÇÃO PENDENTE (bloco incompleto)
     let targetWork = null;
     let targetLang = null;
+    let targetChunkIndex = -1;
 
     for (const work of allWorks) {
-      // Validação de Segurança de Domínio Público
       if (work.year >= 1929) continue;
-
       const bookId = work.title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
-      const bookProgress = progress.books[bookId] || {};
+      const bp = progress.books[bookId];
 
-      for (const lang of LANGUAGES) {
-        if (!bookProgress[lang.code]) {
-          targetWork = work;
-          targetLang = lang;
-          break;
+      // Se tem chunks, busca o próximo bloco não traduzido
+      if (bp && bp.chunks) {
+        for (const lang of LANGUAGES) {
+          if (!bp.chunks[lang.code]) continue;
+          const idx = getNextUntranslatedChunk(progress, bookId, lang.code);
+          if (idx !== -1) {
+            targetWork = work;
+            targetLang = lang;
+            targetChunkIndex = idx;
+            break;
+          }
         }
+        if (targetWork) break;
       }
-      if (targetWork) break;
     }
 
-    if (!targetWork || !targetLang) {
-      log("✅ Todas as obras do catálogo estão traduzidas em todos os idiomas! Verificando Auto-Discovery...", "ESTEIRA_A");
-      
-      // Tenta auto-discovery se todas as obras foram processadas
+    // 2. Se nenhum bloco pendente, procura livro não iniciado (sem chunks)
+    if (!targetWork) {
+      for (const work of allWorks) {
+        if (work.year >= 1929) continue;
+        const bookId = work.title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+        const bp = progress.books[bookId];
+
+        // Se já tem chunks (mesmo que completos), pula
+        if (bp && bp.chunks) continue;
+
+        targetWork = work;
+        targetLang = null; // Vai iniciar: baixar texto completo e criar chunks
+        break;
+      }
+    }
+
+    if (!targetWork) {
+      log("✅ Todas as obras completas em todos os idiomas! Verificando Auto-Discovery...", "ESTEIRA_A");
       const lastDiscovery = progress.lastDiscoveryTimestamp ? new Date(progress.lastDiscoveryTimestamp) : null;
       const hoursSinceDiscovery = lastDiscovery ? (Date.now() - lastDiscovery.getTime()) / (1000 * 60 * 60) : 999;
-      
+
       if (hoursSinceDiscovery > 6) {
         await discoverNewWorks(progress);
       } else {
-        log(`Auto-Discovery já executado há ${hoursSinceDiscovery.toFixed(1)}h. Próximo em ${(6 - hoursSinceDiscovery).toFixed(1)}h.`, "ESTEIRA_A");
+        log(`Auto-Discovery já executado há ${hoursSinceDiscovery.toFixed(1)}h.`, "ESTEIRA_A");
       }
       return;
     }
 
     const bookId = targetWork.title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
-    const localizedTitle = getLocalizedTitle(targetWork.title, targetLang.code);
-    
-    log(`Processando: "${targetWork.title}" → ${targetLang.flag} ${targetLang.name} (${targetLang.code})`, "ESTEIRA_A");
-    log(`Validação de Domínio Público: OK! (${targetWork.year}) — domínio público livre.`);
+    const source = targetWork.source || 'gutenberg';
+    const isDp = source === 'dominio-publico';
+
+    // Idioma original da obra
+    const ORIGINAL_LANG = isDp ? 'pt-br' : 'en';
+
+    log(`Processando: "${targetWork.title}" [${source}] (${bookId})`, "ESTEIRA_A");
+    log(`Validação de Domínio Público: OK! (${targetWork.year})`);
 
     // Carrega JSON atual
     let livrosMock = [];
@@ -569,176 +822,314 @@ async function runEsteiraA(progress) {
       livrosMock = JSON.parse(fs.readFileSync(LIVROS_MOCK_PATH, 'utf-8'));
     }
 
-    // Buscar ou carregar o texto original em inglês
-    let cleanText;
-    const enDownloadPath = path.join(DOWNLOADS_DIR, `${bookId}-en.txt`);
-    
-    if (fs.existsSync(enDownloadPath)) {
-      cleanText = fs.readFileSync(enDownloadPath, 'utf-8');
-      log(`Texto EN já existe localmente: ${enDownloadPath}`);
-    } else {
-      const rawText = await fetchGutenbergBook(targetWork.id);
-      cleanText = cleanGutenbergText(rawText);
-      fs.writeFileSync(enDownloadPath, cleanText, 'utf-8');
-      log(`Texto EN original salvo: ${enDownloadPath}`);
-    }
+    // ======================================================================
+    // CASO 1: NOVO LIVRO — Baixar texto completo, TODOS os chunks do original
+    // ======================================================================
+    if (targetLang === null) {
+      log(`DOWNLOAD do texto completo de "${targetWork.title}"...`, "ESTEIRA_A");
 
-    // Também salvar sem sufixo de idioma para compatibilidade
-    const legacyPath = path.join(DOWNLOADS_DIR, `${bookId}.txt`);
-    if (!fs.existsSync(legacyPath)) {
-      fs.copyFileSync(enDownloadPath, legacyPath);
-    }
+      let fullText;
+      const originalDownloadPath = path.join(DOWNLOADS_DIR, `${bookId}-${ORIGINAL_LANG}.txt`);
 
-    // Extrair segmento para tradução
-    let bookChapterText = "";
-    const chapterMatch = cleanText.match(/(CHAPTER I|CAPÍTULO I|I\.\s)/i);
-    if (chapterMatch && chapterMatch.index !== -1) {
-      bookChapterText = cleanText.substring(chapterMatch.index, chapterMatch.index + 6000);
-    } else {
-      bookChapterText = cleanText.substring(0, 6000);
-    }
-    log(`Segmentado trecho de ${bookChapterText.length} caracteres.`);
+      if (fs.existsSync(originalDownloadPath)) {
+        fullText = fs.readFileSync(originalDownloadPath, 'utf-8');
+        log(`Texto original já existe: ${originalDownloadPath}`);
+      } else if (isDp) {
+        const rawText = await fetchDominioPublicoBook(targetWork.id, targetWork.title, targetWork.author);
+        fullText = rawText;
+        fs.writeFileSync(originalDownloadPath, fullText, 'utf-8');
+        log(`Texto original DP salvo: ${originalDownloadPath}`);
+      } else {
+        const rawText = await fetchGutenbergBook(targetWork.id);
+        fullText = cleanGutenbergText(rawText);
+        fs.writeFileSync(originalDownloadPath, fullText, 'utf-8');
+        log(`Texto original Gutenberg salvo: ${originalDownloadPath}`);
+      }
 
-    let translatedText;
-    let synopsis;
+      // Salvar sem sufixo para compatibilidade
+      const legacyPath = path.join(DOWNLOADS_DIR, `${bookId}.txt`);
+      if (!fs.existsSync(legacyPath)) {
+        fs.copyFileSync(originalDownloadPath, legacyPath);
+      }
 
-    if (targetLang.code === 'en') {
-      // Idioma original — sem tradução necessária
-      translatedText = bookChapterText;
-      
-      // Gerar sinopse em inglês
-      const synopsisSystemPrompt = `You are a literary critic. Write a captivating, short synopsis in English for the classic work "${targetWork.title}" by ${targetWork.author}. Return only the synopsis.`;
-      synopsis = await callLocalLLM(synopsisSystemPrompt, `Write a synopsis for the work.`);
-      log(`Sinopse EN gerada: "${synopsis.substring(0, 80)}..."`);
-      
-    } else {
-      // Tradução para o idioma-alvo
-      const langInstruction = targetLang.translateFrom;
-      
-      const systemPrompt = `Você é um tradutor literário experiente. Traduza o texto a seguir ${langInstruction} de forma muito fiel e artística, mantendo o tom clássico e a profundidade da obra original.
-Formate o texto aplicando boas práticas de UX de leitura:
-- Crie parágrafos confortáveis, dividindo blocos longos em trechos menores e mais legíveis.
-- Mantenha um line-height visualmente limpo através de quebras de parágrafo adequadas.
-- Use negrito/itálico onde apropriado de forma elegante.
-Retorne APENAS o texto traduzido e formatado em Markdown, sem introduções ou explicações.`;
+      // Dividir em chunks de ~4000 caracteres
+      const chunks = splitIntoChunks(fullText, 4000);
+      log(`Texto completo dividido em ${chunks.length} blocos de ~4000 caracteres.`);
 
-      const userPrompt = `Traduza o seguinte capítulo/segmento da obra clássica "${targetWork.title}":\n\n${bookChapterText}`;
-      
-      translatedText = await callLocalLLM(systemPrompt, userPrompt);
-      log(`Tradução ${targetLang.code} finalizada com sucesso.`);
+      // Inicializar progresso dos chunks
+      const bp = getChunkProgress(progress, bookId, chunks.length);
 
-      // Gerar sinopse no idioma-alvo
-      const synopsisLangMap = {
-        'pt-br': { sys: `Escreva uma sinopse cativante e curta em português brasileiro`, lang: "português brasileiro" },
-        'pt-pt': { sys: `Escreva uma sinopse cativante e curta em português europeu`, lang: "português europeu" },
-        'es':    { sys: `Escribe una sinopsis cautivadora y corta en español`, lang: "español" },
-        'fr':    { sys: `Écrivez un synopsis captivant et court en français`, lang: "français" }
+      // IDIOMA ORIGINAL: marcar TODOS os chunks como concluídos e concatenar
+      let fullOriginalText = '';
+      for (let i = 0; i < chunks.length; i++) {
+        bp.chunks[ORIGINAL_LANG][i] = true;
+        fullOriginalText += chunks[i] + '\n\n';
+        const chunkPath = path.join(DOWNLOADS_DIR, `${bookId}-${ORIGINAL_LANG}.chunk.${i}.txt`);
+        fs.writeFileSync(chunkPath, chunks[i], 'utf-8');
+      }
+      fullOriginalText = fullOriginalText.trim();
+
+      // Salvar texto completo do idioma original
+      fs.writeFileSync(originalDownloadPath, fullOriginalText, 'utf-8');
+      fs.writeFileSync(legacyPath, fullOriginalText, 'utf-8');
+      log(`Texto COMPLETO do idioma original (${ORIGINAL_LANG}) disponível: ${fullOriginalText.length} caracteres.`);
+
+      // Gerar sinopse no idioma original
+      let synopsis;
+      if (isDp) {
+        const sys = `Você é um crítico literário. Escreva uma sinopse cativante e curta em português brasileiro para a obra clássica "${targetWork.title}" de ${targetWork.author}. Retorne apenas a sinopse.`;
+        synopsis = await callLocalLLM(sys, `Crie a sinopse em português brasileiro.`);
+      } else {
+        const sys = `You are a literary critic. Write a captivating, short synopsis in English for "${targetWork.title}" by ${targetWork.author}. Return only the synopsis.`;
+        synopsis = await callLocalLLM(sys, `Write a synopsis.`);
+      }
+      log(`Sinopse ${ORIGINAL_LANG} gerada.`);
+
+      // Gerar sinopse em pt-br
+      let synopsisPtBr = synopsis;
+      if (!isDp) {
+        const sysPt = `Você é um crítico literário. Escreva uma sinopse cativante e curta em português brasileiro para "${targetWork.title}" de ${targetWork.author}. Retorne apenas a sinopse.`;
+        synopsisPtBr = await callLocalLLM(sysPt, `Crie a sinopse em pt-br.`);
+      }
+
+      // Buscar capa
+      let localCoverImage = undefined;
+      const existingBook = livrosMock.find(b => b.id === bookId);
+      if (!existingBook || !existingBook.coverImage) {
+        const coverUrl = await fetchOpenLibraryCover(targetWork.title, targetWork.author);
+        if (coverUrl) {
+          const ext = coverUrl.split('.').pop() || 'jpg';
+          const filename = `cover-${bookId}.${ext}`;
+          const imagePath = path.join(COVERS_DIR, filename);
+          if (await downloadImage(coverUrl, imagePath)) {
+            localCoverImage = `/covers/${filename}`;
+          }
+        }
+      } else {
+        localCoverImage = existingBook.coverImage;
+      }
+
+      // Montar objeto do livro com texto COMPLETO no original
+      const primaryTitle = getLocalizedTitle(targetWork.title, 'pt-br');
+      const searchQuery = `${primaryTitle} ${targetWork.author}`;
+      const affLinkBR = `https://www.amazon.com.br/s?k=${encodeURIComponent(searchQuery)}&tag=${AMAZON_TAG_BR}`;
+      const affLinkPT = `https://www.amazon.es/s?k=${encodeURIComponent(searchQuery)}&tag=${AMAZON_TAG_PT}`;
+
+      // translations: só o original fica completo; demais idiomas AUSENTES → "Em breve"
+      const translations = {};
+      translations[ORIGINAL_LANG] = {
+        title: getLocalizedTitle(targetWork.title, ORIGINAL_LANG),
+        synopsis: synopsis,
+        fullText: fullOriginalText,
+        downloadFile: `/downloads/${bookId}-${ORIGINAL_LANG}.txt`
       };
-      const synConf = synopsisLangMap[targetLang.code];
-      const synopsisSystemPrompt = `Você é um crítico literário. ${synConf.sys} para a obra clássica "${localizedTitle}" de ${targetWork.author}. Retorne apenas a sinopse.`;
-      synopsis = await callLocalLLM(synopsisSystemPrompt, `Crie a sinopse em ${synConf.lang} da obra.`);
-      log(`Sinopse ${targetLang.code} gerada: "${synopsis.substring(0, 80)}..."`);
+      if (!isDp) {
+        translations['pt-br'] = {
+          title: primaryTitle,
+          synopsis: synopsisPtBr,
+          fullText: fullOriginalText,
+          downloadFile: `/downloads/${bookId}-pt-br.txt`
+        };
+      }
+
+      const newBook = {
+        id: bookId,
+        title: primaryTitle,
+        author: targetWork.author,
+        year: targetWork.year,
+        genres: targetWork.genres,
+        rating: existingBook ? existingBook.rating : 4.8,
+        coverGradient: existingBook ? existingBook.coverGradient : getRandomGradient(),
+        coverImage: localCoverImage || (existingBook ? existingBook.coverImage : undefined),
+        synopsis: isDp ? synopsis : synopsisPtBr,
+        fullText: fullOriginalText,
+        downloadFile: `/downloads/${bookId}.txt`,
+        translations: translations,
+        isFullTextComplete: true,
+        editions: existingBook ? existingBook.editions : [
+          {
+            id: `ed-${bookId}-physical`,
+            publisher: "Edição Física Recomendada",
+            year: targetWork.year,
+            isbn: `978-3161484${bookId.replace(/[^0-9]/g, '').substring(0, 6) || String(targetWork.id)}`,
+            pages: Math.floor(Math.random() * 200) + 150,
+            coverType: "Brochura Clássica",
+            priceBR: 29.90,
+            pricePT: 8.99,
+            linkBR: affLinkBR,
+            linkPT: affLinkPT
+          }
+        ],
+        reviews: existingBook ? existingBook.reviews : [
+          {
+            id: `rev-${bookId}-gut`,
+            username: "leitor_gutenberg",
+            rating: 5,
+            date: new Date().toISOString().split('T')[0],
+            text: `Edição completa traduzida localmente por IA. A leitura flui de forma incrível no e-reader!`
+          }
+        ]
+      };
+
+      const bookIndex = livrosMock.findIndex(b => b.id === bookId);
+      if (bookIndex !== -1) {
+        livrosMock[bookIndex] = { ...livrosMock[bookIndex], ...newBook };
+        log(`Livro "${newBook.title}" atualizado (iniciado blocos).`);
+      } else {
+        livrosMock.push(newBook);
+        log(`Novo livro "${newBook.title}" inserido (iniciado blocos).`);
+      }
+
+      fs.writeFileSync(LIVROS_MOCK_PATH, JSON.stringify(livrosMock, null, 2), 'utf-8');
+      saveProgress(progress);
+      log(`Progresso salvo: ${bookId} → bloco 0/${ORIGINAL_LANG} ✅`);
+      return;
     }
 
-    // Salvar texto traduzido como arquivo de download
-    const langDownloadPath = path.join(DOWNLOADS_DIR, `${bookId}-${targetLang.code}.txt`);
-    fs.writeFileSync(langDownloadPath, translatedText, 'utf-8');
-    log(`Texto ${targetLang.code} salvo para download: ${langDownloadPath}`);
+    // ======================================================================
+    // CASO 2: TRADUZIR PRÓXIMO BLOCO PENDENTE
+    // ======================================================================
+    const localizedTitle = getLocalizedTitle(targetWork.title, targetLang.code);
+    log(`Traduzindo bloco #${targetChunkIndex}: "${targetWork.title}" → ${targetLang.flag} ${targetLang.name}`, "ESTEIRA_A");
 
-    // Busca capa na Open Library (apenas uma vez por livro)
-    let localCoverImage = undefined;
-    const existingBook = livrosMock.find(b => b.id === bookId);
-    
-    if (existingBook && existingBook.coverImage) {
-      localCoverImage = existingBook.coverImage;
-      log(`Capa já existe localmente: ${localCoverImage}`);
+    // Carregar texto completo original e dividir em chunks
+    const originalDownloadPath = path.join(DOWNLOADS_DIR, `${bookId}-${ORIGINAL_LANG}.txt`);
+    const fullOriginalText = fs.readFileSync(originalDownloadPath, 'utf-8');
+    const chunks = splitIntoChunks(fullOriginalText, 4000);
+    const chunkToTranslate = chunks[targetChunkIndex];
+
+    let translatedChunk;
+
+    if (targetLang.code === ORIGINAL_LANG) {
+      translatedChunk = chunkToTranslate;
+      const bp = progress.books[bookId];
+      if (bp && bp.chunks) {
+        bp.chunks[ORIGINAL_LANG][targetChunkIndex] = true;
+      }
+      log(`Bloco #${targetChunkIndex} copiado (idioma original).`);
     } else {
-      const coverUrl = await fetchOpenLibraryCover(targetWork.title, targetWork.author);
-      if (coverUrl) {
-        const ext = coverUrl.split('.').pop() || 'jpg';
-        const filename = `cover-${bookId}.${ext}`;
-        const imagePath = path.join(COVERS_DIR, filename);
-        const downloadSuccess = await downloadImage(coverUrl, imagePath);
-        if (downloadSuccess) {
-          localCoverImage = `/covers/${filename}`;
+      let langInstruction;
+
+      if (ORIGINAL_LANG === 'en') {
+        const langMap = {
+          'pt-br': { from: "do inglês para o português brasileiro" },
+          'pt-pt': { from: "do inglês para o português europeu" },
+          'es':    { from: "del inglés al español" },
+          'fr':    { from: "de l'anglais vers le français" }
+        };
+        langInstruction = langMap[targetLang.code]?.from || targetLang.translateFrom;
+      } else {
+        const langMap = {
+          'en':  { from: "do português brasileiro para o inglês" },
+          'pt-pt': { from: "do português brasileiro para o português europeu" },
+          'es':    { from: "do português brasileiro para o espanhol" },
+          'fr':    { from: "do português brasileiro para o francês" }
+        };
+        langInstruction = langMap[targetLang.code]?.from || `do português brasileiro para ${targetLang.name}`;
+      }
+
+      const systemPrompt = `Você é um tradutor literário experiente. Traduza o texto a seguir ${langInstruction} de forma muito fiel e artística, mantendo o tom clássico e a profundidade da obra original. Retorne APENAS o texto traduzido, sem introduções ou explicações.`;
+
+      const userPrompt = `Traduza o seguinte segmento (bloco ${targetChunkIndex + 1}/${chunks.length}) da obra "${targetWork.title}":\n\n${chunkToTranslate}`;
+
+      translatedChunk = await callLocalLLM(systemPrompt, userPrompt);
+      log(`Bloco #${targetChunkIndex} traduzido para ${targetLang.code}.`);
+
+      const bp = progress.books[bookId];
+      if (bp && bp.chunks) {
+        bp.chunks[targetLang.code][targetChunkIndex] = true;
+      }
+
+      // Se for o primeiro bloco, gerar sinopse no idioma alvo
+      if (targetChunkIndex === 0) {
+        let synopsisLang = {
+          'en': 'Write a captivating short synopsis in English. Return only the synopsis.',
+          'pt-br': 'Escreva uma sinopse cativante e curta em português brasileiro. Retorne apenas a sinopse.',
+          'pt-pt': 'Escreva uma sinopse cativante e curta em português europeu. Retorne apenas a sinopse.',
+          'es': 'Escribe una sinopsis cautivadora y corta en español. Devuelve solo la sinopsis.',
+          'fr': 'Écrivez un synopsis captivant et court en français. Retournez uniquement le synopsis.'
+        };
+        const synSysPrompt = `Você é um crítico literário. ${synopsisLang[targetLang.code]} para a obra "${targetWork.title}" de ${targetWork.author}.`;
+        try {
+          const newSynopsis = await callLocalLLM(synSysPrompt, `Crie a sinopse.`);
+          // Atualizar no livros-mock
+          let livrosMock = [];
+          if (fs.existsSync(LIVROS_MOCK_PATH)) {
+            livrosMock = JSON.parse(fs.readFileSync(LIVROS_MOCK_PATH, 'utf-8'));
+          }
+          const existingBook = livrosMock.find(b => b.id === bookId);
+          if (existingBook) {
+            if (!existingBook.translations) existingBook.translations = {};
+            existingBook.translations[targetLang.code] = {
+              ...(existingBook.translations[targetLang.code] || {}),
+              title: localizedTitle,
+              synopsis: newSynopsis
+            };
+            fs.writeFileSync(LIVROS_MOCK_PATH, JSON.stringify(livrosMock, null, 2), 'utf-8');
+          }
+          log(`Sinopse ${targetLang.code} gerada para "${targetWork.title}".`);
+        } catch (e) {
+          log(`Erro ao gerar sinopse ${targetLang.code}: ${e.message}`, "WARN");
         }
       }
     }
 
-    // Montar ou atualizar o objeto do livro
-    const primaryTitle = getLocalizedTitle(targetWork.title, 'pt-br');
-    const searchQuery = `${primaryTitle} ${targetWork.author}`;
-    const affLinkBR = `https://www.amazon.com.br/s?k=${encodeURIComponent(searchQuery)}&tag=${AMAZON_TAG_BR}`;
-    const affLinkPT = `https://www.amazon.es/s?k=${encodeURIComponent(searchQuery)}&tag=${AMAZON_TAG_PT}`;
+    // Salvar chunk traduzido individualmente
+    const chunkFilePath = path.join(DOWNLOADS_DIR, `${bookId}-${targetLang.code}.chunk.${targetChunkIndex}.txt`);
+    fs.writeFileSync(chunkFilePath, translatedChunk, 'utf-8');
 
-    // Construir o campo translations
-    let translations = {};
-    if (existingBook && existingBook.translations) {
-      translations = { ...existingBook.translations };
-    }
-    translations[targetLang.code] = {
-      title: localizedTitle,
-      synopsis: synopsis,
-      fullText: translatedText,
-      downloadFile: `/downloads/${bookId}-${targetLang.code}.txt`
-    };
+    // Verificar se o idioma está completo
+    const langComplete = isBookFullyTranslated(progress, bookId, targetLang.code);
 
-    const newBook = {
-      id: bookId,
-      title: primaryTitle, // Título principal sempre em pt-br
-      author: targetWork.author,
-      year: targetWork.year,
-      genres: targetWork.genres,
-      rating: existingBook ? existingBook.rating : 4.8,
-      coverGradient: existingBook ? existingBook.coverGradient : getRandomGradient(),
-      coverImage: localCoverImage || (existingBook ? existingBook.coverImage : undefined),
-      synopsis: translations['pt-br'] ? translations['pt-br'].synopsis : (translations['en'] ? translations['en'].synopsis : synopsis),
-      fullText: translations['pt-br'] ? translations['pt-br'].fullText : (translations['en'] ? translations['en'].fullText : translatedText),
-      downloadFile: `/downloads/${bookId}.txt`,
-      translations: translations,
-      editions: existingBook ? existingBook.editions : [
-        {
-          id: `ed-${bookId}-physical`,
-          publisher: "Edição Física Recomendada",
-          year: targetWork.year,
-          isbn: `978-3161484${targetWork.id}`,
-          pages: Math.floor(Math.random() * 200) + 150,
-          coverType: "Brochura Clássica",
-          priceBR: 29.90,
-          pricePT: 8.99,
-          linkBR: affLinkBR,
-          linkPT: affLinkPT
+    if (langComplete) {
+      log(`🎉 Idioma ${targetLang.code} COMPLETO para "${targetWork.title}"! Concatenando blocos...`, "ESTEIRA_A");
+
+      // Concatenar todos os chunks deste idioma
+      let fullTranslatedText = '';
+      const bp = progress.books[bookId];
+      const total = bp.totalChunks;
+      for (let i = 0; i < total; i++) {
+        const chunkPath = path.join(DOWNLOADS_DIR, `${bookId}-${targetLang.code}.chunk.${i}.txt`);
+        if (fs.existsSync(chunkPath)) {
+          fullTranslatedText += fs.readFileSync(chunkPath, 'utf-8') + '\n\n';
         }
-      ],
-      reviews: existingBook ? existingBook.reviews : [
-        {
-          id: `rev-${bookId}-gut`,
-          username: "leitor_gutenberg",
-          rating: 5,
-          date: new Date().toISOString().split('T')[0],
-          text: "Edição excelente traduzida localmente por IA. A leitura flui de forma incrível no e-reader da página!"
-        }
-      ]
-    };
+      }
 
-    // Atualiza ou insere no JSON
-    const bookIndex = livrosMock.findIndex(b => b.id === bookId);
-    if (bookIndex !== -1) {
-      livrosMock[bookIndex] = { ...livrosMock[bookIndex], ...newBook };
-      log(`Livro "${newBook.title}" atualizado com tradução ${targetLang.code}.`);
-    } else {
-      livrosMock.push(newBook);
-      log(`Novo livro "${newBook.title}" inserido no JSON (${targetLang.code}).`);
+      // Salvar arquivo completo de download
+      const langDownloadPath = path.join(DOWNLOADS_DIR, `${bookId}-${targetLang.code}.txt`);
+      fs.writeFileSync(langDownloadPath, fullTranslatedText, 'utf-8');
+      log(`Arquivo completo salvo: ${langDownloadPath}`);
+
+      // Atualizar livros-mock.json com o texto completo
+      const existingBook = livrosMock.find(b => b.id === bookId);
+      if (existingBook) {
+        if (!existingBook.translations) existingBook.translations = {};
+        existingBook.translations[targetLang.code] = {
+          title: localizedTitle,
+          synopsis: existingBook.translations[targetLang.code]?.synopsis || fullTranslatedText.substring(0, 150) + "...",
+          fullText: fullTranslatedText,
+          downloadFile: `/downloads/${bookId}-${targetLang.code}.txt`
+        };
+
+        // Atualizar fullText principal se for pt-br ou en
+        if (targetLang.code === 'pt-br' || (targetLang.code === 'en' && !existingBook.translations['pt-br'])) {
+          existingBook.fullText = fullTranslatedText;
+          existingBook.synopsis = existingBook.translations[targetLang.code]?.synopsis || existingBook.synopsis;
+        }
+
+        // Se todos os 5 idiomas estiverem completos, marcar isFullTextComplete
+        const allDone = LANGUAGES.every(l => isBookFullyTranslated(progress, bookId, l.code));
+        if (allDone) {
+          existingBook.isFullTextComplete = true;
+          log(`🎉🎉 OBRA COMPLETA: "${targetWork.title}" em todos os 5 idiomas!`);
+        }
+
+        fs.writeFileSync(LIVROS_MOCK_PATH, JSON.stringify(livrosMock, null, 2), 'utf-8');
+      }
     }
 
-    fs.writeFileSync(LIVROS_MOCK_PATH, JSON.stringify(livrosMock, null, 2), 'utf-8');
-    log("Arquivo 'src/data/livros-mock.json' atualizado com sucesso!");
-
-    // Atualizar progresso
-    if (!progress.books[bookId]) progress.books[bookId] = {};
-    progress.books[bookId][targetLang.code] = true;
     saveProgress(progress);
-    log(`Progresso salvo: ${bookId} → ${targetLang.code} ✅`);
+    log(`Progresso: ${bookId} → ${targetLang.code} bloco ${targetChunkIndex + 1}/${progress.books[bookId]?.totalChunks || '?'} ✅`);
 
   } catch (err) {
     log(`Falha crítica na Esteira A: ${err.message}`, "ERROR");
@@ -746,15 +1137,14 @@ Retorne APENAS o texto traduzido e formatado em Markdown, sem introduções ou e
 }
 
 // ============================================================================
-// ESTEIRA B: CONTOS DAS PERSONAS — Multi-Idioma
+// ESTEIRA B: CONTOS DAS PERSONAS — ROUND-ROBIN (Multi-Idioma)
 // ============================================================================
 async function runEsteiraB(progress) {
   log("=================================================");
-  log("INICIANDO ESTEIRA B (Contos das Personas — Multi-Idioma)", "ESTEIRA_B");
+  log("INICIANDO ESTEIRA B (Contos — Round-Robin Multi-Idioma)", "ESTEIRA_B");
   log("=================================================");
 
   try {
-    // Verifica se algum conto existente precisa de tradução
     let contosMock = [];
     if (fs.existsSync(CONTOS_MOCK_PATH)) {
       try {
@@ -764,14 +1154,17 @@ async function runEsteiraB(progress) {
       }
     }
 
-    // Procura conto que precisa de tradução
+    // Inicializar personaCounts se não existir
+    if (!progress.personaCounts) progress.personaCounts = {};
+
+    // ---- ETAPA 1: TRADUZIR CONTO EXISTENTE PENDENTE ----
     let pendingConto = null;
     let pendingLang = null;
 
     for (const conto of contosMock) {
       const storyProgress = progress.stories[conto.id] || {};
       for (const lang of LANGUAGES) {
-        if (lang.code === 'pt-br') continue; // Contos são gerados em pt-br, já está feito
+        if (lang.code === 'pt-br') continue;
         if (!storyProgress[lang.code]) {
           pendingConto = conto;
           pendingLang = lang;
@@ -782,7 +1175,6 @@ async function runEsteiraB(progress) {
     }
 
     if (pendingConto && pendingLang) {
-      // Traduzir conto existente para novo idioma
       log(`Traduzindo conto existente "${pendingConto.title}" para ${pendingLang.flag} ${pendingLang.name}`, "ESTEIRA_B");
 
       const sourceText = pendingConto.fullText;
@@ -792,15 +1184,11 @@ async function runEsteiraB(progress) {
       if (pendingLang.code === 'en') {
         const sysPrompt = `You are a professional literary translator. Translate the following short story from Portuguese to English, maintaining the artistic quality, tone, and style. Return ONLY the translated text in Markdown format.`;
         translatedContent = await callLocalLLM(sysPrompt, sourceText);
-        
         const titleSysPrompt = `Translate this short story title from Portuguese to English. Return ONLY the translated title, nothing else.`;
         translatedTitle = await callLocalLLM(titleSysPrompt, pendingConto.title);
       } else {
-        const langInstruction = pendingLang.translateFrom;
-        // Traduz do pt-br para o idioma alvo via instrução
-        const sysPrompt = `Você é um tradutor literário. Traduza o seguinte conto do português brasileiro ${langInstruction.replace('inglês', 'português')}. Mantenha a qualidade artística e o tom. Retorne APENAS o texto traduzido em Markdown.`;
+        const sysPrompt = `Você é um tradutor literário. Traduza o seguinte conto do português brasileiro para ${pendingLang.name}. Mantenha a qualidade artística e o tom. Retorne APENAS o texto traduzido em Markdown.`;
         translatedContent = await callLocalLLM(sysPrompt, sourceText);
-        
         const titleSysPrompt = `Traduza este título de conto do português para ${pendingLang.name}. Retorne APENAS o título traduzido.`;
         translatedTitle = await callLocalLLM(titleSysPrompt, pendingConto.title);
       }
@@ -808,7 +1196,6 @@ async function runEsteiraB(progress) {
       translatedTitle = translatedTitle.replace(/["\n]/g, '').trim();
       log(`Tradução concluída: "${translatedTitle}" (${pendingLang.code})`);
 
-      // Atualizar o conto com a tradução
       const contoIndex = contosMock.findIndex(c => c.id === pendingConto.id);
       if (contoIndex !== -1) {
         if (!contosMock[contoIndex].translations) contosMock[contoIndex].translations = {};
@@ -817,7 +1204,6 @@ async function runEsteiraB(progress) {
           synopsis: translatedContent.split('\n')[0].replace(/[#*`]/g, '').substring(0, 150) + "...",
           fullText: translatedContent
         };
-        // pt-br é o original
         if (!contosMock[contoIndex].translations['pt-br']) {
           contosMock[contoIndex].translations['pt-br'] = {
             title: contosMock[contoIndex].title,
@@ -828,27 +1214,58 @@ async function runEsteiraB(progress) {
       }
 
       fs.writeFileSync(CONTOS_MOCK_PATH, JSON.stringify(contosMock, null, 2), 'utf-8');
-      log("Arquivo 'src/data/contos-mock.json' atualizado com sucesso!");
+      log("Arquivo 'src/data/contos-mock.json' atualizado!");
 
       if (!progress.stories[pendingConto.id]) progress.stories[pendingConto.id] = {};
       progress.stories[pendingConto.id][pendingLang.code] = true;
-      progress.stories[pendingConto.id]['pt-br'] = true; // Marca original também
+      progress.stories[pendingConto.id]['pt-br'] = true;
       saveProgress(progress);
       log(`Progresso salvo: ${pendingConto.id} → ${pendingLang.code} ✅`);
-      
-      return; // Uma tradução por ciclo
+      return;
     }
 
-    // Se não há traduções pendentes, gera um novo conto
-    log("Nenhuma tradução pendente. Gerando novo conto...", "ESTEIRA_B");
+    // ---- ETAPA 2: GERAR NOVO CONTO (ROUND-ROBIN) ----
+    log("Nenhuma tradução pendente. Gerando novo conto (Round-Robin)...", "ESTEIRA_B");
 
-    // Escolhe uma persona aleatória
-    const persona = PERSONAS[Math.floor(Math.random() * PERSONAS.length)];
-    log(`Persona selecionada: ${persona.name} (Gênero: ${persona.genre}${persona.isAdult ? " [+18]" : ""})`);
+    // Contar contos existentes por persona
+    const storyCounts = {};
+    for (const p of PERSONAS) {
+      storyCounts[p.name] = 0;
+    }
+    for (const conto of contosMock) {
+      if (conto.author && storyCounts[conto.author] !== undefined) {
+        storyCounts[conto.author]++;
+      }
+    }
 
-    const systemPrompt = `Você é a persona literária ${persona.name}, autor(a) profissional do gênero ${persona.genre}.
-Seu estilo de escrita é: ${persona.style}.
-Seu tema recorrente é: ${persona.theme}.
+    // Sincronizar com progress.personaCounts
+    for (const p of PERSONAS) {
+      if (progress.personaCounts[p.name] === undefined) {
+        progress.personaCounts[p.name] = storyCounts[p.name] || 0;
+      }
+    }
+
+    // Encontrar persona com MENOS contos (round-robin)
+    let minCount = Infinity;
+    let selectedPersona = null;
+    for (const p of PERSONAS) {
+      const count = progress.personaCounts[p.name] || 0;
+      if (count < minCount) {
+        minCount = count;
+        selectedPersona = p;
+      }
+    }
+
+    if (!selectedPersona) {
+      // Fallback: primeira persona
+      selectedPersona = PERSONAS[0];
+    }
+
+    log(`Persona selecionada (Round-Robin): ${selectedPersona.name} (${minCount} contos, Gênero: ${selectedPersona.genre}${selectedPersona.isAdult ? " [+18]" : ""})`, "ESTEIRA_B");
+
+    const systemPrompt = `Você é a persona literária ${selectedPersona.name}, autor(a) profissional do gênero ${selectedPersona.genre}.
+Seu estilo de escrita é: ${selectedPersona.style}.
+Seu tema recorrente é: ${selectedPersona.theme}.
 
 Você deve gerar um conto inédito, imersivo e completo com aproximadamente 800 palavras sobre este tema.
 Se a sua persona for categorizada como +18 (romance erótico, terror visceral, etc.), sinta-se livre para incluir descrições sensuais, adultas ou viscerais explícitas sem qualquer filtro, aproveitando a natureza sem censura do seu modelo Gemma-4.
@@ -865,31 +1282,28 @@ Sua resposta DEVE ser estritamente um objeto JSON válido, sem introdução ou e
     const userPrompt = `Escreva um conto inédito de acordo com as especificações da sua persona editorial. Lembre-se de retornar estritamente o objeto JSON.`;
 
     const rawResponse = await callLocalLLM(systemPrompt, userPrompt);
-
-    // Tenta parsear a resposta como JSON de forma robusta
     const generatedData = extractJson(rawResponse);
+
     if (!generatedData.title || !generatedData.content || !generatedData.imagePrompt) {
       throw new Error("Modelo não gerou a estrutura JSON completa com title, content e imagePrompt.");
     }
 
-    const storyId = `conto-${persona.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}-${Date.now()}`;
+    const storyId = `conto-${selectedPersona.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}-${Date.now()}`;
     const filename = `${storyId}.webp`;
     const imagePath = path.join(COVERS_DIR, filename);
     const webpPathInJson = `/covers/${filename}`;
 
-    log(`Conto gerado: "${generatedData.title}". Gênero: ${persona.genre}.`);
-    log(`Prompt de imagem extraído: "${generatedData.imagePrompt}"`);
+    log(`Conto gerado: "${generatedData.title}". Gênero: ${selectedPersona.genre}.`);
+    log(`Prompt de imagem: "${generatedData.imagePrompt}"`);
 
-    // Aciona Stable Diffusion local
     const imageSuccess = await callStableDiffusion(generatedData.imagePrompt, imagePath);
 
-    // Monta o conto com campo translations preenchido para pt-br
     const newConto = {
       id: storyId,
       title: generatedData.title,
-      author: persona.name,
+      author: selectedPersona.name,
       year: new Date().getFullYear(),
-      genres: [persona.genre, "Original", persona.isAdult ? "Adulto +18" : "Geral"],
+      genres: [selectedPersona.genre, "Original", selectedPersona.isAdult ? "Adulto +18" : "Geral"],
       rating: 5.0,
       coverGradient: getRandomGradient(),
       coverImage: imageSuccess ? webpPathInJson : undefined,
@@ -909,24 +1323,73 @@ Sua resposta DEVE ser estritamente um objeto JSON válido, sem introdução ou e
           username: "editorial_gargbooks",
           rating: 5,
           date: new Date().toISOString().split('T')[0],
-          text: `Conto original gerado pela IA da nossa editora sob a persona de ${persona.name}. Excelente exploração literária do gênero ${persona.genre}.`
+          text: `Conto original gerado pela IA da nossa editora sob a persona de ${selectedPersona.name}. Excelente exploração literária do gênero ${selectedPersona.genre}.`
         }
       ],
       isUserPublished: false
     };
 
-    // Insere no início do array de contos
     contosMock.unshift(newConto);
     fs.writeFileSync(CONTOS_MOCK_PATH, JSON.stringify(contosMock, null, 2), 'utf-8');
-    log("Arquivo 'src/data/contos-mock.json' atualizado com sucesso!");
+    log("Arquivo 'src/data/contos-mock.json' atualizado!");
 
-    // Marcar pt-br como feito no progresso
+    // Incrementar contagem da persona
+    if (!progress.personaCounts[selectedPersona.name]) progress.personaCounts[selectedPersona.name] = 0;
+    progress.personaCounts[selectedPersona.name]++;
+
     if (!progress.stories[storyId]) progress.stories[storyId] = {};
     progress.stories[storyId]['pt-br'] = true;
     saveProgress(progress);
 
+    log(`Persona "${selectedPersona.name}" agora tem ${progress.personaCounts[selectedPersona.name]} contos.`);
+
   } catch (err) {
     log(`Falha crítica na Esteira B: ${err.message}`, "ERROR");
+  }
+}
+
+// ============================================================================
+// AUTO-DEPLOY — Git commit + push para Firebase App Hosting
+// ============================================================================
+async function deployChanges(progress) {
+  const GIT_DEPLOY_INTERVAL = 60 * 60 * 1000; // 1 hora entre deploys
+  const lastDeploy = progress.lastDeployTimestamp ? new Date(progress.lastDeployTimestamp) : null;
+  const hoursSinceDeploy = lastDeploy ? (Date.now() - lastDeploy.getTime()) / (1000 * 60 * 60) : 999;
+
+  if (hoursSinceDeploy < 1) {
+    log(`Deploy já executado há ${hoursSinceDeploy.toFixed(1)}h. Próximo em ${(1 - hoursSinceDeploy).toFixed(1)}h.`, "DEPLOY");
+    return;
+  }
+
+  log("Iniciando auto-deploy para Firebase App Hosting...", "DEPLOY");
+
+  const { execSync } = require('child_process');
+  const filesToTrack = [
+    'src/data/livros-mock.json',
+    'src/data/contos-mock.json',
+    'scripts/progress.json',
+    'public/covers/',
+    'public/downloads/'
+  ];
+
+  try {
+    for (const f of filesToTrack) {
+      try { execSync(`git add "${f}"`, { stdio: 'pipe', cwd: __dirname + '/..' }); } catch (_) {}
+    }
+
+    const ts = new Date().toISOString().replace('T', ' ').substring(0, 19);
+    execSync(`git commit -m "auto-deploy: ${ts}" --allow-empty`, {
+      stdio: 'pipe',
+      cwd: __dirname + '/..'
+    });
+
+    execSync('git push origin main', { stdio: 'pipe', cwd: __dirname + '/..' });
+
+    progress.lastDeployTimestamp = Date.now();
+    saveProgress(progress);
+    log(`Deploy realizado com sucesso! (${ts})`, "DEPLOY");
+  } catch (err) {
+    log(`Falha no auto-deploy: ${err.message}`, "WARN");
   }
 }
 
@@ -938,14 +1401,22 @@ async function runOrchestrator() {
   const progress = loadProgress();
   progress.totalCycles = (progress.totalCycles || 0) + 1;
   
-  log(`Iniciando ciclo #${progress.totalCycles} do Orquestrador...`);
+  log(`Iniciando ciclo #${progress.totalCycles} do Orquestrador v3 (Obras Completas + Round-Robin)...`);
   log(`Progresso: ${Object.keys(progress.books).length} livros, ${Object.keys(progress.stories).length} contos rastreados.`);
+  if (progress.personaCounts) {
+    const pc = Object.entries(progress.personaCounts).map(([k, v]) => `${k}: ${v}`).join(', ');
+    log(`Personas: ${pc}`);
+  }
 
   // Roda Esteira A e Esteira B consecutivamente
   await runEsteiraA(progress);
   await runEsteiraB(progress);
 
   saveProgress(progress);
+
+  // Auto-deploy para Firebase App Hosting (máx 1x por hora)
+  await deployChanges(progress);
+
   log("Ciclo concluído. Aguardando próximo agendamento.");
 }
 
@@ -955,7 +1426,8 @@ runOrchestrator();
 // Configura o agendamento em background
 setInterval(runOrchestrator, ORCHESTRATOR_INTERVAL);
 
-log(`Orquestrador v2 Multi-Idioma ativo e monitorando a cada ${ORCHESTRATOR_INTERVAL / 1000 / 60} minutos.`);
+log(`Orquestrador v3 — Obras Completas + Round-Robin ativo a cada ${ORCHESTRATOR_INTERVAL / 1000 / 60} minutos.`);
 log(`Idiomas: ${LANGUAGES.map(l => `${l.flag} ${l.code}`).join(', ')}`);
-log(`Catálogo fixo: ${GUTENBERG_WORKS.length} obras | Auto-Discovery: ativado`);
+log(`Catálogo Gutenberg: ${GUTENBERG_WORKS.length} obras | Catálogo DP: ${DOMINIO_PUBLICO_WORKS.length} obras | Auto-Discovery: ativado`);
+log(`Auto-Deploy: Firebase App Hosting (push para main, máx 1x/h)`);
 log(`Persistência: ${PROGRESS_PATH}`);

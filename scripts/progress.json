@@ -5,7 +5,35 @@
       "pt-br": true,
       "pt-pt": true,
       "es": true,
-      "fr": true
+      "fr": true,
+      "chunks": {
+        "en": [
+          true,
+          true,
+          false
+        ],
+        "pt-br": [
+          false,
+          false,
+          false
+        ],
+        "pt-pt": [
+          false,
+          false,
+          false
+        ],
+        "es": [
+          false,
+          false,
+          false
+        ],
+        "fr": [
+          false,
+          false,
+          false
+        ]
+      },
+      "totalChunks": 3
     },
     "the-metamorphosis": {
       "en": true,
@@ -348,6 +376,41 @@
     "conto-luna-novak-1783508396974": {
       "en": true,
       "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "conto-18-sombras-sangue": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "conto-viktor-draum-1783606878796": {
+      "pt-br": true,
+      "en": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "conto-luna-novak-1783609882397": {
+      "pt-br": true,
+      "en": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "conto-chloe-mercier-1783612892649": {
+      "pt-br": true,
+      "en": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "conto-isabela-requena-1783615881522": {
+      "pt-br": true,
+      "en": true,
       "pt-pt": true
     }
   },
@@ -473,5 +536,6 @@
     }
   ],
   "lastDiscoveryTimestamp": "2026-07-09T11:31:06.123Z",
-  "totalCycles": 115
+  "totalCycles": 140,
+  "personaCounts": {}
 }

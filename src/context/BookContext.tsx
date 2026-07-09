@@ -54,6 +54,8 @@ export interface Book {
   publishWithRealPhoto?: boolean; // toggle to show real photo or anonymous avatar for +18
   type: "livro" | "conto"; // distinguish books from short stories
   reactions?: Record<string, string[]>; // mapping reaction type to user IDs
+  publicDomain?: boolean;
+  language?: string;
 }
 
 export interface Bookmark {

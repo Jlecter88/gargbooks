@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "orchestrator": "node scripts/orchestrator.js"
+    "orchestrator": "node scripts/orchestrator.js",
+    "migrate-chunks": "node scripts/migrate-chunks.js"
   },
   "dependencies": {
     "firebase": "^12.15.0",

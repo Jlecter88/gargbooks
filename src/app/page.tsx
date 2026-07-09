@@ -123,11 +123,19 @@ export default function Home() {
   const [loadingGutenberg, setLoadingGutenberg] = useState(false);
   const [hasSearchedGutenberg, setHasSearchedGutenberg] = useState(false);
 
+  // Amazon Search states
+  const [amazonResults, setAmazonResults] = useState<any[]>([]);
+  const [loadingAmazon, setLoadingAmazon] = useState(false);
+  const [hasSearchedAmazon, setHasSearchedAmazon] = useState(false);
+
   // Search Project Gutenberg (Gutendex API with CORS enabled)
   const handleGutenbergSearch = async () => {
     if (!searchTerm.trim()) return;
     setLoadingGutenberg(true);
     setHasSearchedGutenberg(true);
+    // Clear Amazon search results to avoid cluttering
+    setAmazonResults([]);
+    setHasSearchedAmazon(false);
     try {
       const response = await fetch(`https://gutendex.com/books/?search=${encodeURIComponent(searchTerm)}`);
       if (response.ok) {
@@ -140,6 +148,29 @@ export default function Home() {
       console.error("Falha ao buscar no Gutenberg:", err);
     } finally {
       setLoadingGutenberg(false);
+    }
+  };
+
+  // Search Amazon using our new Next.js route
+  const handleAmazonSearch = async () => {
+    if (!searchTerm.trim()) return;
+    setLoadingAmazon(true);
+    setHasSearchedAmazon(true);
+    // Clear Gutenberg search results to avoid cluttering
+    setGutenbergResults([]);
+    setHasSearchedGutenberg(false);
+    try {
+      const response = await fetch(`/api/amazon?q=${encodeURIComponent(searchTerm)}`);
+      if (response.ok) {
+        const data = await response.json();
+        setAmazonResults(data.results || []);
+      } else {
+        console.error("Erro na busca da Amazon");
+      }
+    } catch (err) {
+      console.error("Falha ao buscar na Amazon:", err);
+    } finally {
+      setLoadingAmazon(false);
     }
   };
 
@@ -168,6 +199,8 @@ export default function Home() {
         fullText: "Carregando o texto completo do Project Gutenberg...",
         downloadFile: `/api/gutenberg?id=${gbook.id}`,
         type: "livro" as const,
+        publicDomain: true,
+        language: "en",
         editions: [],
         reviews: [],
         translations: {
@@ -187,6 +220,21 @@ export default function Home() {
       };
       
       addBook(newBook);
+    }
+    
+    router.push(`/livros/${bookId}`);
+  };
+
+  // Catalog commercial book and route to details page
+  const handleOpenAmazonBook = (aBook: any) => {
+    const bookId = aBook.id;
+    const existing = books.find(b => b.id === bookId);
+    
+    if (!existing) {
+      addBook({
+        ...aBook,
+        isUserPublished: false
+      });
     }
     
     router.push(`/livros/${bookId}`);
@@ -717,12 +765,20 @@ export default function Home() {
               <span className="absolute left-4 top-3 text-[11px] opacity-60">🔍</span>
             </div>
             {searchTerm.trim().length > 1 && activeTab !== "contos" && (
-              <button
-                onClick={handleGutenbergSearch}
-                className="px-5 py-2.5 text-[11px] font-mono uppercase tracking-widest rounded-full border border-accent text-accent hover:bg-accent hover:text-[#121213] transition-all cursor-pointer font-bold"
-              >
-                Buscar Gutenberg 🌐
-              </button>
+              <div className="flex gap-2 shrink-0">
+                <button
+                  onClick={handleGutenbergSearch}
+                  className="px-4 py-2.5 text-[10px] font-mono uppercase tracking-widest rounded-full border border-accent text-accent hover:bg-accent hover:text-[#121213] transition-all cursor-pointer font-bold flex items-center gap-1"
+                >
+                  Gutenberg 🌐
+                </button>
+                <button
+                  onClick={handleAmazonSearch}
+                  className="px-4 py-2.5 text-[10px] font-mono uppercase tracking-widest rounded-full border border-emerald-500 text-emerald-450 hover:bg-emerald-500 hover:text-white transition-all cursor-pointer font-bold flex items-center gap-1"
+                >
+                  Amazon 🛒
+                </button>
+              </div>
             )}
             <select
               value={sortBy}
@@ -792,6 +848,57 @@ export default function Home() {
           </section>
         )}
 
+        {/* ── Amazon Affiliate Catalog Search Results ── */}
+        {(loadingAmazon || (hasSearchedAmazon && amazonResults.length > 0)) && (
+          <section className="mb-24 mt-4 animate-fade-in-up">
+            <div className="flex items-center gap-3 mb-6">
+              <span className="h-[1px] w-8 bg-emerald-500" />
+              <span className="font-mono text-xs uppercase tracking-widest text-emerald-450 font-semibold">
+                Catálogo Comercial (Parceiro Amazon)
+              </span>
+            </div>
+            
+            {loadingAmazon ? (
+              <div className="text-center py-12">
+                <div className="animate-spin text-emerald-500 text-3xl mb-2">⏳</div>
+                <p className="font-mono text-xs opacity-60">Pesquisando no catálogo completo comercial da Amazon BR e ES...</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+                {amazonResults.map((aBook) => {
+                  const coverImg = aBook.coverImage;
+                  return (
+                    <div 
+                      key={aBook.id} 
+                      onClick={() => handleOpenAmazonBook(aBook)}
+                      className={`border rounded-2xl p-6 flex flex-col justify-between items-center text-center cursor-pointer hover:border-emerald-500 hover:shadow-xl transition-all duration-300 ${borderClasses} bg-current/3`}
+                    >
+                      <div className="w-[120px] h-[175px] shadow-lg rounded-md overflow-hidden bg-stone-800 flex items-center justify-center mb-4 relative">
+                        {coverImg ? (
+                          <img src={coverImg} alt={aBook.title} className="w-full h-full object-cover" />
+                        ) : (
+                          <div className="p-3 text-[10px] text-white/60 font-serif font-bold uppercase">{aBook.title}</div>
+                        )}
+                        <div className="absolute top-2 right-2 bg-emerald-600 text-white text-[8px] font-mono font-bold px-1.5 py-0.5 rounded">
+                          COMERCIAL
+                        </div>
+                      </div>
+                      <div>
+                        <h3 className="font-serif text-xs font-bold line-clamp-2 mb-1">{aBook.title}</h3>
+                        <p className="font-mono text-[9px] opacity-60 uppercase tracking-wider">{aBook.author}</p>
+                      </div>
+                      <button className="mt-4 px-4 py-2 bg-emerald-600 text-white rounded-full font-mono text-[9px] font-bold uppercase tracking-wider w-full cursor-pointer">
+                        Ver Edição / Comprar 🛒
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+            <div className="editorial-line mt-12" />
+          </section>
+        )}
+
         {/* ── Content Grid ─────────────────────────────────────────────── */}
         {filteredBooks.length === 0 ? (
           <div className="text-center py-24 border border-dashed rounded-3xl border-current/15">
@@ -805,12 +912,20 @@ export default function Home() {
               Tente redefinir seus filtros ou buscar por outros termos de pesquisa na estante.
             </p>
             {searchTerm.trim().length > 1 && activeTab !== "contos" && (
-              <button
-                onClick={handleGutenbergSearch}
-                className="px-6 py-3 bg-accent text-white hover:bg-accent-hover text-xs uppercase tracking-widest font-mono font-bold transition-all duration-300 transform active:scale-95 shadow-lg shadow-accent/25 cursor-pointer"
-              >
-                Buscar "${searchTerm}" no Project Gutenberg 🌐
-              </button>
+              <div className="flex justify-center gap-3">
+                <button
+                  onClick={handleGutenbergSearch}
+                  className="px-6 py-3 bg-accent text-[#121213] hover:bg-accent-hover text-xs uppercase tracking-widest font-mono font-bold transition-all duration-300 transform active:scale-95 shadow-lg shadow-accent/25 cursor-pointer rounded-full"
+                >
+                  Buscar no Project Gutenberg 🌐
+                </button>
+                <button
+                  onClick={handleAmazonSearch}
+                  className="px-6 py-3 bg-emerald-600 text-white hover:bg-emerald-700 text-xs uppercase tracking-widest font-mono font-bold transition-all duration-300 transform active:scale-95 shadow-lg shadow-emerald-600/25 cursor-pointer rounded-full"
+                >
+                  Buscar no Catálogo Amazon 🛒
+                </button>
+              </div>
             )}
           </div>
         ) : (
@@ -964,7 +1079,19 @@ export default function Home() {
                       </div>
 
                       <div className="flex items-center justify-between text-[10px] font-mono mt-4 pt-3 border-t border-current/10 text-current/40">
-                        <span>{book.year}</span>
+                        <div className="flex items-center gap-2">
+                          <span>{book.year}</span>
+                          <span>•</span>
+                          {book.publicDomain === false ? (
+                            <span className="text-red-400 font-bold uppercase tracking-wider text-[8px] border border-red-500/20 px-1.5 py-0.5 rounded bg-red-950/20">
+                              © Copyright
+                            </span>
+                          ) : (
+                            <span className="text-stone-400 font-bold uppercase tracking-wider text-[8px] border border-stone-400/20 px-1.5 py-0.5 rounded bg-stone-950/20">
+                              Domínio Público
+                            </span>
+                          )}
+                        </div>
                         <div className="flex items-center gap-3">
                           {hasBuyLink && (
                             <a
