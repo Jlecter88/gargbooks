@@ -831,25 +831,35 @@ async function runEsteiraA(progress) {
       let fullText;
       const originalDownloadPath = path.join(DOWNLOADS_DIR, `${bookId}-${ORIGINAL_LANG}.txt`);
 
-      if (fs.existsSync(originalDownloadPath)) {
-        fullText = fs.readFileSync(originalDownloadPath, 'utf-8');
-        log(`Texto original já existe: ${originalDownloadPath}`);
-      } else if (isDp) {
-        const rawText = await fetchDominioPublicoBook(targetWork.id, targetWork.title, targetWork.author);
-        fullText = rawText;
+      // Re-download se arquivo existente for muito pequeno (< 50KB = truncado do sistema antigo)
+      const MIN_TEXT_SIZE = 50000;
+      if (fs.existsSync(originalDownloadPath) && !isDp) {
+        const existingSize = fs.statSync(originalDownloadPath).size;
+        if (existingSize < MIN_TEXT_SIZE) {
+          log(`Arquivo existente muito pequeno (${existingSize} bytes). Baixando novamente...`, "WARN");
+        } else {
+          fullText = fs.readFileSync(originalDownloadPath, 'utf-8');
+          log(`Texto original já existe: ${originalDownloadPath} (${existingSize} bytes)`);
+        }
+      }
+
+      if (!fullText) {
+        if (isDp) {
+          const rawText = await fetchDominioPublicoBook(targetWork.id, targetWork.title, targetWork.author);
+          fullText = rawText;
+        } else {
+          const rawText = await fetchGutenbergBook(targetWork.id);
+          fullText = cleanGutenbergText(rawText);
+        }
         fs.writeFileSync(originalDownloadPath, fullText, 'utf-8');
-        log(`Texto original DP salvo: ${originalDownloadPath}`);
-      } else {
-        const rawText = await fetchGutenbergBook(targetWork.id);
-        fullText = cleanGutenbergText(rawText);
-        fs.writeFileSync(originalDownloadPath, fullText, 'utf-8');
-        log(`Texto original Gutenberg salvo: ${originalDownloadPath}`);
+        log(`Texto original ${isDp ? 'DP' : 'Gutenberg'} salvo: ${originalDownloadPath}`);
       }
 
       // Salvar sem sufixo para compatibilidade
       const legacyPath = path.join(DOWNLOADS_DIR, `${bookId}.txt`);
-      if (!fs.existsSync(legacyPath)) {
-        fs.copyFileSync(originalDownloadPath, legacyPath);
+      // Sobrescreve legacy se o original foi re-baixado (agora maior)
+      if (!fs.existsSync(legacyPath) || (fullText.length > MIN_TEXT_SIZE && fs.statSync(legacyPath).size < MIN_TEXT_SIZE)) {
+        fs.writeFileSync(legacyPath, fullText, 'utf-8');
       }
 
       // Dividir em chunks de ~4000 caracteres

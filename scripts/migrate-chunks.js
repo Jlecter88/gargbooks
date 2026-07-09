@@ -91,29 +91,54 @@ async function migrate() {
     const bookId = work.title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
     const bp = progress.books[bookId];
 
-    // Pula se já tem chunks (já migrado) ou não existe no progress
     if (!bp) continue;
-    if (bp.chunks) {
-      log(`"${work.title}" já possui chunks. Pulando.`);
+
+    // Verifica se precisa re-baixar (arquivo truncado)
+    const enPath = path.join(DOWNLOADS_DIR, `${bookId}-en.txt`);
+    let needsRedownload = false;
+    if (fs.existsSync(enPath)) {
+      const size = fs.statSync(enPath).size;
+      if (size < 50000) {
+        needsRedownload = true;
+        log(`"${work.title}" texto truncado (${size} bytes). Re-baixando...`, "WARN");
+      }
+    }
+
+    // Se já tem chunks e o texto é grande o suficiente, pula
+    if (bp.chunks && !needsRedownload) {
+      log(`"${work.title}" já possui chunks OK. Pulando.`);
       continue;
     }
 
     log(`Migrando: "${work.title}" (${bookId})...`);
 
-    // Baixar ou carregar texto completo
+    // Baixar ou carregar texto completo (re-baixa se < 50KB = truncado)
+    const MIN_TEXT_SIZE = 50000;
     const downloadPath = path.join(DOWNLOADS_DIR, `${bookId}-en.txt`);
     let fullText;
+    let needsDownload = false;
+
     if (fs.existsSync(downloadPath)) {
-      fullText = fs.readFileSync(downloadPath, 'utf-8');
-      log(`Texto EN encontrado localmente.`);
+      const existingSize = fs.statSync(downloadPath).size;
+      if (existingSize < MIN_TEXT_SIZE) {
+        log(`Arquivo local muito pequeno (${existingSize} bytes). Re-baixando do Gutenberg...`, "WARN");
+        needsDownload = true;
+      } else {
+        fullText = fs.readFileSync(downloadPath, 'utf-8');
+        log(`Texto EN encontrado localmente (${existingSize} bytes).`);
+      }
     } else {
+      needsDownload = true;
+    }
+
+    if (needsDownload) {
       try {
         const raw = await fetchGutenbergBook(work.id);
         fullText = cleanGutenbergText(raw);
         fs.writeFileSync(downloadPath, fullText, 'utf-8');
         const legacyPath = path.join(DOWNLOADS_DIR, `${bookId}.txt`);
         fs.writeFileSync(legacyPath, fullText, 'utf-8');
-        log(`Texto EN baixado do Gutenberg.`);
+        log(`Texto EN baixado do Gutenberg (${fullText.length} chars).`);
       } catch (err) {
         log(`Falha ao baixar "${work.title}": ${err.message}`, "WARN");
         continue;

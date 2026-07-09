@@ -22,7 +22,7 @@ export default function Home() {
   const [selectedGenre, setSelectedGenre] = useState("Todos");
   const [sortBy, setSortBy] = useState("year-desc");
   const [appTheme, setAppTheme] = useState<"dark" | "sepia" | "light">("light");
-  const [activeTab, setActiveTab] = useState<ContentTab>("todos");
+  const [activeTab, setActiveTab] = useState<ContentTab>("livros");
   const [userRegion, setUserRegion] = useState<"BR" | "PT">("BR");
 
   // Detect region upon login or browser language
@@ -436,14 +436,14 @@ export default function Home() {
                     LER CONTOS
                   </button>
                 </div>
-                <button
+                 <button
                   onClick={() => {
-                    setActiveTab("todos");
+                    setActiveTab("livros");
                     setPreloaderActive(false);
                   }}
                   className="font-mono text-[9px] uppercase tracking-[0.15rem] text-white/40 hover:text-white transition-colors duration-300 cursor-pointer mt-2 underline underline-offset-4"
                 >
-                  Ver toda a estante
+                  Ir para a estante
                 </button>
               </div>
             )}
@@ -674,12 +674,6 @@ export default function Home() {
             {(
               [
                 {
-                  id: "todos",
-                  label: "Tudo",
-                  icon: "🔮",
-                  description: "Livros e contos",
-                },
-                {
                   id: "livros",
                   label: "Livros",
                   icon: "📚",
@@ -724,8 +718,6 @@ export default function Home() {
               "📚 Livros clássicos e edições raras — com links de afiliados para compra no Brasil e em Portugal."}
             {activeTab === "contos" &&
               "✍️ Contos originais gerados por escritores da comunidade e personas da IA editorial Gargbooks."}
-            {activeTab === "todos" &&
-              "🔮 Toda a estante — livros clássicos, edições raras e contos originais em um só lugar."}
           </p>
         </section>
 
@@ -929,21 +921,8 @@ export default function Home() {
             )}
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-y-28 gap-x-12 animate-fade-in-up">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 animate-fade-in-up">
             {filteredBooks.map((book, idx) => {
-              const isWide = idx % 4 === 0 || idx % 4 === 3;
-              const colSpanClass = isWide ? "md:col-span-7" : "md:col-span-5";
-              const offsetClass =
-                idx % 4 === 1 ? "md:mt-24" : idx % 4 === 2 ? "md:mt-12" : "";
-              const aspectClass =
-                idx % 4 === 0
-                  ? "aspect-[4/5]"
-                  : idx % 4 === 1
-                  ? "aspect-[3/4]"
-                  : idx % 4 === 2
-                  ? "aspect-[4/3]"
-                  : "aspect-[16/10]";
-
               const isLivro = book.type === "livro";
               const hasBuyLink = isLivro && book.editions && book.editions.length > 0;
 
@@ -951,15 +930,15 @@ export default function Home() {
                 <React.Fragment key={book.id}>
                   {/* Manifesto row after 2nd item */}
                   {idx === 2 && (
-                    <div className="col-span-1 md:col-span-12 my-12 border-y border-current/10 py-16 text-center max-w-4xl mx-auto w-full">
-                      <span className="text-[10px] font-mono uppercase tracking-widest text-accent mb-4 block font-bold">
+                    <div className="col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-4 my-8 border-y border-current/10 py-12 text-center w-full">
+                      <span className="text-[10px] font-mono uppercase tracking-widest text-accent mb-3 block font-bold">
                         O Manifesto Gargbooks
                       </span>
-                      <p className="font-serif text-3xl md:text-4xl italic leading-relaxed text-current max-w-3xl mx-auto">
+                      <p className="font-serif text-2xl md:text-3xl italic leading-relaxed text-current max-w-3xl mx-auto">
                         &ldquo;A leitura é a arquitetura da alma. Cada obra não é apenas um texto,
                         mas uma estrutura escultural que esculpe a mente e o espaço ao redor.&rdquo;
                       </p>
-                      <div className="mt-8 flex justify-center gap-6 text-[10px] font-mono uppercase tracking-widest">
+                      <div className="mt-6 flex justify-center gap-6 text-[10px] font-mono uppercase tracking-widest">
                         <span className="text-current/60">curadoria independente</span>
                         <span className="text-accent">•</span>
                         <span className="text-current/60">edições raras</span>
@@ -969,14 +948,14 @@ export default function Home() {
 
                   {/* Philosophy block after 4th item */}
                   {idx === 4 && (
-                    <div className="col-span-1 md:col-span-12 my-12 grid grid-cols-1 md:grid-cols-2 gap-8 border border-current/10 p-10 rounded-2xl bg-current/3">
+                    <div className="col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-4 my-8 grid grid-cols-1 md:grid-cols-2 gap-8 border border-current/10 p-8 rounded-2xl bg-current/3">
                       <div className="flex flex-col justify-between">
-                        <h3 className="font-serif text-2xl md:text-3xl font-bold tracking-tight">
+                        <h3 className="font-serif text-xl md:text-2xl font-bold tracking-tight">
                           Nossa{" "}
                           <span className="font-light italic text-accent font-serif">filosofia</span>{" "}
                           de design geométrico
                         </h3>
-                        <p className={`text-xs leading-relaxed font-sans ${mutedTextClasses} max-w-sm mt-4`}>
+                        <p className={`text-xs leading-relaxed font-sans ${mutedTextClasses} max-w-sm mt-3`}>
                           Cada elemento do Gargbooks é regido por proporções visuais de equilíbrio,
                           buscando criar um refúgio visual para leitores que apreciam a tipografia
                           clássica, o minimalismo e a beleza estrutural das palavras.
@@ -991,76 +970,78 @@ export default function Home() {
                   )}
 
                   {/* Book / Conto Card */}
-                  <div className={`group flex flex-col h-full ${colSpanClass} ${offsetClass}`}>
-                    <Link
-                      href={`/livros/${book.id}`}
-                      className="flex flex-col flex-1 hover:-translate-y-2 transition-all duration-700 ease-corto"
-                    >
-                      {/* Cover */}
-                      <div
-                        className={`relative w-full overflow-hidden rounded-2xl border border-current/8 group-hover:border-accent/40 shadow-sm group-hover:shadow-lg transition-all duration-700 ease-corto ${aspectClass}`}
+                  <div className="group flex flex-col h-full bg-current/[0.02] border border-current/10 rounded-2xl p-5 hover:border-accent/40 hover:shadow-xl transition-all duration-500 ease-corto justify-between">
+                    <div>
+                      <Link
+                        href={`/livros/${book.id}`}
+                        className="flex flex-col hover:-translate-y-1 transition-all duration-500 ease-corto"
                       >
-                        {/* Background */}
+                        {/* Cover */}
                         <div
-                          className={`absolute inset-0 bg-gradient-to-tr ${book.coverGradient} transition-transform duration-700 ease-corto group-hover:scale-105`}
-                          style={
-                            book.coverImage
-                              ? {
-                                  backgroundImage: `url(${book.coverImage})`,
-                                  backgroundSize: "cover",
-                                  backgroundPosition: "center",
-                                }
-                              : undefined
-                          }
-                        />
+                          className="relative w-full overflow-hidden rounded-xl border border-current/8 group-hover:border-accent/40 shadow-sm group-hover:shadow-lg transition-all duration-500 ease-corto aspect-[2/3]"
+                        >
+                          {/* Background */}
+                          <div
+                            className="absolute inset-0 bg-gradient-to-tr transition-transform duration-500 ease-corto group-hover:scale-105"
+                            style={
+                              book.coverImage
+                                ? {
+                                    backgroundImage: `url(${book.coverImage})`,
+                                    backgroundSize: "cover",
+                                    backgroundPosition: "center",
+                                  }
+                                : {
+                                    backgroundColor: "#1c1917"
+                                  }
+                            }
+                          />
 
-                        {/* Geometric overlay */}
-                        <div className="absolute inset-0 opacity-10 pointer-events-none mix-blend-overlay group-hover:opacity-20 transition-all duration-750">
-                          <svg
-                            viewBox="0 0 100 100"
-                            className="w-full h-full stroke-white fill-none stroke-[0.8]"
-                          >
-                            <path d="M50,50 A0.5,0.5 0 0,1 50,50.1 A1,1 0 0,1 49,49 A2,2 0 0,1 51,47 A4,4 0 0,1 55,51 A8,8 0 0,1 47,59 A16,16 0 0,1 31,43 A32,32 0 0,1 63,11 A64,64 0 0,1 -1,75" />
-                          </svg>
-                        </div>
+                          {/* Geometric overlay */}
+                          <div className="absolute inset-0 opacity-10 pointer-events-none mix-blend-overlay group-hover:opacity-20 transition-all duration-500">
+                            <svg
+                              viewBox="0 0 100 100"
+                              className="w-full h-full stroke-white fill-none stroke-[0.8]"
+                            >
+                              <path d="M50,50 A0.5,0.5 0 0,1 50,50.1 A1,1 0 0,1 49,49 A2,2 0 0,1 51,47 A4,4 0 0,1 55,51 A8,8 0 0,1 47,59 A16,16 0 0,1 31,43 A32,32 0 0,1 63,11 A64,64 0 0,1 -1,75" />
+                            </svg>
+                          </div>
 
-                        {/* Top overlay: type badge + rating */}
-                        <div className="absolute top-5 left-5 right-5 flex justify-between items-start z-10">
-                          {/* Type badge — visually distinct */}
-                          <span
-                            className={`px-3 py-1 text-[9px] font-mono uppercase tracking-widest border rounded-full font-bold ${
-                              isLivro
-                                ? "bg-sky-950/80 border-sky-400/30 text-sky-300"
-                                : "bg-violet-950/80 border-violet-400/30 text-violet-300"
-                            }`}
-                          >
-                            {isLivro ? "📚 Livro" : "✍️ Conto"}
-                          </span>
-                          <span className="font-mono text-[10px] tracking-wider text-accent font-bold drop-shadow">
-                            ★ {book.rating}
-                          </span>
-                        </div>
-
-                        {/* Buy badge (livros with editions only) */}
-                        {hasBuyLink && (
-                          <div className="absolute bottom-4 left-4 z-10">
-                            <span className="px-3 py-1 text-[8px] font-bold font-mono uppercase tracking-widest rounded-full bg-emerald-900/80 border border-emerald-400/30 text-emerald-300">
-                              🛒 Comprar
+                          {/* Top overlay: type badge + rating */}
+                          <div className="absolute top-4 left-4 right-4 flex justify-between items-start z-10">
+                            {/* Type badge — visually distinct */}
+                            <span
+                              className={`px-2.5 py-0.5 text-[8px] font-mono uppercase tracking-widest border rounded-full font-bold ${
+                                isLivro
+                                  ? "bg-sky-950/80 border-sky-400/30 text-sky-300"
+                                  : "bg-violet-950/80 border-violet-400/30 text-violet-300"
+                              }`}
+                            >
+                              {isLivro ? "📚 Livro" : "✍️ Conto"}
+                            </span>
+                            <span className="font-mono text-[9px] tracking-wider text-accent font-bold drop-shadow">
+                              ★ {book.rating}
                             </span>
                           </div>
-                        )}
-                      </div>
-                    </Link>
 
-                    {/* Metadata */}
-                    <div className="mt-5 flex-1 flex flex-col justify-between">
-                      <div>
+                          {/* Buy badge (livros with editions only) */}
+                          {hasBuyLink && (
+                            <div className="absolute bottom-3 left-3 z-10">
+                              <span className="px-2 py-0.5 text-[8px] font-bold font-mono uppercase tracking-widest rounded-full bg-emerald-900/80 border border-emerald-400/30 text-emerald-300">
+                                🛒 Comprar
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                      </Link>
+
+                      {/* Metadata */}
+                      <div className="mt-4">
                         {/* Tags */}
-                        <div className="flex items-center gap-1.5 flex-wrap mb-3">
-                          {book.genres.map((g) => (
+                        <div className="flex items-center gap-1 flex-wrap mb-2">
+                          {book.genres.slice(0, 3).map((g) => (
                             <span
                               key={g}
-                              className="px-2.5 py-0.5 text-[8px] font-bold font-mono uppercase tracking-widest bg-accent/10 text-accent rounded border border-accent/20"
+                              className="px-2 py-0.5 text-[8px] font-semibold font-mono uppercase tracking-wider bg-accent/10 text-accent rounded border border-accent/10"
                             >
                               {g}
                             </span>
@@ -1069,48 +1050,48 @@ export default function Home() {
 
                         {/* Title */}
                         <Link href={`/livros/${book.id}`}>
-                          <h3 className="font-serif text-2xl md:text-3xl font-bold text-current leading-tight hover:text-accent transition-colors duration-300">
+                          <h3 className="font-serif text-lg md:text-xl font-bold text-current leading-snug hover:text-accent transition-colors duration-300 line-clamp-2">
                             {book.title}
                           </h3>
                         </Link>
-                        <p className="text-[10px] font-mono uppercase tracking-widest text-current/60 mt-1 font-semibold">
+                        <p className="text-[9px] font-mono uppercase tracking-widest text-accent mt-0.5 font-bold">
                           {book.author}
                         </p>
                       </div>
+                    </div>
 
-                      <div className="flex items-center justify-between text-[10px] font-mono mt-4 pt-3 border-t border-current/10 text-current/40">
-                        <div className="flex items-center gap-2">
-                          <span>{book.year}</span>
-                          <span>•</span>
-                          {book.publicDomain === false ? (
-                            <span className="text-red-400 font-bold uppercase tracking-wider text-[8px] border border-red-500/20 px-1.5 py-0.5 rounded bg-red-950/20">
-                              © Copyright
-                            </span>
-                          ) : (
-                            <span className="text-stone-400 font-bold uppercase tracking-wider text-[8px] border border-stone-400/20 px-1.5 py-0.5 rounded bg-stone-950/20">
-                              Domínio Público
-                            </span>
-                          )}
-                        </div>
-                        <div className="flex items-center gap-3">
-                          {hasBuyLink && (
-                            <a
-                              href={book.editions[0].linkBR}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-emerald-400 uppercase tracking-widest font-bold hover:underline"
-                              onClick={(e) => e.stopPropagation()}
-                            >
-                              Comprar ↗
-                            </a>
-                          )}
-                          <Link
-                            href={`/livros/${book.id}`}
-                            className="text-accent uppercase tracking-widest font-bold hover:underline"
+                    <div className="flex items-center justify-between text-[9px] font-mono mt-4 pt-3 border-t border-current/10 text-current/40">
+                      <div className="flex items-center gap-2">
+                        <span>{book.year}</span>
+                        <span>•</span>
+                        {book.publicDomain === false ? (
+                          <span className="text-red-400 font-bold uppercase tracking-wider text-[7px] border border-red-500/10 px-1 py-0.5 rounded bg-red-950/10">
+                            © Copyright
+                          </span>
+                        ) : (
+                          <span className="text-stone-400 font-bold uppercase tracking-wider text-[7px] border border-stone-400/10 px-1 py-0.5 rounded bg-stone-950/10">
+                            Domínio Público
+                          </span>
+                        )}
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {hasBuyLink && (
+                          <a
+                            href={book.editions[0].linkBR}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-emerald-450 uppercase tracking-widest font-bold hover:underline"
+                            onClick={(e) => e.stopPropagation()}
                           >
-                            {isLivro ? "Acessar Livro ↗" : "Ler Conto ↗"}
-                          </Link>
-                        </div>
+                            Comprar ↗
+                          </a>
+                        )}
+                        <Link
+                          href={`/livros/${book.id}`}
+                          className="text-accent uppercase tracking-widest font-bold hover:underline"
+                        >
+                          {isLivro ? "Acessar ↗" : "Ler ↗"}
+                        </Link>
                       </div>
                     </div>
                   </div>
