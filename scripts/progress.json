@@ -18086,7 +18086,8 @@
     },
     "conto-alistair-vance-1783624899000": {
       "pt-br": true,
-      "en": true
+      "en": true,
+      "pt-pt": true
     }
   },
   "discoveredWorks": [
@@ -18211,6 +18212,6 @@
     }
   ],
   "lastDiscoveryTimestamp": "2026-07-09T11:31:06.123Z",
-  "totalCycles": 154,
+  "totalCycles": 155,
   "personaCounts": {}
 }
