@@ -240,6 +240,12 @@ export default function Home() {
     router.push(`/livros/${bookId}`);
   };
 
+  // Mount state for hydration safety
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   // Preloader state
   const [preloaderActive, setPreloaderActive] = useState(true);
   const [progress, setProgress] = useState(0);
@@ -452,7 +458,7 @@ export default function Home() {
       )}
 
       {/* Custom Mouse Cursor elements */}
-      {typeof window !== "undefined" && window.innerWidth > 768 && (
+      {mounted && typeof window !== "undefined" && window.innerWidth > 768 && (
         <>
           <div
             id="custom-cursor"

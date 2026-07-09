@@ -18087,7 +18087,20 @@
     "conto-alistair-vance-1783624899000": {
       "pt-br": true,
       "en": true,
-      "pt-pt": true
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "conto-alistair-vance-1783627885987": {
+      "pt-br": true,
+      "en": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "conto-thomas-kael-1783630897649": {
+      "pt-br": true,
+      "en": true
     }
   },
   "discoveredWorks": [
@@ -18212,6 +18225,6 @@
     }
   ],
   "lastDiscoveryTimestamp": "2026-07-09T11:31:06.123Z",
-  "totalCycles": 155,
+  "totalCycles": 164,
   "personaCounts": {}
 }
