@@ -59,14 +59,23 @@ export default function Header() {
         {/* Action Button & Menu Trigger */}
         <div className="flex items-center gap-4">
           {currentUser && (
-            <Link
-              href="/perfil"
-              className="hidden lg:flex items-center gap-1.5 px-3 py-1 bg-current/5 border border-current/10 rounded-full text-[10px] font-mono text-current/80 hover:border-accent transition-all"
-              title="Meu Perfil"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-              @{currentUser.username}
-            </Link>
+            <>
+              <Link
+                href="/perfil"
+                className="hidden lg:flex items-center gap-1.5 px-3 py-1 bg-current/5 border border-current/10 rounded-full text-[10px] font-mono text-current/80 hover:border-accent transition-all"
+                title="Meu Perfil"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                @{currentUser.username}
+              </Link>
+              <Link
+                href="/admin"
+                className="hidden lg:flex items-center gap-1.5 px-3 py-1 bg-accent/10 border border-accent/20 rounded-full text-[10px] font-mono text-accent hover:bg-accent/20 transition-all"
+                title="Painel Admin"
+              >
+                ⚙️ Admin
+              </Link>
+            </>
           )}
           <Link
             href="/publicar"
@@ -93,26 +102,26 @@ export default function Header() {
         />
       )}
 
-      {/* Sidebar Drawer Panel - Obsidian theme for premium feel */}
+      {/* Sidebar Drawer Panel - Adapts to Light/Dark theme */}
       <div
-        className={`fixed top-0 right-0 z-50 h-full w-full max-w-sm bg-[#0E0E0C] text-[#ECE8E1] border-l border-white/10 shadow-2xl p-8 flex flex-col justify-between transition-transform duration-500 ease-out transform ${
+        className={`fixed top-0 right-0 z-50 h-full w-full max-w-sm bg-[var(--background)] text-[var(--foreground)] border-l border-current/15 shadow-2xl p-8 flex flex-col justify-between transition-transform duration-500 ease-out transform ${
           isDrawerOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         <div>
           {/* Close Button */}
           <div className="flex justify-between items-center mb-10">
-            <span className="font-serif text-lg tracking-widest uppercase text-stone-300">Coleção</span>
+            <span className="font-serif text-lg tracking-widest uppercase text-current/80">Coleção</span>
             <button
               onClick={() => setIsDrawerOpen(false)}
-              className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/5 active:scale-90 transition-all font-mono text-xs cursor-pointer"
+              className="w-8 h-8 rounded-full border border-current/15 flex items-center justify-center hover:bg-current/5 active:scale-90 transition-all font-mono text-xs cursor-pointer"
             >
               ✕
             </button>
           </div>
 
           {/* Links */}
-          <nav className="flex flex-col gap-6 text-sm font-mono uppercase tracking-widest font-semibold text-stone-300">
+          <nav className="flex flex-col gap-6 text-sm font-mono uppercase tracking-widest font-semibold text-current/80">
             <Link
               href="/"
               onClick={() => setIsDrawerOpen(false)}
@@ -141,15 +150,22 @@ export default function Header() {
             >
               <span className="text-[10px] text-accent">04/</span> Publicar Obra
             </Link>
+            <Link
+              href="/admin"
+              onClick={() => setIsDrawerOpen(false)}
+              className="hover:text-accent flex items-center gap-3 transition-colors duration-200 text-accent font-semibold"
+            >
+              <span className="text-[10px] text-accent">05/</span> Painel Admin
+            </Link>
           </nav>
 
           {/* Saved Bookmarks Section */}
-          <div className="mt-12 border-t border-white/10 pt-8">
+          <div className="mt-12 border-t border-current/15 pt-8">
             <h3 className="font-mono text-[10px] text-accent uppercase tracking-widest mb-4 flex items-center justify-between">
               <span>Seus Marcadores ({bookmarks.length})</span>
             </h3>
             {bookmarks.length === 0 ? (
-              <p className="text-xs text-stone-500 leading-relaxed italic bg-white/5 p-4 rounded-2xl border border-white/5 font-sans">
+              <p className="text-xs text-current/50 leading-relaxed italic bg-current/5 p-4 rounded-2xl border border-current/5 font-sans">
                 Nenhum trecho salvo. Abra uma obra para salvar marcadores de leitura.
               </p>
             ) : (
@@ -157,12 +173,12 @@ export default function Header() {
                 {bookmarks.map((bm, idx) => (
                   <div
                     key={idx}
-                    className="p-4 bg-white/5 rounded-2xl border border-white/5 text-xs relative group/item hover:border-accent/40 transition-all duration-300"
+                    className="p-4 bg-current/5 rounded-2xl border border-current/5 text-xs relative group/item hover:border-accent/40 transition-all duration-300"
                   >
-                    <p className="text-stone-350 font-serif italic line-clamp-3 mb-2 leading-relaxed">
+                    <p className="text-current/80 font-serif italic line-clamp-3 mb-2 leading-relaxed">
                       &ldquo;{bm.text}&rdquo;
                     </p>
-                    <div className="flex justify-between items-center text-[9px] text-stone-500 font-mono">
+                    <div className="flex justify-between items-center text-[9px] text-current/45 font-mono">
                       <span>Ref: {bm.bookId}</span>
                       <button
                         onClick={() => removeBookmark(bm.bookId, bm.text)}
@@ -179,12 +195,12 @@ export default function Header() {
         </div>
 
         {/* Footer Brand Info */}
-        <div className="border-t border-white/10 pt-6 text-[10px] font-mono text-stone-500 flex flex-col gap-2">
+        <div className="border-t border-current/15 pt-6 text-[10px] font-mono text-current/50 flex flex-col gap-2">
           <div className="flex items-center justify-between">
             <span>© 2026 Gargbooks</span>
-            <span className="text-accent uppercase tracking-wider">Aesthetics by Creative Pash</span>
+            <span className="text-accent uppercase tracking-wider font-bold">Aesthetics by Capitolium</span>
           </div>
-          <div className="text-[9px] text-stone-600 leading-relaxed">
+          <div className="text-[9px] text-current/40 leading-relaxed">
             Marketplace de edições raras e clube de leitura com curadoria focada em design escultural.
           </div>
         </div>

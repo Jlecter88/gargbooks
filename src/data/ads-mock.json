@@ -1,0 +1,22 @@
+[
+  {
+    "id": "ad-1",
+    "title": "Kindle Oasis - A Melhor Experiência de Leitura",
+    "imageUrl": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400&auto=format&fit=crop&q=80",
+    "link": "https://www.amazon.com.br/Kindle-Oasis",
+    "location": "sidebar",
+    "active": true,
+    "impressions": 1240,
+    "clicks": 58
+  },
+  {
+    "id": "ad-2",
+    "title": "Clube de Assinatura de Livros Intrínsecos",
+    "imageUrl": "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&auto=format&fit=crop&q=80",
+    "link": "https://www.intrinsecos.com.br",
+    "location": "top",
+    "active": true,
+    "impressions": 3200,
+    "clicks": 142
+  }
+]

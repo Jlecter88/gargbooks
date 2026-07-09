@@ -7,7 +7,7 @@ const path = require('path');
 // CONFIGURAÇÕES OBRIGATÓRIAS DE AMBIENTE LOCAL
 // ============================================================================
 const LM_STUDIO_URL = 'http://localhost:1234/v1/chat/completions';
-const MODEL_NAME = 'C:/Users/USER 1/.lmstudio/models/HauhauCS/Gemma-4-E4B-Uncensored-HauhauCS-Aggressive/Gemma-4-E4B-Uncensored-HauhauCS-Aggressive-Q4_K_M.gguf';
+const MODEL_NAME = 'gemma-4-e4b-uncensored-hauhaucs-aggressive';
 const SD_API_URL = 'http://localhost:7860/sdapi/v1/txt2img';
 
 // Caminhos locais do projeto Next.js
@@ -307,7 +307,8 @@ async function callLocalLLM(systemPrompt, userPrompt, maxTokens = 1500) {
     });
 
     if (!response.ok) {
-      throw new Error(`Erro na API do LM Studio: ${response.status} ${response.statusText}`);
+      const errorBody = await response.text();
+      throw new Error(`Erro na API do LM Studio: ${response.status} ${response.statusText} - Detalhes: ${errorBody}`);
     }
 
     const data = await response.json();
@@ -592,9 +593,9 @@ async function runEsteiraA(progress) {
     let bookChapterText = "";
     const chapterMatch = cleanText.match(/(CHAPTER I|CAPÍTULO I|I\.\s)/i);
     if (chapterMatch && chapterMatch.index !== -1) {
-      bookChapterText = cleanText.substring(chapterMatch.index, chapterMatch.index + 12000);
+      bookChapterText = cleanText.substring(chapterMatch.index, chapterMatch.index + 6000);
     } else {
-      bookChapterText = cleanText.substring(0, 12000);
+      bookChapterText = cleanText.substring(0, 6000);
     }
     log(`Segmentado trecho de ${bookChapterText.length} caracteres.`);
 

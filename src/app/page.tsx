@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useBooks } from "@/context/BookContext";
 import { useUserSession } from "@/context/UserContext";
 import Header from "@/components/Header";
@@ -13,15 +14,249 @@ import { Book } from "@/context/BookContext";
 type ContentTab = "todos" | "livros" | "contos";
 
 export default function Home() {
-  const { books, livros, contos } = useBooks();
+  const router = useRouter();
+  const { books, livros, contos, addBook } = useBooks();
   const { currentUser } = useUserSession();
 
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("Todos");
   const [sortBy, setSortBy] = useState("year-desc");
-  const [appTheme, setAppTheme] = useState<"dark" | "sepia" | "light">("dark");
+  const [appTheme, setAppTheme] = useState<"dark" | "sepia" | "light">("light");
   const [activeTab, setActiveTab] = useState<ContentTab>("todos");
-  const [userRegion] = useState<"BR" | "PT">("BR");
+  const [userRegion, setUserRegion] = useState<"BR" | "PT">("BR");
+
+  // Detect region upon login or browser language
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const lang = navigator.language || "";
+      if (lang.toLowerCase().includes("pt-pt") || lang.toLowerCase().includes("es") || lang.toLowerCase().includes("de") || lang.toLowerCase().includes("gb") || lang.toLowerCase().includes("uk")) {
+        setUserRegion("PT");
+      } else {
+        setUserRegion("BR");
+      }
+    }
+  }, [currentUser]);
+
+  // Curated book promotions database (Amazon Affiliate)
+  const amazonPromotions = useMemo(() => {
+    return [
+      {
+        id: "promo-1",
+        title: "Drácula (Edição Especial)",
+        author: "Bram Stoker",
+        description: "O clássico supremo do terror gótico em edição de luxo com capa dura e ilustrações.",
+        image: "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=300&auto=format&fit=crop&q=60",
+        prices: {
+          BR: { current: 49.90, original: 69.90, store: "Amazon BR", link: "https://www.amazon.com.br/s?k=Dracula+Bram+Stoker+Capa+Dura&tag=gargbooks-20" },
+          PT: { current: 14.90, original: 19.90, store: "Amazon ES", link: "https://www.amazon.es/s?k=Dracula+Bram+Stoker+Tapa+Dura&tag=gargbookspt-21" }
+        }
+      },
+      {
+        id: "promo-2",
+        title: "Neuromancer",
+        author: "William Gibson",
+        description: "A obra definitiva do Cyberpunk que inspirou Matrix e definiu a ficção científica moderna.",
+        image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=300&auto=format&fit=crop&q=60",
+        prices: {
+          BR: { current: 39.90, original: 55.00, store: "Amazon BR", link: "https://www.amazon.com.br/s?k=Neuromancer+William+Gibson&tag=gargbooks-20" },
+          PT: { current: 12.50, original: 16.00, store: "Amazon ES", link: "https://www.amazon.es/s?k=Neuromancer+William+Gibson&tag=gargbookspt-21" }
+        }
+      },
+      {
+        id: "promo-3",
+        title: "O Silmarillion",
+        author: "J.R.R. Tolkien",
+        description: "A cosmologia da Terra-média em uma edição ilustrada essencial para todo fã de fantasia.",
+        image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=300&auto=format&fit=crop&q=60",
+        prices: {
+          BR: { current: 59.90, original: 79.90, store: "Amazon BR", link: "https://www.amazon.com.br/s?k=O+Silmarillion+Tolkien+Ilustrado&tag=gargbooks-20" },
+          PT: { current: 18.90, original: 24.90, store: "Amazon ES", link: "https://www.amazon.es/s?k=El+Silmarillion+Tolkien+Ilustrado&tag=gargbookspt-21" }
+        }
+      }
+    ];
+  }, []);
+
+  const [promoList, setPromoList] = useState<any[]>(amazonPromotions);
+  const [currentPromoIndex, setCurrentPromoIndex] = useState(0);
+
+  // Load banners from API
+  useEffect(() => {
+    async function loadPromos() {
+      try {
+        const res = await fetch("/api/banners");
+        if (res.ok) {
+          const data = await res.json();
+          const activeBanners = data.filter((b: any) => b.active).sort((a: any, b: any) => a.order - b.order);
+          if (activeBanners.length > 0) {
+            const mapped = activeBanners.map((b: any) => ({
+              id: b.id,
+              title: b.title,
+              author: b.author || "Curadoria Editorial",
+              description: b.description || "Destaque selecionado por nossa curadoria literária. Clique para conferir.",
+              image: b.imageUrl,
+              prices: b.prices || {
+                BR: { current: b.price || 49.90, original: b.originalPrice || 69.90, store: "Amazon BR", link: b.link },
+                PT: { current: b.price_eur || 14.90, original: b.originalPrice_eur || 19.90, store: "Amazon ES", link: b.link }
+              }
+            }));
+            setPromoList(mapped);
+          }
+        }
+      } catch (err) {
+        console.error("Erro ao carregar banners dinâmicos:", err);
+      }
+    }
+    loadPromos();
+  }, [amazonPromotions]);
+
+  // Auto-advance promotion carousel
+  useEffect(() => {
+    if (promoList.length === 0) return;
+    const interval = setInterval(() => {
+      setCurrentPromoIndex((prev) => (prev + 1) % promoList.length);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, [promoList]);
+
+  // Project Gutenberg Global Search states
+  const [gutenbergResults, setGutenbergResults] = useState<any[]>([]);
+  const [loadingGutenberg, setLoadingGutenberg] = useState(false);
+  const [hasSearchedGutenberg, setHasSearchedGutenberg] = useState(false);
+
+  // Search Project Gutenberg (Gutendex API with CORS enabled)
+  const handleGutenbergSearch = async () => {
+    if (!searchTerm.trim()) return;
+    setLoadingGutenberg(true);
+    setHasSearchedGutenberg(true);
+    try {
+      const response = await fetch(`https://gutendex.com/books/?search=${encodeURIComponent(searchTerm)}`);
+      if (response.ok) {
+        const data = await response.json();
+        setGutenbergResults(data.results || []);
+      } else {
+        console.error("Erro na busca do Gutendex");
+      }
+    } catch (err) {
+      console.error("Falha ao buscar no Gutenberg:", err);
+    } finally {
+      setLoadingGutenberg(false);
+    }
+  };
+
+  // Add Project Gutenberg book to local Context and route to reader
+  const handleOpenGutenbergBook = (gbook: any) => {
+    const bookId = `gutenberg-${gbook.id}`;
+    const existing = books.find(b => b.id === bookId);
+    
+    if (!existing) {
+      const coverImg = gbook.formats["image/jpeg"] || null;
+      const authorName = gbook.authors && gbook.authors.length > 0 
+        ? gbook.authors[0].name.split(',').reverse().join(' ').trim() 
+        : "Autor Desconhecido";
+      
+      const newBook = {
+        id: bookId,
+        title: gbook.title,
+        author: authorName,
+        year: gbook.authors && gbook.authors.length > 0 && gbook.authors[0].birth_year 
+          ? gbook.authors[0].birth_year + 25 
+          : 1850,
+        genres: gbook.subjects || ["Clássicos"],
+        coverGradient: "from-stone-900 via-neutral-950 to-neutral-900",
+        coverImage: coverImg,
+        synopsis: `Obra clássica importada do acervo global do Project Gutenberg.`,
+        fullText: "Carregando o texto completo do Project Gutenberg...",
+        downloadFile: `/api/gutenberg?id=${gbook.id}`,
+        type: "livro" as const,
+        editions: [],
+        reviews: [],
+        translations: {
+          "en": {
+            title: gbook.title,
+            synopsis: `Classic work from Project Gutenberg.`,
+            fullText: "Carregando...",
+            downloadFile: `/api/gutenberg?id=${gbook.id}`
+          },
+          "pt-br": {
+            title: gbook.title,
+            synopsis: `Obra clássica importada do Project Gutenberg.`,
+            fullText: "Carregando...",
+            downloadFile: `/api/gutenberg?id=${gbook.id}`
+          }
+        }
+      };
+      
+      addBook(newBook);
+    }
+    
+    router.push(`/livros/${bookId}`);
+  };
+
+  // Preloader state
+  const [preloaderActive, setPreloaderActive] = useState(true);
+  const [progress, setProgress] = useState(0);
+  const [enterVisible, setEnterVisible] = useState(false);
+
+  // Featured book reveal state
+  const [featuredRevealed, setFeaturedRevealed] = useState(false);
+
+  // Cursor coordinates
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [followerPos, setFollowerPos] = useState({ x: 0, y: 0 });
+
+  // 1. Dynamic CSS Variables update for theme sync
+  useEffect(() => {
+    const bg = appTheme === "light" ? "#F0E3CF" : appTheme === "dark" ? "#121213" : "#EAE5DC";
+    const fg = appTheme === "light" ? "#121213" : appTheme === "dark" ? "#F0E3CF" : "#3E3529";
+    document.documentElement.style.setProperty('--background', bg);
+    document.documentElement.style.setProperty('--foreground', fg);
+  }, [appTheme]);
+
+  // 2. Preloader simulated loading progress
+  useEffect(() => {
+    if (!preloaderActive) return;
+    const timer = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(timer);
+          setEnterVisible(true);
+          return 100;
+        }
+        return prev + Math.floor(Math.random() * 8) + 4;
+      });
+    }, 120);
+    return () => clearInterval(timer);
+  }, [preloaderActive]);
+
+  // 3. Custom Cursor Follower LERP effect
+  useEffect(() => {
+    if (typeof window === "undefined" || window.innerWidth <= 768) return;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePos({ x: e.clientX, y: e.clientY });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+
+    let frameId: number;
+    const updateFollower = () => {
+      setFollowerPos((prev) => {
+        const dx = mousePos.x - prev.x;
+        const dy = mousePos.y - prev.y;
+        return {
+          x: prev.x + dx * 0.15,
+          y: prev.y + dy * 0.15,
+        };
+      });
+      frameId = requestAnimationFrame(updateFollower);
+    };
+    frameId = requestAnimationFrame(updateFollower);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      cancelAnimationFrame(frameId);
+    };
+  }, [mousePos]);
 
   // Recommendations (computed only when user is logged in)
   const recommendations = useMemo(() => {
@@ -69,33 +304,33 @@ export default function Home() {
 
   // Theme classes
   const themeClasses = {
-    dark: "bg-corto-dark text-stone-100",
-    sepia: "bg-sepia-bg text-sepia-text",
-    light: "bg-corto-cream text-corto-charcoal",
+    dark: "bg-[#121213] text-[#F0E3CF]",
+    sepia: "bg-[#EAE5DC] text-[#121213]",
+    light: "bg-[#F0E3CF] text-[#121213]",
   }[appTheme];
 
   const borderClasses = {
-    dark: "border-white/10",
-    sepia: "border-sepia-text/10",
-    light: "border-corto-charcoal/10",
+    dark: "border-[#F0E3CF]/15",
+    sepia: "border-[#121213]/15",
+    light: "border-[#121213]/15",
   }[appTheme];
 
   const mutedTextClasses = {
     dark: "text-stone-400",
-    sepia: "text-sepia-muted",
-    light: "text-corto-stone/70",
+    sepia: "text-stone-600",
+    light: "text-stone-600",
   }[appTheme];
 
   const inputClasses = {
-    dark: "bg-white/5 border-white/10 text-stone-100 focus:border-accent/60",
-    sepia: "bg-sepia-text/5 border-sepia-text/20 text-sepia-text focus:border-accent/60 placeholder-sepia-muted",
-    light: "bg-corto-charcoal/5 border-corto-charcoal/10 text-corto-charcoal focus:border-accent/60 placeholder-corto-stone/50",
+    dark: "bg-white/5 border-white/10 text-[#F0E3CF] focus:border-accent/60 placeholder-stone-500",
+    sepia: "bg-black/5 border-black/10 text-[#121213] focus:border-accent/60 placeholder-stone-500",
+    light: "bg-black/5 border-black/10 text-[#121213] focus:border-accent/60 placeholder-stone-500",
   }[appTheme];
 
   const selectClasses = {
-    dark: "bg-neutral-900 border-white/10 text-stone-100 focus:border-accent",
-    sepia: "bg-sepia-bg border-sepia-text/20 text-sepia-text focus:border-accent",
-    light: "bg-corto-cream border-corto-charcoal/10 text-corto-charcoal focus:border-accent",
+    dark: "bg-neutral-900 border-white/10 text-[#F0E3CF] focus:border-accent",
+    sepia: "bg-[#EAE5DC] border-black/10 text-[#121213] focus:border-accent",
+    light: "bg-[#F0E3CF] border-black/10 text-[#121213] focus:border-accent",
   }[appTheme];
 
   const tabBadgeCount: Record<ContentTab, number> = {
@@ -107,6 +342,86 @@ export default function Home() {
   return (
     <div className={`min-h-screen flex flex-col transition-colors duration-700 ${themeClasses}`}>
       <Header />
+
+      {/* Preloader Overlay */}
+      {preloaderActive && (
+        <div id="preloader" style={{ opacity: enterVisible && !preloaderActive ? 0 : 1 }}>
+          <div className="text-center flex flex-col items-center">
+            <div className="loader-crest">
+              <span className="font-serif text-2xl font-bold text-accent">G</span>
+            </div>
+            <h1 className="font-serif text-4xl md:text-5xl tracking-[0.4rem] font-bold mb-2">GARGBOOKS</h1>
+            <p className="font-script text-2xl text-accent mb-8">A Arte do Raciocínio e do Conto</p>
+            
+            {!enterVisible ? (
+              <>
+                <div className="w-60 h-[2px] bg-white/10 relative overflow-hidden mb-3">
+                  <div 
+                    className="h-full bg-accent transition-all duration-150" 
+                    style={{ width: `${progress}%` }} 
+                  />
+                </div>
+                <div className="font-mono text-xs tracking-widest text-white/50">{progress}%</div>
+              </>
+            ) : (
+              <div className="flex flex-col items-center gap-4">
+                <span className="font-mono text-[9px] uppercase tracking-widest text-white/50 mb-2">
+                  Escolha o seu caminho literário
+                </span>
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <button
+                    onClick={() => {
+                      setActiveTab("livros");
+                      setPreloaderActive(false);
+                    }}
+                    className="font-serif text-xs tracking-[0.2rem] px-6 py-3.5 border border-accent text-accent hover:bg-accent hover:text-[#121213] transition-all duration-300 transform hover:scale-105 cursor-pointer w-48 font-bold"
+                  >
+                    EXPLORAR LIVROS
+                  </button>
+                  <button
+                    onClick={() => {
+                      setActiveTab("contos");
+                      setPreloaderActive(false);
+                    }}
+                    className="font-serif text-xs tracking-[0.2rem] px-6 py-3.5 border border-accent text-accent hover:bg-accent hover:text-[#121213] transition-all duration-300 transform hover:scale-105 cursor-pointer w-48 font-bold"
+                  >
+                    LER CONTOS
+                  </button>
+                </div>
+                <button
+                  onClick={() => {
+                    setActiveTab("todos");
+                    setPreloaderActive(false);
+                  }}
+                  className="font-mono text-[9px] uppercase tracking-[0.15rem] text-white/40 hover:text-white transition-colors duration-300 cursor-pointer mt-2 underline underline-offset-4"
+                >
+                  Ver toda a estante
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Custom Mouse Cursor elements */}
+      {typeof window !== "undefined" && window.innerWidth > 768 && (
+        <>
+          <div
+            id="custom-cursor"
+            style={{
+              left: `${mousePos.x}px`,
+              top: `${mousePos.y}px`,
+            }}
+          />
+          <div
+            id="custom-cursor-follower"
+            style={{
+              left: `${followerPos.x}px`,
+              top: `${followerPos.y}px`,
+            }}
+          />
+        </>
+      )}
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-6 py-12 md:py-20">
 
@@ -121,12 +436,13 @@ export default function Home() {
 
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-10">
             <div className="max-w-4xl">
-              <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[0.9] mb-6">
+              <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[0.9] mb-4">
                 Estante{" "}
                 <span className="font-light italic text-accent font-serif">editorial</span> de obras
                 e{" "}
                 <span className="font-light italic text-accent font-serif">contos</span> literários.
               </h1>
+              <span className="font-script text-accent text-3xl md:text-5xl block -mt-2 mb-6">A Curadoria da Escrita</span>
               <p className={`text-sm md:text-base max-w-2xl ${mutedTextClasses} leading-relaxed font-sans`}>
                 Uma curadoria de livros clássicos, edições raras e contos contemporâneos. Explore,
                 descubra e compre com links de afiliados curados pela nossa equipe editorial.
@@ -135,7 +451,7 @@ export default function Home() {
 
             {/* Theme switcher */}
             <div className="flex items-center gap-1 bg-current/5 p-1 rounded-full border border-current/10 self-start lg:self-end">
-              {(["dark", "sepia", "light"] as const).map((t) => (
+              {(["light", "dark"] as const).map((t) => (
                 <button
                   key={t}
                   onClick={() => setAppTheme(t)}
@@ -145,13 +461,153 @@ export default function Home() {
                       : "text-current/60 hover:text-current"
                   }`}
                 >
-                  {t === "dark" ? "Obsidian" : t === "sepia" ? "Linen" : "Toscana"}
+                  {t === "light" ? "Pergaminho" : "Antracite"}
                 </button>
               ))}
             </div>
           </div>
 
           <div className="editorial-line mt-12" />
+        </section>
+
+        {/* ── Amazon Affiliate Promotion Carousel ── */}
+        <section className="mb-24 rounded-3xl border border-accent/20 bg-current/3 p-8 flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden transition-all duration-500 shadow-md">
+          {/* Subtle gold mesh backdrop */}
+          <div className="absolute inset-0 bg-radial-gradient(circle at 90% 20%, rgba(var(--color-accent-rgb), 0.04) 0%, transparent 40%) pointer-events-none" />
+          
+          <div className="flex-1 z-10">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="h-[1.5px] w-6 bg-accent animate-pulse" />
+              <span className="font-mono text-[9px] uppercase tracking-widest text-accent font-bold">
+                Oferta Exclusiva Amazon
+              </span>
+              <button 
+                onClick={() => setUserRegion(prev => prev === "BR" ? "PT" : "BR")}
+                className="px-2.5 py-1 border border-accent/30 text-accent/80 hover:text-accent hover:border-accent text-[8px] font-mono rounded font-bold uppercase transition-all cursor-pointer bg-transparent"
+                title="Clique para alternar região de ofertas"
+              >
+                {userRegion === "BR" ? "🇧🇷 BRASIL" : "🇪🇺 EUROPA"}
+              </button>
+            </div>
+            
+            <div className="min-h-[120px] transition-all duration-500">
+              <h3 className="font-serif text-2xl md:text-3xl font-bold tracking-tight mb-1 text-current">
+                {promoList[currentPromoIndex]?.title}
+              </h3>
+              <p className="font-mono text-[10px] uppercase tracking-widest text-current/60 mb-4 font-semibold">
+                por {promoList[currentPromoIndex]?.author}
+              </p>
+              <p className={`text-xs md:text-sm leading-relaxed max-w-2xl ${mutedTextClasses}`}>
+                {promoList[currentPromoIndex]?.description}
+              </p>
+            </div>
+            
+            <div className="flex items-center gap-4 mt-6">
+              <div className="font-serif text-2xl font-black text-accent">
+                {userRegion === "BR" 
+                  ? `R$ ${promoList[currentPromoIndex]?.prices.BR.current.toFixed(2)}`
+                  : `€ ${promoList[currentPromoIndex]?.prices.PT.current.toFixed(2)}`
+                }
+              </div>
+              <div className="font-mono text-xs line-through opacity-40">
+                {userRegion === "BR"
+                  ? `R$ ${promoList[currentPromoIndex]?.prices.BR.original.toFixed(2)}`
+                  : `€ ${promoList[currentPromoIndex]?.prices.PT.original.toFixed(2)}`
+                }
+              </div>
+              <span className="px-2 py-0.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[8px] font-mono font-bold rounded uppercase tracking-wider">
+                Economia Ativa
+              </span>
+            </div>
+
+            {/* Navigation Dots */}
+            <div className="flex items-center gap-2 mt-8">
+              {promoList.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setCurrentPromoIndex(idx)}
+                  className={`w-2 h-2 rounded-full transition-all cursor-pointer ${
+                    currentPromoIndex === idx ? "bg-accent w-4" : "bg-current/15 hover:bg-current/35"
+                  }`}
+                  aria-label={`Slide de promoção ${idx + 1}`}
+                />
+              ))}
+            </div>
+          </div>
+
+          <div className="flex items-center gap-6 z-10 flex-shrink-0 w-full md:w-auto">
+            <div className="w-[110px] h-[165px] bg-stone-800 rounded-lg shadow-xl overflow-hidden flex-shrink-0 relative border border-current/10 group">
+              <img
+                src={promoList[currentPromoIndex]?.image}
+                alt={promoList[currentPromoIndex]?.title}
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+            </div>
+            
+            <a
+              href={userRegion === "BR" 
+                ? promoList[currentPromoIndex]?.prices.BR.link
+                : promoList[currentPromoIndex]?.prices.PT.link
+              }
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 md:flex-initial px-6 py-4 bg-accent text-[#121213] rounded-full font-mono text-[10px] font-bold uppercase tracking-widest hover:scale-105 active:scale-95 transition-all text-center hover:bg-accent-hover font-bold"
+            >
+              Comprar na Amazon ↗
+            </a>
+          </div>
+        </section>
+
+        {/* ── Featured Book Reveal Section ── */}
+        <section className="mb-24 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center animate-fade-in-up">
+          <div className="lg:col-span-7">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="h-[1px] w-8 bg-accent" />
+              <span className="font-mono text-[10px] uppercase tracking-widest text-accent font-semibold">
+                Obra em Destaque
+              </span>
+            </div>
+            <h2 className="font-serif text-4xl md:text-5xl font-bold tracking-tight mb-4">
+              {books[0]?.title || "A Divina Comédia"}
+            </h2>
+            <p className="font-mono text-xs uppercase tracking-widest text-current/60 mb-6 font-semibold">
+              por {books[0]?.author || "Dante Alighieri"}
+            </p>
+            <p className={`text-sm md:text-base leading-relaxed mb-8 max-w-xl ${mutedTextClasses}`}>
+              {books[0]?.synopsis || "Uma viagem alegórica pelo além-túmulo, que moldou a literatura ocidental. Nesta edição especial, explore os detalhes de sua estrutura narrativa de forma escultural."}
+            </p>
+            {featuredRevealed && (
+              <Link
+                href={`/livros/${books[0]?.id || "a-divina-comedia"}`}
+                className="inline-block px-8 py-3 bg-accent text-white hover:bg-accent-hover text-xs uppercase tracking-widest font-mono font-bold transition-all duration-300 transform active:scale-95 shadow-lg shadow-accent/25 hover:shadow-accent/40"
+              >
+                Acessar Edição Luxo ↗
+              </Link>
+            )}
+          </div>
+          
+          <div className="lg:col-span-5 flex justify-center">
+            <div className="book-container rounded-2xl border border-current/15 bg-current/3">
+              <div 
+                className={`book-veil transition-all duration-1000 ${featuredRevealed ? 'opacity-0 pointer-events-none scale-105' : 'opacity-100'}`}
+              >
+                <div className="veil-pattern" />
+                <button
+                  onClick={() => setFeaturedRevealed(true)}
+                  className="z-12 cursor-pointer relative px-6 py-3 font-serif text-[10px] font-bold uppercase tracking-[0.2rem] text-accent border border-accent hover:bg-accent hover:text-[#121213] transition-all duration-500"
+                >
+                  REVELAR DESTAQUE
+                </button>
+              </div>
+              <div className={`w-full h-full p-6 flex flex-col justify-center items-center relative transition-all duration-700 ${featuredRevealed ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}>
+                <img 
+                  src="/book_cover.png" 
+                  alt="Livro em Destaque" 
+                  className="max-h-[85%] max-w-[85%] object-contain shadow-2xl rounded-md transition-transform duration-500 hover:scale-105 hover:-rotate-1"
+                />
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* ── Personalized Recommendations ─────────────────────────────── */}
@@ -260,6 +716,14 @@ export default function Home() {
               />
               <span className="absolute left-4 top-3 text-[11px] opacity-60">🔍</span>
             </div>
+            {searchTerm.trim().length > 1 && activeTab !== "contos" && (
+              <button
+                onClick={handleGutenbergSearch}
+                className="px-5 py-2.5 text-[11px] font-mono uppercase tracking-widest rounded-full border border-accent text-accent hover:bg-accent hover:text-[#121213] transition-all cursor-pointer font-bold"
+              >
+                Buscar Gutenberg 🌐
+              </button>
+            )}
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
@@ -273,6 +737,61 @@ export default function Home() {
           </div>
         </section>
 
+        {/* ── Project Gutenberg Global Search Results ── */}
+        {(loadingGutenberg || (hasSearchedGutenberg && gutenbergResults.length > 0)) && (
+          <section className="mb-24 mt-4 animate-fade-in-up">
+            <div className="flex items-center gap-3 mb-6">
+              <span className="h-[1px] w-8 bg-accent" />
+              <span className="font-mono text-xs uppercase tracking-widest text-accent font-semibold">
+                Acervo Global (Project Gutenberg)
+              </span>
+            </div>
+            
+            {loadingGutenberg ? (
+              <div className="text-center py-12">
+                <div className="animate-spin text-accent text-3xl mb-2">⏳</div>
+                <p className="font-mono text-xs opacity-60">Consultando base de 70.000+ livros do Project Gutenberg...</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+                {gutenbergResults.map((gbook) => {
+                  const coverImg = gbook.formats["image/jpeg"];
+                  const author = gbook.authors && gbook.authors.length > 0 
+                    ? gbook.authors[0].name.split(',').reverse().join(' ').trim() 
+                    : "Autor Desconhecido";
+                  
+                  return (
+                    <div 
+                      key={gbook.id} 
+                      onClick={() => handleOpenGutenbergBook(gbook)}
+                      className={`border rounded-2xl p-6 flex flex-col justify-between items-center text-center cursor-pointer hover:border-accent hover:shadow-xl transition-all duration-300 ${borderClasses} bg-current/3`}
+                    >
+                      <div className="w-[120px] h-[175px] shadow-lg rounded-md overflow-hidden bg-stone-800 flex items-center justify-center mb-4 relative">
+                        {coverImg ? (
+                          <img src={coverImg} alt={gbook.title} className="w-full h-full object-cover" />
+                        ) : (
+                          <div className="p-3 text-[10px] text-white/60 font-serif font-bold uppercase">{gbook.title}</div>
+                        )}
+                        <div className="absolute top-2 right-2 bg-accent/85 text-[#121213] text-[8px] font-mono font-bold px-1.5 py-0.5 rounded">
+                          GUTENBERG
+                        </div>
+                      </div>
+                      <div>
+                        <h3 className="font-serif text-xs font-bold line-clamp-2 mb-1">{gbook.title}</h3>
+                        <p className="font-mono text-[9px] opacity-60 uppercase tracking-wider">{author}</p>
+                      </div>
+                      <button className="mt-4 px-4 py-2 bg-accent text-[#121213] rounded-full font-mono text-[9px] font-bold uppercase tracking-wider w-full cursor-pointer">
+                        Ler Livro Completo
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+            <div className="editorial-line mt-12" />
+          </section>
+        )}
+
         {/* ── Content Grid ─────────────────────────────────────────────── */}
         {filteredBooks.length === 0 ? (
           <div className="text-center py-24 border border-dashed rounded-3xl border-current/15">
@@ -280,11 +799,19 @@ export default function Home() {
               {activeTab === "contos" ? "✍️" : "📖"}
             </span>
             <h3 className="font-serif text-xl font-bold mb-2">
-              Nenhum {activeTab === "contos" ? "conto" : "livro"} encontrado
+              Nenhum {activeTab === "contos" ? "conto" : "livro"} encontrado localmente
             </h3>
-            <p className={`text-xs ${mutedTextClasses} max-w-sm mx-auto`}>
+            <p className={`text-xs ${mutedTextClasses} max-w-sm mx-auto mb-6`}>
               Tente redefinir seus filtros ou buscar por outros termos de pesquisa na estante.
             </p>
+            {searchTerm.trim().length > 1 && activeTab !== "contos" && (
+              <button
+                onClick={handleGutenbergSearch}
+                className="px-6 py-3 bg-accent text-white hover:bg-accent-hover text-xs uppercase tracking-widest font-mono font-bold transition-all duration-300 transform active:scale-95 shadow-lg shadow-accent/25 cursor-pointer"
+              >
+                Buscar "${searchTerm}" no Project Gutenberg 🌐
+              </button>
+            )}
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-12 gap-y-28 gap-x-12 animate-fade-in-up">

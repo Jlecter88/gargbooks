@@ -1,0 +1,175 @@
+I. Un lugar público.
+Escena II. Una calle.
+Escena III. Habitación en la casa de Capuleto.
+Escena IV. Una calle.
+Escena V. Un salón en la casa de Capuleto.
+
+**ACTO II**
+
+CORO.
+
+Escena I. Un lugar abierto adyacente al jardín de Capuleto.
+Escena II. El jardín de Capuleto.
+Escena III. La celda del Fraile Lorenzo.
+Escena IV. Una calle.
+Escena V. El jardín de Capuleto.
+Escena VI. La celda del Fraile Lorenzo.
+
+**ACTO III**
+
+Escena I. Un lugar público.
+Escena II. Una habitación en la casa de Capuleto.
+Escena III. La celda del Fraile Lorenzo.
+Escena IV. Una habitación en la casa de Capuleto.
+Escena V. Una galería abierta hacia la cámara de Julieta, con vistas al jardín.
+
+**ACTO IV**
+
+Escena I. La celda del Fraile Lorenzo.
+Escena II. Salón en la casa de Capuleto.
+Escena III. La cámara de Julieta.
+Escena IV. Salón en la casa de Capuleto.
+Escena V. La cámara de Julieta; Julieta sobre la cama.
+
+**ACTO V**
+
+Escena I. Mântua. Una calle.
+Escena II. La celda del Fraile Lorenzo.
+Escena III. Un cementerio; en él un monumento perteneciente a los Capuleto.
+
+***
+
+### Personajes (*Dramatis Personae*)
+
+**ESCALUS**, Príncipe de Verona.
+**MERCUTIO**, pariente del Príncipe y amigo de Romeo.
+**PARIS**, joven noble, pariente del Príncipe.
+Paje de Paris.
+
+**MONTAGUE**, cabeza de una familia veronesa en enemistad con los Capuleto.
+**DAMA MONTAGUE**, esposa de Montague.
+**ROMEO**, hijo de Montague.
+**BENVOLIO**, sobrino de Montague y amigo de Romeo.
+**ABRAM**, sirviente de Montague.
+**BALTHASAR**, sirviente de Romeo.
+
+**CAPULETO**, cabeza de una familia veronesa en enemistad con los Montague.
+**DAMA CAPULETO**, esposa de Capuleto.
+**JULIETA**, hija de Capuleto.
+**TYBALT**, sobrino de Lady Capuleto.
+**PRIMO DE CAPULETO**, un anciano.
+**NIÑERA** de Julieta.
+**PETER**, sirviente de la Niñera de Julieta.
+**SAMPSON**, sirviente de Capuleto.
+**GREGORY**, sirviente de Capuleto.
+Sirvientes.
+
+**FRAILE LORENZO**, franciscano.
+**FRAILE JUAN**, de la misma Orden.
+Un Boticario (*Apothecary*).
+CORO.
+Tres Músicos.
+Un Oficial.
+Ciudadanos de Verona; varios Hombres y Mujeres, parientes de ambas casas;
+Enmascarados, Guardias, Vigilantes y Ayudantes.
+
+**ESCENA.** Durante la mayor parte de la obra en Verona; una vez, en el Quinto Acto, en Mântua.
+
+***
+
+### PRÓLOGO
+
+Entra Coro.
+
+**CORO.**
+Dos casas, ambas iguales en dignidad,
+En hermosa Verona, donde situamos nuestra escena,
+De antigua rencor rompen a nueva mutinería,
+Donde la sangre civil mancha las manos civiles.
+Desde las fatales entrañas de estos dos adversarios
+Una pareja de amantes cruzados se quita la vida;
+Cuyos padecibles e inesperados desenlaces
+Entierran con su muerte la disputa de sus padres.
+El temible tránsito del amor marcado por el destino,
+Y la persistencia del furor de sus progenitores,
+Que, solo con el fin de sus hijos, no podría remover,
+Es ahora el transcurso de dos horas en nuestro escenario;
+Lo cual, si atentas oídos prestáis,
+Nuestra labor intentará remediar.
+
+*[Sale.]*
+
+***
+
+**ACTO I**
+
+**ESCENA I. Un lugar público.**
+
+Entran Sampson y Gregory armados con espadas y escudos.
+
+**SAMPSON.**
+Gregory, por mi palabra, no llevaremos carbón.
+
+**GREGORY.**
+No, pues entonces seríamos acarreadores (*colliers*).
+
+**SAMPSON.**
+Quiero decir, si nos enojamos, sacaremos el acero.
+
+**GREGORY.**
+Sí, mientras vivas, sácate la garganta del collar.
+
+**SAMPSON.**
+Golpeo presto al sentirme conmovido.
+
+**GREGORY.**
+Mas no te mueves presto para golpear.
+
+**SAMPSON.**
+Un perro de la casa de Montague me mueve a actuar.
+
+**GREGORY.**
+Moverse es agitarse; y ser valiente es permanecer: por tanto, si te mueves, huyes.
+
+**SAMPSON.**
+Un perro de esa casa me moverá a quedarme firme. Tomaré el muro de cualquier hombre o doncella de Montague.
+
+**GREGORY.**
+Eso muestra que eres un esclavo débil, pues el más endeble va al muro.
+
+**SAMPSON.**
+Verdadero, y por ello las mujeres, siendo los recipientes más débiles, son siempre empujadas al muro: por tanto, yo empujaré a los hombres de Montague del muro, y arrojaré a sus doncellas contra él.
+
+**GREGORY.**
+La disputa es entre nuestros amos y nosotros sus hombres.
+
+**SAMPSON.**
+Es todo uno; me mostraré un tirano: cuando haya luchado con los hombres seré civil con las doncellas, les cortaré la cabeza.
+
+**GREGORY.**
+¿Las cabezas de las doncellas?
+
+**SAMPSON.**
+Sí, las cabezas de las doncellas, o su virginidad; tómalo en el sentido que quieras.
+
+**GREGORY.**
+Deben tomarlo en el sentido que lo sientan.
+
+**SAMPSON.**
+Ellas lo sentirán mientras pueda estar firme: y es sabido que soy una pieza de carne bastante fina.
+
+**GREGORY.**
+Bien hiciste no ser pez; si fueras, habrías sido pobre John. Saca tu herramienta; aquí viene de la casa de los Montagues.
+
+Entran Abram y Balthasar.
+
+**SAMPSON.**
+Mi arma desnuda está lista: pelearemos, te respaldaré.
+
+**GREGORY.**
+¿Cómo? ¿Darle la espalda y correr?
+
+**SAMPSON.**
+No temas.
+
+**GREGORY

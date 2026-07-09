@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Outfit } from "next/font/google";
+import { Playfair_Display, Outfit, Pinyon_Script } from "next/font/google";
 import { BookProvider } from "@/context/BookContext";
 import { UserProvider } from "@/context/UserContext";
 import "./globals.css";
@@ -12,6 +12,13 @@ const playfair = Playfair_Display({
 
 const outfit = Outfit({
   variable: "--font-outfit",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const pinyon = Pinyon_Script({
+  weight: "400",
+  variable: "--font-script",
   subsets: ["latin"],
   display: "swap",
 });
@@ -29,7 +36,7 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={`${playfair.variable} ${outfit.variable} h-full antialiased dark`}
+      className={`${playfair.variable} ${outfit.variable} ${pinyon.variable} h-full antialiased dark`}
     >
       <body className="min-h-full flex flex-col bg-zinc-950 text-stone-100 font-sans">
         <UserProvider>

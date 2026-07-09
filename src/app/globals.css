@@ -1,32 +1,33 @@
 @import "tailwindcss";
 
 @theme {
-  /* Brand colors matching House of Corto */
-  --color-corto-cream: #FAF7F2;
-  --color-corto-sand: #EAE5DC;
-  --color-corto-charcoal: #1A1A1A;
-  --color-corto-clay: #C55A37;
-  --color-corto-dark: #0E0E0C;
-  --color-corto-stone: #2D2B2A;
+  /* Brand colors matching Capitolium and House of Corto */
+  --color-corto-cream: #F0E3CF;
+  --color-corto-sand: #E5D5BD;
+  --color-corto-charcoal: #121213;
+  --color-corto-clay: #C5A880;
+  --color-corto-dark: #121213;
+  --color-corto-stone: #2A2A2D;
   
   /* Semantic mappings for the app components */
-  --color-accent: #C55A37;
-  --color-accent-hover: #A34426;
-  --color-cream: #FAF7F2;
-  --color-dark: #0E0E0C;
+  --color-accent: #C5A880;
+  --color-accent-hover: #D4AF37;
+  --color-cream: #F0E3CF;
+  --color-dark: #121213;
   
   /* Reading themes */
-  --color-sepia-bg: #F3EDE2;
-  --color-sepia-text: #3E3529;
-  --color-sepia-muted: #8F6E4E;
+  --color-sepia-bg: #EAE5DC;
+  --color-sepia-text: #121213;
+  --color-sepia-muted: #58595B;
   
-  --color-night-bg: #0E0E0C;
-  --color-night-text: #ECE8E1;
-  --color-night-muted: #8A857D;
+  --color-night-bg: #121213;
+  --color-night-text: #F0E3CF;
+  --color-night-muted: #8E8F91;
   
   /* Font mapping */
   --font-sans: var(--font-outfit), system-ui, sans-serif;
   --font-serif: var(--font-playfair), Georgia, serif;
+  --font-script: var(--font-script), cursive;
   
   /* Custom easing curve for organic motion */
   --ease-corto: cubic-bezier(0.16, 1, 0.3, 1);
@@ -136,5 +137,134 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* Custom Pinyon Script utility */
+.font-script {
+  font-family: var(--font-script), cursive;
+}
+
+/* Custom Cursor aesthetics */
+#custom-cursor {
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-accent);
+  border-radius: 50%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 10000;
+  transition: width 0.2s, height 0.2s, background-color 0.3s;
+}
+
+#custom-cursor-follower {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--color-accent);
+  border-radius: 50%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.1s ease-out, width 0.3s, height 0.3s, border-color 0.3s;
+}
+
+@media (max-width: 768px) {
+  #custom-cursor, #custom-cursor-follower {
+    display: none;
+  }
+}
+
+/* Preloader styles */
+#preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #121213;
+  color: #F0E3CF;
+  z-index: 99999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s;
+}
+
+.loader-crest {
+  width: 70px;
+  height: 70px;
+  border: 2px solid var(--color-accent);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+  animation: pulseGlow 2.5s infinite ease-in-out;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(197, 168, 128, 0.2);
+    border-color: rgba(197, 168, 128, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(197, 168, 128, 0.5);
+    border-color: rgba(197, 168, 128, 1);
+  }
+}
+
+/* Book Reveal components */
+.book-container {
+  width: 100%;
+  max-width: 320px;
+  height: 440px;
+  position: relative;
+  border: 1px solid rgba(var(--color-accent), 0.15);
+  background-color: var(--color-corto-charcoal);
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.book-veil {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-corto-charcoal);
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.veil-pattern {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0.1;
+  background-image: repeating-linear-gradient(45deg, var(--color-accent) 0px, var(--color-accent) 1px, transparent 1px, transparent 10px);
+}
+
+/* Noise overlay for texture */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
 
 

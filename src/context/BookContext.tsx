@@ -67,7 +67,7 @@ interface BookContextType {
   livros: Book[];   // only type === "livro"
   contos: Book[];   // only type === "conto"
   bookmarks: Bookmark[];
-  addBook: (book: Omit<Book, "id" | "rating" | "reviews">) => void;
+  addBook: (book: Omit<Book, "id" | "rating" | "reviews"> & { id?: string }) => void;
   addReview: (bookId: string, username: string, rating: number, text: string) => void;
   addBookmark: (bookId: string, text: string) => void;
   removeBookmark: (bookId: string, text: string) => void;
@@ -156,14 +156,14 @@ export function BookProvider({ children }: { children: React.ReactNode }) {
     }
   }, [bookmarks, isLoaded]);
 
-  const addBook = (newBookData: Omit<Book, "id" | "rating" | "reviews">) => {
+  const addBook = (newBookData: Omit<Book, "id" | "rating" | "reviews"> & { id?: string }) => {
     const newBook: Book = {
       ...newBookData,
-      id: newBookData.title.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+      id: newBookData.id || newBookData.title.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
       rating: 5,
       reviews: [],
       isUserPublished: true,
-    };
+    } as Book;
     setBooks((prev) => [newBook, ...prev]);
   };
 

@@ -9,7 +9,143 @@
     },
     "the-metamorphosis": {
       "en": true,
-      "pt-br": true
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "frankenstein": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "alice-s-adventures-in-wonderland": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "pride-and-prejudice": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "moby-dick": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "a-tale-of-two-cities": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "the-picture-of-dorian-gray": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "the-war-of-the-worlds": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "dr-jekyll-and-mr-hyde": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "heart-of-darkness": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "the-time-machine": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "romeo-and-juliet": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "crime-and-punishment": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "the-adventures-of-sherlock-holmes": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "treasure-island": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "the-jungle-book": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "the-count-of-monte-cristo": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "the-odyssey": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "don-quixote": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "twenty-thousand-leagues-under-the-seas": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
     }
   },
   "stories": {
@@ -24,10 +160,318 @@
       "en": true,
       "pt-br": true,
       "pt-pt": true,
-      "es": true
+      "es": true,
+      "fr": true
+    },
+    "conto-valerie-cross-1783521558961": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "conto-jax-mercer-1783520960102": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "conto-thomas-kael-1783520363575": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "conto-aida-sterling-1783519761823": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "conto-alistair-vance-1783519163026": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "conto-aida-sterling-1783518562422": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "conto-thomas-kael-1783517957437": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "conto-thomas-kael-1783517364443": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "conto-jax-mercer-1783516758718": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "conto-valerie-cross-1783516157765": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "conto-aida-sterling-1783515560830": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "conto-alistair-vance-1783514993094": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "conto-elena-thorne-1783514361597": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "conto-valerie-cross-1783513755433": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "conto-thomas-kael-1783513162854": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "conto-jax-mercer-1783512593038": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "conto-thomas-kael-1783512177216": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "conto-marcus-vance-1783511962860": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "conto-elena-thorne-1783511800339": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "conto-elena-thorne-1783511362182": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "conto-jax-mercer-1783511199691": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "conto-thomas-kael-1783510799767": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "conto-elena-thorne-1783510603268": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "conto-marcus-vance-1783510161545": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "conto-elena-thorne-1783510040491": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "conto-luna-novak-1783509561299": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "conto-luna-novak-1783508396974": {
+      "en": true,
+      "pt-br": true,
+      "pt-pt": true
     }
   },
-  "discoveredWorks": [],
-  "lastDiscoveryTimestamp": null,
-  "totalCycles": 7
+  "discoveredWorks": [
+    {
+      "id": 2488,
+      "title": "Twenty Thousand Leagues Under the Seas",
+      "author": "Jules Verne",
+      "year": 1853,
+      "genres": [
+        "Aventura",
+        "Ficção",
+        "Clássicos",
+        "Clássicos"
+      ],
+      "discovered": true
+    },
+    {
+      "id": 9695,
+      "title": "Bleak House",
+      "author": "Charles Dickens",
+      "year": 1837,
+      "genres": [
+        "Clássicos",
+        "Ficção",
+        "Clássicos"
+      ],
+      "discovered": true
+    },
+    {
+      "id": 9699,
+      "title": "Martin Chuzzlewit",
+      "author": "Charles Dickens",
+      "year": 1837,
+      "genres": [
+        "Aventura",
+        "Ficção",
+        "Clássicos",
+        "Clássicos"
+      ],
+      "discovered": true
+    },
+    {
+      "id": 9725,
+      "title": "Nicholas Nickleby",
+      "author": "Charles Dickens",
+      "year": 1837,
+      "genres": [
+        "Clássicos",
+        "Ficção",
+        "Clássicos"
+      ],
+      "discovered": true
+    },
+    {
+      "id": 9715,
+      "title": "Little Dorrit",
+      "author": "Charles Dickens",
+      "year": 1837,
+      "genres": [
+        "Ficção",
+        "Clássicos"
+      ],
+      "discovered": true
+    },
+    {
+      "id": 9703,
+      "title": "Dombey and Son",
+      "author": "Charles Dickens",
+      "year": 1837,
+      "genres": [
+        "Ficção",
+        "Clássicos"
+      ],
+      "discovered": true
+    },
+    {
+      "id": 7094,
+      "title": "Don Quixote",
+      "author": "Miguel de Cervantes Saavedra",
+      "year": 1572,
+      "genres": [
+        "Ficção",
+        "Clássicos",
+        "Romance",
+        "Clássicos"
+      ],
+      "discovered": true
+    },
+    {
+      "id": 9719,
+      "title": "Our Mutual Friend",
+      "author": "Charles Dickens",
+      "year": 1837,
+      "genres": [
+        "Ficção",
+        "Clássicos"
+      ],
+      "discovered": true
+    },
+    {
+      "id": 9672,
+      "title": "Adam Bede",
+      "author": "George Eliot",
+      "year": 1844,
+      "genres": [
+        "Ficção",
+        "Clássicos"
+      ],
+      "discovered": true
+    },
+    {
+      "id": 9730,
+      "title": "The Pickwick Papers",
+      "author": "Charles Dickens",
+      "year": 1837,
+      "genres": [
+        "Ficção",
+        "Clássicos",
+        "Clássicos"
+      ],
+      "discovered": true
+    }
+  ],
+  "lastDiscoveryTimestamp": "2026-07-09T11:31:06.123Z",
+  "totalCycles": 115
 }
