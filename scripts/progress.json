@@ -18100,7 +18100,34 @@
     },
     "conto-thomas-kael-1783630897649": {
       "pt-br": true,
-      "en": true
+      "en": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "conto-rex-obsidian-1783633891938": {
+      "pt-br": true,
+      "en": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "conto-alistair-vance-1783636883681": {
+      "pt-br": true,
+      "en": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "conto-chloe-mercier-1783639889410": {
+      "pt-br": true,
+      "en": true,
+      "pt-pt": true,
+      "es": true,
+      "fr": true
+    },
+    "conto-satoshi-kurogane-1783642896730": {
+      "pt-br": true
     }
   },
   "discoveredWorks": [
@@ -18225,6 +18252,6 @@
     }
   ],
   "lastDiscoveryTimestamp": "2026-07-09T11:31:06.123Z",
-  "totalCycles": 164,
+  "totalCycles": 183,
   "personaCounts": {}
 }

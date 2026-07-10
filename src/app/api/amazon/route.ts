@@ -8,7 +8,13 @@ export async function GET(request: Request) {
     return NextResponse.json({ results: [] });
   }
 
-  const url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=10&printType=books`;
+  const key = process.env.GOOGLE_BOOKS_API_KEY || "";
+
+  if (!key) {
+    console.warn("⚠️ GOOGLE_BOOKS_API_KEY não configurada — requisições limitadas a 10/dia sem chave.");
+  }
+
+  const url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=10&printType=books${key ? `&key=${key}` : ""}`;
 
   try {
     const response = await fetch(url, {
@@ -17,9 +23,15 @@ export async function GET(request: Request) {
       }
     });
 
+    if (response.status === 403) {
+      return NextResponse.json({
+        error: "Cota de requisições diárias excedida. Tente novamente amanhã ou configure uma chave de API do Google Books.",
+        results: []
+      });
+    }
     if (!response.ok) {
       console.error(`Google Books API returned status ${response.status}`);
-      return NextResponse.json({ error: "Failed to fetch from Google Books" }, { status: response.status });
+      return NextResponse.json({ error: "Erro ao consultar catálogo de livros." }, { status: response.status });
     }
 
     const data = await response.json();

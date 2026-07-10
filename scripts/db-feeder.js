@@ -17,22 +17,37 @@ function log(msg, type = "INFO") {
 }
 
 // 2. Verificação inicial da Chave de Segurança
-if (!fs.existsSync(SERVICE_ACCOUNT_PATH)) {
+let serviceAccount;
+if (fs.existsSync(SERVICE_ACCOUNT_PATH)) {
+  serviceAccount = require(SERVICE_ACCOUNT_PATH);
+  log("Credenciais carregadas do arquivo serviceAccountKey.json", "SUCCESS");
+} else if (process.env.FIREBASE_PROJECT_ID && process.env.FIREBASE_CLIENT_EMAIL && process.env.FIREBASE_PRIVATE_KEY) {
+  serviceAccount = {
+    project_id: process.env.FIREBASE_PROJECT_ID,
+    client_email: process.env.FIREBASE_CLIENT_EMAIL,
+    private_key: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+  };
+  log("Credenciais carregadas das variáveis de ambiente (.env.local)", "SUCCESS");
+} else {
   console.log("\n" + "=".repeat(80));
-  log("ARQUIVO DE CREDENCIAIS NÃO ENCONTRADO!", "ERROR");
-  console.log(`\nPara rodar a alimentação automática de livros no Firebase, siga estes passos:`);
+  log("CREDENCIAIS DO FIREBASE NÃO ENCONTRADAS!", "ERROR");
+  console.log(`\nForneça as credenciais de duas formas:`);
+  console.log(`\nOpção 1 — Arquivo serviceAccountKey.json:`);
   console.log(`1. Acesse o Console do Firebase (https://console.firebase.google.com/)`);
   console.log(`2. Vá em Configurações do Projeto (ícone de engrenagem) > Contas de Serviço (Service Accounts)`);
   console.log(`3. Clique no botão "Gerar nova chave privada" (Generate new private key)`);
   console.log(`4. Salve o arquivo JSON baixado dentro da pasta:`);
   console.log(`   👉 ${SERVICE_ACCOUNT_PATH}`);
   console.log(`   Nomeie o arquivo exatamente como: serviceAccountKey.json`);
+  console.log(`\nOpção 2 — Variáveis de ambiente no .env.local:`);
+  console.log(`   FIREBASE_PROJECT_ID=seu-projeto-id`);
+  console.log(`   FIREBASE_CLIENT_EMAIL=firebase-adminsdk-xxx@seu-projeto.iam.gserviceaccount.com`);
+  console.log(`   FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\\n..."`);
   console.log("\n" + "=".repeat(80) + "\n");
   process.exit(1);
 }
 
 // Carregar credenciais
-const serviceAccount = require(SERVICE_ACCOUNT_PATH);
 const projectId = serviceAccount.project_id;
 
 // Resolver o nome padrão do Storage Bucket

@@ -3,6 +3,8 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import initialBooks from "@/data/livros-mock.json";
 import initialContos from "@/data/contos-mock.json";
+import { db } from "@/utils/firebase";
+import { collection, query, limit, startAfter, getDocs, orderBy } from "firebase/firestore";
 
 export interface Edition {
   id: string;
@@ -77,6 +79,32 @@ interface BookContextType {
   toggleReactionOnReview: (bookId: string, reviewId: string, reactionType: string, userId: string) => void;
 }
 
+const FIREBASE_PAGE_SIZE = 50;
+const FIREBASE_MAX_BOOKS = 200;
+
+async function fetchBooksFromFirestore(): Promise<Book[]> {
+  const allBooks: Book[] = [];
+  let lastDoc: unknown = null;
+
+  while (allBooks.length < FIREBASE_MAX_BOOKS) {
+    const q = lastDoc
+      ? query(collection(db, "books"), orderBy("title"), limit(FIREBASE_PAGE_SIZE), startAfter(lastDoc))
+      : query(collection(db, "books"), orderBy("title"), limit(FIREBASE_PAGE_SIZE));
+
+    const snapshot = await getDocs(q);
+    if (snapshot.empty) break;
+
+    for (const doc of snapshot.docs) {
+      allBooks.push({ ...(doc.data() as Book), id: doc.id });
+    }
+
+    lastDoc = snapshot.docs[snapshot.docs.length - 1];
+    if (snapshot.docs.length < FIREBASE_PAGE_SIZE) break;
+  }
+
+  return allBooks;
+}
+
 const BookContext = createContext<BookContextType | undefined>(undefined);
 
 export function BookProvider({ children }: { children: React.ReactNode }) {
@@ -84,77 +112,118 @@ export function BookProvider({ children }: { children: React.ReactNode }) {
   const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // Load from localStorage on mount and merge with mock data
+  // Load from Firestore first, then fall back to localStorage + JSON mock data
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const storedBooks = localStorage.getItem("gargbooks_list");
-      const storedBookmarks = localStorage.getItem("gargbooks_bookmarks");
-
-      // Tag each source with its type
-      const typedLivros = (initialBooks as Omit<Book, "type">[]).map(b => ({
-        ...b,
-        type: "livro" as const,
-      }));
-      const typedContos = (initialContos as Omit<Book, "type">[]).map(b => ({
-        ...b,
-        type: "conto" as const,
-      }));
-      const diskBooks: Book[] = [...typedLivros, ...typedContos];
-      let finalBooks = diskBooks;
-
-      if (storedBooks) {
-        try {
-          const parsedStored = JSON.parse(storedBooks) as Book[];
-          // Keep user-published books (isUserPublished === true)
-          const userBooks = parsedStored.filter((b) => b.isUserPublished);
-
-          // For each disk book, find if it has reviews in localStorage and merge them
-          const mergedDiskBooks = diskBooks.map((diskBook) => {
-            const storedBook = parsedStored.find((sb) => sb.id === diskBook.id);
-            if (storedBook && storedBook.reviews && storedBook.reviews.length > 0) {
-              const reviews = storedBook.reviews;
-              const avgRating =
-                reviews.length > 0
-                  ? parseFloat(
-                      (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)
-                    )
-                  : diskBook.rating;
-              return { ...diskBook, reviews, rating: avgRating };
-            }
-            return diskBook;
-          });
-
-          finalBooks = [...userBooks, ...mergedDiskBooks];
-        } catch (e) {
-          console.error("Failed to parse stored books", e);
+      // Clean oversized data from previous version (fullText used to be stored)
+      try {
+        const test = localStorage.getItem("gargbooks_list");
+        if (test && test.length > 100_000) {
+          localStorage.removeItem("gargbooks_list");
         }
+      } catch {
+        localStorage.removeItem("gargbooks_list");
+        localStorage.removeItem("gargbooks_bookmarks");
       }
 
-      // Defer state updates to avoid synchronous cascading renders during mount / hydration
-      setTimeout(() => {
-        setBooks(finalBooks);
-        if (storedBookmarks) {
-          try {
-            setBookmarks(JSON.parse(storedBookmarks));
-          } catch (e) {
-            console.error("Failed to parse bookmarks", e);
+      const loadData = async () => {
+        let loadedBooks: Book[] | null = null;
+
+        // 1. Try Firestore first
+        try {
+          const fbBooks = await fetchBooksFromFirestore();
+          if (fbBooks.length > 0) {
+            loadedBooks = fbBooks;
           }
+        } catch (err) {
+          console.warn("Firestore unavailable, falling back to local data:", err);
         }
-        setIsLoaded(true);
-      }, 0);
+
+        // 2. If Firestore failed/empty, fall back to localStorage + JSON
+        if (!loadedBooks) {
+          const storedBooks = localStorage.getItem("gargbooks_list");
+          const storedBookmarks = localStorage.getItem("gargbooks_bookmarks");
+
+          const typedLivros = (initialBooks as Omit<Book, "type">[]).map(b => ({
+            ...b,
+            type: "livro" as const,
+          }));
+          const typedContos = (initialContos as Omit<Book, "type">[]).map(b => ({
+            ...b,
+            type: "conto" as const,
+          }));
+          const diskBooks: Book[] = [...typedLivros, ...typedContos];
+          let finalBooks = diskBooks;
+
+          if (storedBooks) {
+            try {
+              const parsedStored = JSON.parse(storedBooks) as Book[];
+              const userBooks = parsedStored.filter((b) => b.isUserPublished);
+
+              const mergedDiskBooks = diskBooks.map((diskBook) => {
+                const storedBook = parsedStored.find((sb) => sb.id === diskBook.id);
+                if (storedBook && storedBook.reviews && storedBook.reviews.length > 0) {
+                  const reviews = storedBook.reviews;
+                  const avgRating =
+                    reviews.length > 0
+                      ? parseFloat(
+                          (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)
+                        )
+                      : diskBook.rating;
+                  return { ...diskBook, reviews, rating: avgRating };
+                }
+                return diskBook;
+              });
+
+              finalBooks = [...userBooks, ...mergedDiskBooks];
+            } catch (e) {
+              console.error("Failed to parse stored books", e);
+            }
+          }
+
+          loadedBooks = finalBooks;
+        }
+
+        // 3. Defer state updates to avoid synchronous cascading renders
+        setTimeout(() => {
+          if (loadedBooks) setBooks(loadedBooks);
+          const storedBookmarks = localStorage.getItem("gargbooks_bookmarks");
+          if (storedBookmarks) {
+            try {
+              setBookmarks(JSON.parse(storedBookmarks));
+            } catch (e) {
+              console.error("Failed to parse bookmarks", e);
+            }
+          }
+          setIsLoaded(true);
+        }, 0);
+      };
+
+      loadData();
     }
   }, []);
 
-  // Save to localStorage when state changes
+  // Save to localStorage when state changes (strip fullText to avoid quota exceeded)
   useEffect(() => {
-    if (isLoaded) {
-      localStorage.setItem("gargbooks_list", JSON.stringify(books));
+    if (!isLoaded) return;
+    try {
+      const trimmed = books.map((b) => {
+        if (b.isUserPublished) return b;
+        const { fullText, translations, ...meta } = b;
+        return meta;
+      });
+      localStorage.setItem("gargbooks_list", JSON.stringify(trimmed));
+    } catch {
+      localStorage.removeItem("gargbooks_list");
     }
   }, [books, isLoaded]);
 
   useEffect(() => {
-    if (isLoaded) {
+    if (!isLoaded) return;
+    try {
       localStorage.setItem("gargbooks_bookmarks", JSON.stringify(bookmarks));
+    } catch {
+      localStorage.removeItem("gargbooks_bookmarks");
     }
   }, [bookmarks, isLoaded]);
 

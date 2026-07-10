@@ -153,7 +153,12 @@ body {
   transform: translate(-50%, -50%);
   pointer-events: none;
   z-index: 10000;
-  transition: width 0.2s, height 0.2s, background-color 0.3s;
+  transition: width 0.2s, height 0.2s, background-color 0.3s, transform 0.2s;
+}
+
+#custom-cursor.cursor-active {
+  transform: translate(-50%, -50%) scale(0.5);
+  background-color: var(--color-accent-hover);
 }
 
 #custom-cursor-follower {
@@ -165,12 +170,29 @@ body {
   transform: translate(-50%, -50%);
   pointer-events: none;
   z-index: 9999;
-  transition: transform 0.1s ease-out, width 0.3s, height 0.3s, border-color 0.3s;
+  background-color: transparent;
+  transition: transform 0.1s ease-out, width 0.3s, height 0.3s, border-color 0.3s, background-color 0.3s;
+}
+
+#custom-cursor-follower.follower-active {
+  width: 56px;
+  height: 56px;
+  border-color: var(--color-accent-hover);
+  background-color: rgba(197, 168, 128, 0.08);
 }
 
 @media (max-width: 768px) {
   #custom-cursor, #custom-cursor-follower {
-    display: none;
+    display: none !important;
+  }
+}
+
+@media (min-width: 769px) {
+  html, body {
+    cursor: none !important;
+  }
+  a, button, select, input, textarea, [role="button"], option, .cursor-pointer {
+    cursor: none !important;
   }
 }
 

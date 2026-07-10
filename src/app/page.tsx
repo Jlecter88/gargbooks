@@ -11,7 +11,7 @@ import RecommendedSection from "@/components/RecommendedSection";
 import { getRecommendations } from "@/utils/recommendations";
 import { Book } from "@/context/BookContext";
 
-type ContentTab = "todos" | "livros" | "contos";
+type ContentTab = "todos" | "livros" | "contos" | "gutenberg" | "comerciais" | "brasil";
 
 export default function Home() {
   const router = useRouter();
@@ -24,6 +24,18 @@ export default function Home() {
   const [appTheme, setAppTheme] = useState<"dark" | "sepia" | "light">("light");
   const [activeTab, setActiveTab] = useState<ContentTab>("livros");
   const [userRegion, setUserRegion] = useState<"BR" | "PT">("BR");
+
+  // Project Gutenberg Search & Popular States
+  const [gutenbergSearchLang, setGutenbergSearchLang] = useState<"all" | "pt" | "en">("all");
+  const [popularGutenberg, setPopularGutenberg] = useState<any[]>([]);
+  const [loadingPopularGutenberg, setLoadingPopularGutenberg] = useState(false);
+
+  // Client hydration mount guard
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Detect region upon login or browser language
   useEffect(() => {
@@ -137,7 +149,11 @@ export default function Home() {
     setAmazonResults([]);
     setHasSearchedAmazon(false);
     try {
-      const response = await fetch(`https://gutendex.com/books/?search=${encodeURIComponent(searchTerm)}`);
+      let url = `https://gutendex.com/books/?search=${encodeURIComponent(searchTerm)}`;
+      if (gutenbergSearchLang !== "all") {
+        url += `&languages=${gutenbergSearchLang}`;
+      }
+      const response = await fetch(url);
       if (response.ok) {
         const data = await response.json();
         setGutenbergResults(data.results || []);
@@ -150,6 +166,32 @@ export default function Home() {
       setLoadingGutenberg(false);
     }
   };
+
+  // Fetch popular Gutenberg books by language on mount/tab change
+  useEffect(() => {
+    if (activeTab !== "gutenberg") return;
+    
+    async function fetchPopular() {
+      setLoadingPopularGutenberg(true);
+      try {
+        let url = "https://gutendex.com/books/";
+        if (gutenbergSearchLang !== "all") {
+          url += `?languages=${gutenbergSearchLang}`;
+        }
+        const response = await fetch(url);
+        if (response.ok) {
+          const data = await response.json();
+          setPopularGutenberg(data.results || []);
+        }
+      } catch (err) {
+        console.error("Erro ao buscar livros populares do Gutenberg:", err);
+      } finally {
+        setLoadingPopularGutenberg(false);
+      }
+    }
+
+    fetchPopular();
+  }, [activeTab, gutenbergSearchLang]);
 
   // Search Amazon using our new Next.js route
   const handleAmazonSearch = async () => {
@@ -240,12 +282,6 @@ export default function Home() {
     router.push(`/livros/${bookId}`);
   };
 
-  // Mount state for hydration safety
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   // Preloader state
   const [preloaderActive, setPreloaderActive] = useState(true);
   const [progress, setProgress] = useState(0);
@@ -253,10 +289,6 @@ export default function Home() {
 
   // Featured book reveal state
   const [featuredRevealed, setFeaturedRevealed] = useState(false);
-
-  // Cursor coordinates
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [followerPos, setFollowerPos] = useState({ x: 0, y: 0 });
 
   // 1. Dynamic CSS Variables update for theme sync
   useEffect(() => {
@@ -266,51 +298,45 @@ export default function Home() {
     document.documentElement.style.setProperty('--foreground', fg);
   }, [appTheme]);
 
-  // 2. Preloader simulated loading progress
+  // 2. Preloader — auto-dismiss after a brief splash
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      const shown = sessionStorage.getItem("gargbooks_preloader_shown");
+      if (shown === "true") {
+        setPreloaderActive(false);
+        return;
+      }
+    }
+
     if (!preloaderActive) return;
+
     const timer = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(timer);
-          setEnterVisible(true);
           return 100;
         }
         return prev + Math.floor(Math.random() * 8) + 4;
       });
-    }, 120);
-    return () => clearInterval(timer);
-  }, [preloaderActive]);
+    }, 40);
 
-  // 3. Custom Cursor Follower LERP effect
-  useEffect(() => {
-    if (typeof window === "undefined" || window.innerWidth <= 768) return;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-
-    let frameId: number;
-    const updateFollower = () => {
-      setFollowerPos((prev) => {
-        const dx = mousePos.x - prev.x;
-        const dy = mousePos.y - prev.y;
-        return {
-          x: prev.x + dx * 0.15,
-          y: prev.y + dy * 0.15,
-        };
-      });
-      frameId = requestAnimationFrame(updateFollower);
-    };
-    frameId = requestAnimationFrame(updateFollower);
+    const autoDismiss = setTimeout(() => {
+      completePreloader("livros");
+    }, 1800);
 
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      cancelAnimationFrame(frameId);
+      clearInterval(timer);
+      clearTimeout(autoDismiss);
     };
-  }, [mousePos]);
+  }, [preloaderActive]);
+
+  const completePreloader = (tab: ContentTab) => {
+    setActiveTab(tab);
+    setPreloaderActive(false);
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem("gargbooks_preloader_shown", "true");
+    }
+  };
 
   // Recommendations (computed only when user is logged in)
   const recommendations = useMemo(() => {
@@ -321,6 +347,7 @@ export default function Home() {
   // Active pool based on tab
   const activePool: Book[] = useMemo(() => {
     if (activeTab === "livros") return livros;
+    if (activeTab === "brasil") return livros.filter(b => b.language === "pt-br");
     if (activeTab === "contos") return contos;
     return books;
   }, [activeTab, books, livros, contos]);
@@ -343,6 +370,7 @@ export default function Home() {
       })
       .sort((a, b) => {
         if (sortBy === "title-asc") return a.title.localeCompare(b.title);
+        if (sortBy === "author-asc") return a.author.localeCompare(b.author);
         if (sortBy === "year-desc") return b.year - a.year;
         if (sortBy === "year-asc") return a.year - b.year;
         if (sortBy === "rating-desc") return b.rating - a.rating;
@@ -354,6 +382,75 @@ export default function Home() {
   const handleTabChange = (tab: ContentTab) => {
     setActiveTab(tab);
     setSelectedGenre("Todos");
+    setSortBy(tab === "brasil" ? "author-asc" : "year-desc");
+  };
+
+  const renderGutenbergCard = (gbook: any) => {
+    const coverImg = gbook.formats["image/jpeg"];
+    const author = gbook.authors && gbook.authors.length > 0 
+      ? gbook.authors[0].name.split(',').reverse().join(' ').trim() 
+      : "Autor Desconhecido";
+    
+    return (
+      <div 
+        key={gbook.id} 
+        onClick={() => handleOpenGutenbergBook(gbook)}
+        className={`border rounded-2xl p-6 flex flex-col justify-between items-center text-center cursor-pointer hover:border-accent hover:shadow-xl transition-all duration-300 ${borderClasses} bg-current/3 book-card`}
+      >
+        <div className="w-[120px] h-[175px] shadow-lg rounded-md overflow-hidden bg-stone-850 flex items-center justify-center mb-4 relative">
+          {coverImg ? (
+            <img src={coverImg} alt={gbook.title} className="w-full h-full object-cover" />
+          ) : (
+            <div className="p-3 text-[9px] text-white/60 font-serif font-bold uppercase">{gbook.title}</div>
+          )}
+          <div className="absolute top-2 right-2 bg-accent/85 text-[#121213] text-[7px] font-mono font-bold px-1.5 py-0.5 rounded">
+            GUTENBERG
+          </div>
+        </div>
+        <div className="flex-1 flex flex-col justify-between">
+          <div>
+            <h3 className="font-serif text-xs font-bold line-clamp-2 mb-1 text-stone-200">{gbook.title}</h3>
+            <p className="font-mono text-[9px] opacity-60 uppercase tracking-wider mb-3">{author}</p>
+          </div>
+          <button className="px-4 py-2 bg-accent text-[#121213] rounded-full font-mono text-[8px] font-bold uppercase tracking-wider w-full cursor-pointer hover:bg-accent-hover transition-colors">
+            Ler Livro Completo
+          </button>
+        </div>
+      </div>
+    );
+  };
+
+  const renderCommercialCard = (book: any) => {
+    return (
+      <div 
+        key={book.id} 
+        onClick={() => handleOpenAmazonBook(book)}
+        className={`border rounded-2xl p-6 flex flex-col justify-between items-center text-center cursor-pointer hover:border-emerald-500 hover:shadow-xl transition-all duration-300 ${borderClasses} bg-current/3 book-card`}
+      >
+        <div className="w-[120px] h-[175px] shadow-lg rounded-md overflow-hidden bg-stone-850 flex items-center justify-center mb-4 relative">
+          {book.coverImage ? (
+            <img src={book.coverImage} alt={book.title} className="w-full h-full object-cover" />
+          ) : (
+            <div className={`w-full h-full bg-gradient-to-br ${book.coverGradient} p-3 flex flex-col justify-between text-left`}>
+              <span className="text-[8px] font-mono uppercase text-white/50">{book.author}</span>
+              <span className="text-[10px] font-serif font-bold text-white leading-tight line-clamp-3">{book.title}</span>
+            </div>
+          )}
+          <div className="absolute top-2 right-2 bg-emerald-600 text-white text-[7px] font-mono font-bold px-1.5 py-0.5 rounded">
+            COMERCIAL
+          </div>
+        </div>
+        <div className="flex-1 flex flex-col justify-between">
+          <div>
+            <h3 className="font-serif text-xs font-bold line-clamp-2 mb-1 text-stone-200">{book.title}</h3>
+            <p className="font-mono text-[9px] opacity-60 uppercase tracking-wider mb-3">{book.author}</p>
+          </div>
+          <button className="px-4 py-2 bg-emerald-600 text-white rounded-full font-mono text-[8px] font-bold uppercase tracking-wider w-full cursor-pointer hover:bg-emerald-700 transition-colors">
+            Ver Ofertas na Amazon
+          </button>
+        </div>
+      </div>
+    );
   };
 
   // Theme classes
@@ -387,10 +484,13 @@ export default function Home() {
     light: "bg-[#F0E3CF] border-black/10 text-[#121213] focus:border-accent",
   }[appTheme];
 
-  const tabBadgeCount: Record<ContentTab, number> = {
+  const tabBadgeCount: Record<ContentTab, string | number> = {
     todos: books.length,
     livros: livros.length,
     contos: contos.length,
+    gutenberg: "70k+",
+    comerciais: "1M+",
+    brasil: livros.filter(b => b.language === "pt-br").length,
   };
 
   return (
@@ -400,7 +500,7 @@ export default function Home() {
       {/* Preloader Overlay */}
       {preloaderActive && (
         <div id="preloader" style={{ opacity: enterVisible && !preloaderActive ? 0 : 1 }}>
-          <div className="text-center flex flex-col items-center">
+          <div className="text-center flex flex-col items-center relative w-full h-full justify-center">
             <div className="loader-crest">
               <span className="font-serif text-2xl font-bold text-accent">G</span>
             </div>
@@ -424,57 +524,36 @@ export default function Home() {
                 </span>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <button
-                    onClick={() => {
-                      setActiveTab("livros");
-                      setPreloaderActive(false);
-                    }}
+                    onClick={() => completePreloader("livros")}
                     className="font-serif text-xs tracking-[0.2rem] px-6 py-3.5 border border-accent text-accent hover:bg-accent hover:text-[#121213] transition-all duration-300 transform hover:scale-105 cursor-pointer w-48 font-bold"
                   >
                     EXPLORAR LIVROS
                   </button>
                   <button
-                    onClick={() => {
-                      setActiveTab("contos");
-                      setPreloaderActive(false);
-                    }}
+                    onClick={() => completePreloader("contos")}
                     className="font-serif text-xs tracking-[0.2rem] px-6 py-3.5 border border-accent text-accent hover:bg-accent hover:text-[#121213] transition-all duration-300 transform hover:scale-105 cursor-pointer w-48 font-bold"
                   >
                     LER CONTOS
                   </button>
                 </div>
                  <button
-                  onClick={() => {
-                    setActiveTab("livros");
-                    setPreloaderActive(false);
-                  }}
+                  onClick={() => completePreloader("livros")}
                   className="font-mono text-[9px] uppercase tracking-[0.15rem] text-white/40 hover:text-white transition-colors duration-300 cursor-pointer mt-2 underline underline-offset-4"
                 >
                   Ir para a estante
                 </button>
               </div>
             )}
+            
+            {/* Skip Intro Button */}
+            <button
+              onClick={() => completePreloader("livros")}
+              className="absolute bottom-10 right-10 text-[9px] font-mono uppercase tracking-[0.2rem] text-accent/50 hover:text-accent transition-colors duration-300 cursor-pointer"
+            >
+              Pular Introdução ➔
+            </button>
           </div>
         </div>
-      )}
-
-      {/* Custom Mouse Cursor elements */}
-      {mounted && typeof window !== "undefined" && window.innerWidth > 768 && (
-        <>
-          <div
-            id="custom-cursor"
-            style={{
-              left: `${mousePos.x}px`,
-              top: `${mousePos.y}px`,
-            }}
-          />
-          <div
-            id="custom-cursor-follower"
-            style={{
-              left: `${followerPos.x}px`,
-              top: `${followerPos.y}px`,
-            }}
-          />
-        </>
       )}
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-6 py-12 md:py-20">
@@ -676,20 +755,38 @@ export default function Home() {
 
         {/* ── Content Type Tabs ────────────────────────────────────────── */}
         <section className="mb-10 animate-fade-in-up">
-          <div className="flex items-center gap-2 border-b border-current/10 pb-0">
+          <div className="flex flex-wrap items-center gap-2 border-b border-current/10 pb-0">
             {(
               [
                 {
                   id: "livros",
-                  label: "Livros",
+                  label: "Estante Curada",
                   icon: "📚",
-                  description: "Edições físicas com links para compra",
+                  description: "Nossa seleção de edições físicas e digitais raras",
                 },
                 {
                   id: "contos",
                   label: "Contos",
                   icon: "✍️",
                   description: "Histórias curtas originais",
+                },
+                {
+                  id: "brasil",
+                  label: "Brasileiros",
+                  icon: "🇧🇷",
+                  description: "Clássicos da literatura brasileira em domínio público",
+                },
+                {
+                  id: "gutenberg",
+                  label: "Biblioteca Gutenberg",
+                  icon: "🌐",
+                  description: "Mais de 70.000 livros de domínio público gratuitos",
+                },
+                {
+                  id: "comerciais",
+                  label: "Catálogo Comercial",
+                  icon: "🛒",
+                  description: "Pesquise e compre edições comerciais na Amazon",
                 },
               ] as { id: ContentTab; label: string; icon: string; description: string }[]
             ).map((tab) => (
@@ -724,211 +821,237 @@ export default function Home() {
               "📚 Livros clássicos e edições raras — com links de afiliados para compra no Brasil e em Portugal."}
             {activeTab === "contos" &&
               "✍️ Contos originais gerados por escritores da comunidade e personas da IA editorial Gargbooks."}
+            {activeTab === "brasil" &&
+              "🇧🇷 Clássicos Brasileiros — Obras fundamentais da literatura do Brasil, de Machado de Assis a Raul Pompeia, todas em domínio público."}
+            {activeTab === "gutenberg" &&
+              "🌐 Biblioteca Gutenberg — Busque e leia na hora mais de 70.000 clássicos de domínio público inteiramente grátis."}
+            {activeTab === "comerciais" &&
+              "🛒 Catálogo Geral (Amazon) — Encontre milhões de livros comerciais e compre na Amazon via link de afiliado."}
           </p>
         </section>
 
-        {/* ── Filter Toolbar ───────────────────────────────────────────── */}
-        <section className="mb-12 flex flex-col gap-6 lg:flex-row lg:items-center justify-between animate-fade-in-up">
-          {/* Genre badges */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-2 -mx-6 px-6 lg:mx-0 lg:px-0 scrollbar-none">
-            {genres.map((genre) => (
-              <button
-                key={genre}
-                onClick={() => setSelectedGenre(genre)}
-                className={`whitespace-nowrap px-5 py-2 text-[10px] font-semibold font-mono uppercase tracking-widest rounded-full border transition-all active:scale-95 cursor-pointer ${
-                  selectedGenre === genre
-                    ? "bg-accent border-accent text-white shadow-sm"
-                    : appTheme === "dark"
-                    ? "border-white/10 bg-white/5 text-stone-300 hover:border-accent/40"
-                    : appTheme === "sepia"
-                    ? "border-sepia-text/20 bg-sepia-text/5 text-sepia-text hover:border-accent/40"
-                    : "border-corto-charcoal/10 bg-corto-charcoal/5 text-corto-charcoal hover:border-accent/40"
-                }`}
+        {/* ── Filter Toolbar ── */}
+        {activeTab === "gutenberg" ? (
+          <section className="mb-12 flex flex-col gap-6 lg:flex-row lg:items-center justify-between animate-fade-in-up">
+            {/* Language filter for Gutenberg */}
+            <div className="flex items-center gap-1.5 p-1 bg-current/5 rounded-full border border-current/10 overflow-x-auto scrollbar-none">
+              {([
+                { id: "all", label: "Qualquer Idioma" },
+                { id: "pt", label: "Português 🇧🇷" },
+                { id: "en", label: "Inglês 🇬🇧" }
+              ] as const).map((lang) => (
+                <button
+                  key={lang.id}
+                  onClick={() => setGutenbergSearchLang(lang.id)}
+                  className={`px-4 py-2 text-[9px] uppercase tracking-wider font-mono font-bold rounded-full transition-all cursor-pointer ${
+                    gutenbergSearchLang === lang.id
+                      ? "bg-accent text-white shadow-md"
+                      : "text-current/60 hover:text-current"
+                  }`}
+                >
+                  {lang.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Gutenberg search input form */}
+            <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
+              <form
+                onSubmit={(e) => { e.preventDefault(); handleGutenbergSearch(); }}
+                className="relative flex-1 sm:w-80 flex gap-2"
               >
-                {genre}
-              </button>
-            ))}
-          </div>
-
-          {/* Search & Sort */}
-          <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
-            <div className="relative flex-1 sm:w-72">
-              <input
-                type="text"
-                placeholder={activeTab === "contos" ? "Buscar conto ou autor..." : "Buscar livro ou autor..."}
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className={`w-full px-5 py-2.5 pl-10 text-[11px] font-mono rounded-full border outline-none transition-all ${inputClasses}`}
-              />
-              <span className="absolute left-4 top-3 text-[11px] opacity-60">🔍</span>
-            </div>
-            {searchTerm.trim().length > 1 && activeTab !== "contos" && (
-              <div className="flex gap-2 shrink-0">
+                <div className="relative flex-1">
+                  <input
+                    type="text"
+                    placeholder="Buscar no Project Gutenberg..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className={`w-full px-5 py-2.5 pl-10 text-[11px] font-mono rounded-full border outline-none transition-all ${inputClasses}`}
+                  />
+                  <span className="absolute left-4 top-3 text-[11px] opacity-60">🔍</span>
+                </div>
                 <button
-                  onClick={handleGutenbergSearch}
-                  className="px-4 py-2.5 text-[10px] font-mono uppercase tracking-widest rounded-full border border-accent text-accent hover:bg-accent hover:text-[#121213] transition-all cursor-pointer font-bold flex items-center gap-1"
+                  type="submit"
+                  className="px-5 py-2.5 bg-accent hover:bg-accent-hover text-[#121213] font-mono text-[10px] uppercase tracking-widest font-bold rounded-full transition-all active:scale-95 cursor-pointer shrink-0"
                 >
-                  Gutenberg 🌐
+                  Buscar
                 </button>
-                <button
-                  onClick={handleAmazonSearch}
-                  className="px-4 py-2.5 text-[10px] font-mono uppercase tracking-widest rounded-full border border-emerald-500 text-emerald-450 hover:bg-emerald-500 hover:text-white transition-all cursor-pointer font-bold flex items-center gap-1"
-                >
-                  Amazon 🛒
-                </button>
-              </div>
-            )}
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-              className={`px-5 py-2.5 text-[11px] font-mono uppercase tracking-widest rounded-full border outline-none cursor-pointer transition-all ${selectClasses}`}
-            >
-              <option value="year-desc">Mais Recentes</option>
-              <option value="year-asc">Mais Antigos</option>
-              <option value="title-asc">Título (A-Z)</option>
-              <option value="rating-desc">Melhor Avaliados</option>
-            </select>
-          </div>
-        </section>
-
-        {/* ── Project Gutenberg Global Search Results ── */}
-        {(loadingGutenberg || (hasSearchedGutenberg && gutenbergResults.length > 0)) && (
-          <section className="mb-24 mt-4 animate-fade-in-up">
-            <div className="flex items-center gap-3 mb-6">
-              <span className="h-[1px] w-8 bg-accent" />
-              <span className="font-mono text-xs uppercase tracking-widest text-accent font-semibold">
-                Acervo Global (Project Gutenberg)
-              </span>
+              </form>
             </div>
-            
-            {loadingGutenberg ? (
-              <div className="text-center py-12">
-                <div className="animate-spin text-accent text-3xl mb-2">⏳</div>
-                <p className="font-mono text-xs opacity-60">Consultando base de 70.000+ livros do Project Gutenberg...</p>
+          </section>
+        ) : activeTab === "comerciais" ? (
+          <section className="mb-12 flex flex-col gap-6 lg:flex-row lg:items-center justify-end animate-fade-in-up">
+            {/* Commercial search input form */}
+            <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
+              <form
+                onSubmit={(e) => { e.preventDefault(); handleAmazonSearch(); }}
+                className="relative flex-1 sm:w-80 flex gap-2"
+              >
+                <div className="relative flex-1">
+                  <input
+                    type="text"
+                    placeholder="Pesquisar milhões de livros comerciais..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className={`w-full px-5 py-2.5 pl-10 text-[11px] font-mono rounded-full border outline-none transition-all ${inputClasses}`}
+                  />
+                  <span className="absolute left-4 top-3 text-[11px] opacity-60">🔍</span>
+                </div>
+                <button
+                  type="submit"
+                  className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-mono text-[10px] uppercase tracking-widest font-bold rounded-full transition-all active:scale-95 cursor-pointer shrink-0"
+                >
+                  Pesquisar
+                </button>
+              </form>
+            </div>
+          </section>
+        ) : (
+          <section className="mb-12 flex flex-col gap-6 lg:flex-row lg:items-center justify-between animate-fade-in-up">
+            {/* Genre badges */}
+            <div className="flex items-center gap-2 overflow-x-auto pb-2 -mx-6 px-6 lg:mx-0 lg:px-0 scrollbar-none">
+              {genres.map((genre) => (
+                <button
+                  key={genre}
+                  onClick={() => setSelectedGenre(genre)}
+                  className={`whitespace-nowrap px-5 py-2 text-[10px] font-semibold font-mono uppercase tracking-widest rounded-full border transition-all active:scale-95 cursor-pointer ${
+                    selectedGenre === genre
+                      ? "bg-accent border-accent text-white shadow-sm"
+                      : appTheme === "dark"
+                      ? "border-white/10 bg-white/5 text-stone-300 hover:border-accent/40"
+                      : appTheme === "sepia"
+                      ? "border-sepia-text/20 bg-sepia-text/5 text-sepia-text hover:border-accent/40"
+                      : "border-corto-charcoal/10 bg-corto-charcoal/5 text-corto-charcoal hover:border-accent/40"
+                  }`}
+                >
+                  {genre}
+                </button>
+              ))}
+            </div>
+
+            {/* Search & Sort */}
+            <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
+              <div className="relative flex-1 sm:w-72">
+                <input
+                  type="text"
+                  placeholder={activeTab === "contos" ? "Buscar conto ou autor..." : "Buscar livro ou autor..."}
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className={`w-full px-5 py-2.5 pl-10 text-[11px] font-mono rounded-full border outline-none transition-all ${inputClasses}`}
+                />
+                <span className="absolute left-4 top-3 text-[11px] opacity-60">🔍</span>
               </div>
-            ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-                {gutenbergResults.map((gbook) => {
-                  const coverImg = gbook.formats["image/jpeg"];
-                  const author = gbook.authors && gbook.authors.length > 0 
-                    ? gbook.authors[0].name.split(',').reverse().join(' ').trim() 
-                    : "Autor Desconhecido";
-                  
-                  return (
-                    <div 
-                      key={gbook.id} 
-                      onClick={() => handleOpenGutenbergBook(gbook)}
-                      className={`border rounded-2xl p-6 flex flex-col justify-between items-center text-center cursor-pointer hover:border-accent hover:shadow-xl transition-all duration-300 ${borderClasses} bg-current/3`}
-                    >
-                      <div className="w-[120px] h-[175px] shadow-lg rounded-md overflow-hidden bg-stone-800 flex items-center justify-center mb-4 relative">
-                        {coverImg ? (
-                          <img src={coverImg} alt={gbook.title} className="w-full h-full object-cover" />
-                        ) : (
-                          <div className="p-3 text-[10px] text-white/60 font-serif font-bold uppercase">{gbook.title}</div>
-                        )}
-                        <div className="absolute top-2 right-2 bg-accent/85 text-[#121213] text-[8px] font-mono font-bold px-1.5 py-0.5 rounded">
-                          GUTENBERG
-                        </div>
-                      </div>
-                      <div>
-                        <h3 className="font-serif text-xs font-bold line-clamp-2 mb-1">{gbook.title}</h3>
-                        <p className="font-mono text-[9px] opacity-60 uppercase tracking-wider">{author}</p>
-                      </div>
-                      <button className="mt-4 px-4 py-2 bg-accent text-[#121213] rounded-full font-mono text-[9px] font-bold uppercase tracking-wider w-full cursor-pointer">
-                        Ler Livro Completo
-                      </button>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-            <div className="editorial-line mt-12" />
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className={`px-5 py-2.5 text-[11px] font-mono uppercase tracking-widest rounded-full border outline-none cursor-pointer transition-all ${selectClasses}`}
+              >
+                <option value="author-asc">Autor (A-Z)</option>
+                <option value="year-desc">Mais Recentes</option>
+                <option value="year-asc">Mais Antigos</option>
+                <option value="title-asc">Título (A-Z)</option>
+                <option value="rating-desc">Melhor Avaliados</option>
+              </select>
+            </div>
           </section>
         )}
 
-        {/* ── Amazon Affiliate Catalog Search Results ── */}
-        {(loadingAmazon || (hasSearchedAmazon && amazonResults.length > 0)) && (
-          <section className="mb-24 mt-4 animate-fade-in-up">
-            <div className="flex items-center gap-3 mb-6">
-              <span className="h-[1px] w-8 bg-emerald-500" />
-              <span className="font-mono text-xs uppercase tracking-widest text-emerald-450 font-semibold">
-                Catálogo Comercial (Parceiro Amazon)
-              </span>
-            </div>
-            
+        {/* ── Main Catalog Grid ── */}
+        {activeTab === "gutenberg" ? (
+          <div>
+            {loadingGutenberg || loadingPopularGutenberg ? (
+              <div className="text-center py-24">
+                <span className="block animate-spin text-3xl text-accent mb-3">🌀</span>
+                <p className="font-mono text-xs opacity-60">Consultando base de dados do Project Gutenberg...</p>
+              </div>
+            ) : hasSearchedGutenberg ? (
+              /* Gutenberg Search Results */
+              gutenbergResults.length === 0 ? (
+                <div className="text-center py-24 border border-dashed rounded-3xl border-current/15">
+                  <span className="text-5xl block mb-4">🔍</span>
+                  <h3 className="font-serif text-xl font-bold mb-2">Nenhum livro encontrado no Project Gutenberg</h3>
+                  <p className={`text-xs ${mutedTextClasses} max-w-sm mx-auto`}>
+                    Verifique a ortografia ou tente buscar em outro idioma utilizando o filtro.
+                  </p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 animate-fade-in-up">
+                  {gutenbergResults.map((gbook) => renderGutenbergCard(gbook))}
+                </div>
+              )
+            ) : (
+              /* Gutenberg Popular Books */
+              <div>
+                <div className="flex items-center gap-3 mb-6">
+                  <span className="h-[1px] w-6 bg-accent" />
+                  <span className="font-mono text-[10px] uppercase tracking-widest text-accent font-bold">
+                    Obras de Domínio Público Mais Populares
+                  </span>
+                </div>
+                {popularGutenberg.length === 0 ? (
+                  <p className="text-center py-12 font-mono text-xs opacity-50">Nenhum livro popular disponível no momento.</p>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 animate-fade-in-up">
+                    {popularGutenberg.map((gbook) => renderGutenbergCard(gbook))}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        ) : activeTab === "comerciais" ? (
+          <div>
             {loadingAmazon ? (
-              <div className="text-center py-12">
-                <div className="animate-spin text-emerald-500 text-3xl mb-2">⏳</div>
-                <p className="font-mono text-xs opacity-60">Pesquisando no catálogo completo comercial da Amazon BR e ES...</p>
+              <div className="text-center py-24">
+                <span className="block animate-spin text-3xl text-emerald-500 mb-3">🌀</span>
+                <p className="font-mono text-xs opacity-60">Pesquisando catálogo comercial do Google Books...</p>
               </div>
+            ) : hasSearchedAmazon ? (
+              /* Amazon Search Results */
+              amazonResults.length === 0 ? (
+                <div className="text-center py-24 border border-dashed rounded-3xl border-current/15">
+                  <span className="text-5xl block mb-4">🔍</span>
+                  <h3 className="font-serif text-xl font-bold mb-2">Nenhum livro comercial localizado</h3>
+                  <p className={`text-xs ${mutedTextClasses} max-w-sm mx-auto`}>
+                    Não encontramos resultados para esta busca no momento.
+                  </p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 animate-fade-in-up">
+                  {amazonResults.map((book) => renderCommercialCard(book))}
+                </div>
+              )
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-                {amazonResults.map((aBook) => {
-                  const coverImg = aBook.coverImage;
-                  return (
-                    <div 
-                      key={aBook.id} 
-                      onClick={() => handleOpenAmazonBook(aBook)}
-                      className={`border rounded-2xl p-6 flex flex-col justify-between items-center text-center cursor-pointer hover:border-emerald-500 hover:shadow-xl transition-all duration-300 ${borderClasses} bg-current/3`}
-                    >
-                      <div className="w-[120px] h-[175px] shadow-lg rounded-md overflow-hidden bg-stone-800 flex items-center justify-center mb-4 relative">
-                        {coverImg ? (
-                          <img src={coverImg} alt={aBook.title} className="w-full h-full object-cover" />
-                        ) : (
-                          <div className="p-3 text-[10px] text-white/60 font-serif font-bold uppercase">{aBook.title}</div>
-                        )}
-                        <div className="absolute top-2 right-2 bg-emerald-600 text-white text-[8px] font-mono font-bold px-1.5 py-0.5 rounded">
-                          COMERCIAL
-                        </div>
-                      </div>
-                      <div>
-                        <h3 className="font-serif text-xs font-bold line-clamp-2 mb-1">{aBook.title}</h3>
-                        <p className="font-mono text-[9px] opacity-60 uppercase tracking-wider">{aBook.author}</p>
-                      </div>
-                      <button className="mt-4 px-4 py-2 bg-emerald-600 text-white rounded-full font-mono text-[9px] font-bold uppercase tracking-wider w-full cursor-pointer">
-                        Ver Edição / Comprar 🛒
-                      </button>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-            <div className="editorial-line mt-12" />
-          </section>
-        )}
-
-        {/* ── Content Grid ─────────────────────────────────────────────── */}
-        {filteredBooks.length === 0 ? (
-          <div className="text-center py-24 border border-dashed rounded-3xl border-current/15">
-            <span className="text-5xl block mb-4">
-              {activeTab === "contos" ? "✍️" : "📖"}
-            </span>
-            <h3 className="font-serif text-xl font-bold mb-2">
-              Nenhum {activeTab === "contos" ? "conto" : "livro"} encontrado localmente
-            </h3>
-            <p className={`text-xs ${mutedTextClasses} max-w-sm mx-auto mb-6`}>
-              Tente redefinir seus filtros ou buscar por outros termos de pesquisa na estante.
-            </p>
-            {searchTerm.trim().length > 1 && activeTab !== "contos" && (
-              <div className="flex justify-center gap-3">
-                <button
-                  onClick={handleGutenbergSearch}
-                  className="px-6 py-3 bg-accent text-[#121213] hover:bg-accent-hover text-xs uppercase tracking-widest font-mono font-bold transition-all duration-300 transform active:scale-95 shadow-lg shadow-accent/25 cursor-pointer rounded-full"
-                >
-                  Buscar no Project Gutenberg 🌐
-                </button>
-                <button
-                  onClick={handleAmazonSearch}
-                  className="px-6 py-3 bg-emerald-600 text-white hover:bg-emerald-700 text-xs uppercase tracking-widest font-mono font-bold transition-all duration-300 transform active:scale-95 shadow-lg shadow-emerald-600/25 cursor-pointer rounded-full"
-                >
-                  Buscar no Catálogo Amazon 🛒
-                </button>
+              /* Search Prompt for Commercial Books */
+              <div className="text-center py-24 border border-dashed rounded-3xl border-current/15 max-w-3xl mx-auto px-6">
+                <span className="text-5xl block mb-6 animate-pulse">🛒</span>
+                <h3 className="font-serif text-2xl font-bold mb-3 text-stone-250">Explore Milhões de Livros Digitais e Físicos</h3>
+                <p className={`text-xs md:text-sm ${mutedTextClasses} max-w-lg mx-auto leading-relaxed mb-8`}>
+                  Nossa busca está conectada ao catálogo global. Digite o título ou autor de qualquer livro comercial 
+                  para ver detalhes de edições e links de parceiros afiliados da Amazon.
+                </p>
+                <div className="flex justify-center">
+                  <div className="h-[1px] w-24 bg-accent/20" />
+                </div>
               </div>
             )}
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 animate-fade-in-up">
-            {filteredBooks.map((book, idx) => {
+          /* Original Local Books and Contos Grid */
+          filteredBooks.length === 0 ? (
+            <div className="text-center py-24 border border-dashed rounded-3xl border-current/15">
+              <span className="text-5xl block mb-4">
+                {activeTab === "contos" ? "✍️" : "📖"}
+              </span>
+              <h3 className="font-serif text-xl font-bold mb-2">
+                Nenhum {activeTab === "contos" ? "conto" : "livro"} encontrado localmente
+              </h3>
+              <p className={`text-xs ${mutedTextClasses} max-w-sm mx-auto mb-6`}>
+                Tente redefinir seus filtros ou buscar por outros termos de pesquisa na estante.
+              </p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 animate-fade-in-up">
+              {filteredBooks.map((book, idx) => {
               const isLivro = book.type === "livro";
               const hasBuyLink = isLivro && book.editions && book.editions.length > 0;
 
@@ -1105,6 +1228,7 @@ export default function Home() {
               );
             })}
           </div>
+          )
         )}
       </main>
 

@@ -8,6 +8,7 @@ import Header from "@/components/Header";
 import AdultContentGuard from "@/components/AdultContentGuard";
 import { useUserSession, ForumComment } from "@/context/UserContext";
 import { User } from "@/utils/rpgMatchmaker";
+import { loadBookText } from "@/utils/textLoader";
 
 type ThemeMode = "premium-dark" | "sepia" | "pure-black" | "light-cream";
 
@@ -161,38 +162,33 @@ export default function DetalheLivro() {
   const [downloadUrl, setDownloadUrl] = useState<string>("");
   const [fullTextContent, setFullTextContent] = useState<string>("");
   const [textLoading, setTextLoading] = useState<boolean>(false);
+  const [textLoadProgress, setTextLoadProgress] = useState<number>(0);
 
-  // Fetch full text from hosted files under public/downloads
+  // Fetch full text from hosted files under public/downloads (supports chunks)
   useEffect(() => {
     if (!book) return;
 
-    const fetchText = async () => {
+    const loadText = async () => {
       setTextLoading(true);
-      // Determine the best source file url
-      const targetFile = translation?.downloadFile || book.downloadFile || `/downloads/${book.id}.txt`;
-      
+      setTextLoadProgress(0);
+
       try {
-        const response = await fetch(targetFile);
-        if (!response.ok) {
-          throw new Error("File not found on server");
-        }
-        const text = await response.text();
-        if (text && text.trim().length > 100) {
-          setFullTextContent(text);
-        } else {
-          // Fallback to JSON content if the text file is empty
-          setFullTextContent(displayFullText);
-        }
+        const result = await loadBookText(
+          displayDownloadFile,
+          displayFullText || undefined,
+          (p) => setTextLoadProgress(p.percent)
+        );
+        setFullTextContent(result.text);
       } catch (err) {
-        console.warn("Could not fetch hosted book file, using database fallback:", err);
+        console.warn("Could not load book text, using fallback:", err);
         setFullTextContent(displayFullText);
       } finally {
         setTextLoading(false);
       }
     };
 
-    fetchText();
-  }, [book?.id, currentLang, displayFullText, translation?.downloadFile]);
+    loadText();
+  }, [book?.id, currentLang, displayFullText, displayDownloadFile]);
 
   // Create runtime text download url using Blob based on loaded full text
   useEffect(() => {
@@ -664,7 +660,19 @@ export default function DetalheLivro() {
                   {textLoading ? (
                     <div className="py-20 text-center space-y-4 font-mono text-xs opacity-60">
                       <span className="block animate-spin text-2xl text-accent">🌀</span>
-                      <span className="block uppercase tracking-widest">Carregando obra completa hospedada no servidor...</span>
+                      <span className="block uppercase tracking-widest">
+                        {textLoadProgress > 0 && textLoadProgress < 100
+                          ? `Carregando texto completo... (${textLoadProgress}%)`
+                          : "Carregando obra completa hospedada no servidor..."}
+                      </span>
+                      {textLoadProgress > 0 && (
+                        <div className="w-64 h-1 bg-current/10 rounded-full mx-auto mt-3 overflow-hidden">
+                          <div
+                            className="h-full bg-accent transition-all duration-300 rounded-full"
+                            style={{ width: `${textLoadProgress}%` }}
+                          />
+                        </div>
+                      )}
                     </div>
                   ) : (
                     /* Renders paragraphs split by double newline */
