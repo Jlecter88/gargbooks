@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 
+const GUTENDEX_PT = "https://gutendex.com/books/?languages=pt&search=";
+
 function cleanDominioPublicoText(rawText: string): string {
   const lines = rawText.split("\n");
   let startIdx = 0;
@@ -41,6 +43,127 @@ function cleanDominioPublicoText(rawText: string): string {
   return lines.slice(startIdx, endIdx).join("\n").trim();
 }
 
+function cleanGutenbergText(rawText: string): string {
+  let cleanText = rawText;
+  const startIdx = rawText.indexOf("*** START OF THE PROJECT GUTENBERG");
+  const endIdx = rawText.indexOf("*** END OF THE PROJECT GUTENBERG");
+  if (startIdx !== -1) {
+    const startLineEnd = rawText.indexOf("\n", startIdx);
+    cleanText = rawText.substring(startLineEnd !== -1 ? startLineEnd : startIdx);
+  }
+  if (endIdx !== -1) {
+    cleanText = cleanText.substring(0, cleanText.indexOf("*** END OF THE PROJECT GUTENBERG"));
+  }
+  return cleanText.trim();
+}
+
+async function tryDominioPublico(id: string): Promise<string | null> {
+  const url = `http://www.dominiopublico.gov.br/download/texto/${id}.txt`;
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
+    const response = await fetch(url, {
+      signal: controller.signal,
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+      }
+    });
+    clearTimeout(timeoutId);
+    if (!response.ok) return null;
+    const rawText = await response.text();
+    return cleanDominioPublicoText(rawText);
+  } catch {
+    return null;
+  }
+}
+
+async function tryGutendex(title: string): Promise<string | null> {
+  try {
+    const searchRes = await fetch(`${GUTENDEX_PT}${encodeURIComponent(title)}`, {
+      signal: AbortSignal.timeout(8000),
+    });
+    if (!searchRes.ok) return null;
+    const data = await searchRes.json();
+    if (!data.results || data.results.length === 0) return null;
+
+    const match = data.results.find((b: any) => {
+      const titleWords = title.toLowerCase().split(" ").filter((w: string) => w.length > 3);
+      return titleWords.some((w: string) => b.title.toLowerCase().includes(w));
+    }) || data.results[0];
+    if (!match) return null;
+
+    const gUrl = `https://www.gutenberg.org/cache/epub/${match.id}/pg${match.id}.txt`;
+    const gRes = await fetch(gUrl, {
+      signal: AbortSignal.timeout(30000),
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+      }
+    });
+    if (!gRes.ok) return null;
+    const text = await gRes.text();
+    return cleanGutenbergText(text);
+  } catch {
+    return null;
+  }
+}
+
+// Mapa de IDs DP → títulos para fallback no Gutendex
+const DP_TITLE_MAP: Record<string, string> = {
+  "bn000067": "Dom Casmurro",
+  "bn000068": "Memórias Póstumas de Brás Cubas",
+  "bn000069": "Quincas Borba",
+  "bn000070": "O Alienista",
+  "bn000082": "Helena",
+  "bn000083": "Iaiá Garcia",
+  "bn000084": "Esaú e Jacó",
+  "bn000085": "Memorial de Aires",
+  "bn000086": "Ressurreição",
+  "bn000087": "A Mão e a Luva",
+  "bn000088": "Várias Histórias",
+  "bn000089": "Páginas Recolhidas",
+  "bn000090": "Relíquias de Casa Velha",
+  "bn000071": "Iracema",
+  "bn000072": "O Guarani",
+  "bn000073": "Senhora",
+  "bn000078": "Lucíola",
+  "bn000079": "Diva",
+  "bn000080": "Til",
+  "bn000081": "O Sertanejo",
+  "bn000091": "Ubirajara",
+  "bn000092": "As Minas de Prata",
+  "bn000093": "Sonhos D'Ouro",
+  "bn000094": "Encarnação",
+  "bn000074": "O Cortiço",
+  "bn000095": "O Mulato",
+  "bn000096": "Casa de Pensão",
+  "bn000097": "O Livro de uma Sogra",
+  "bn000075": "O Navio Negreiro",
+  "bn000098": "Espumas Flutuantes",
+  "bn000099": "Hinos do Equador",
+  "bn000100": "Gonzaga ou a Revolução de Minas",
+  "bn000076": "Noite na Taverna",
+  "bn000101": "Lira dos Vinte Anos",
+  "bn000102": "Macário",
+  "bn000077": "A Moreninha",
+  "bn000103": "O Moço Loiro",
+  "bn000104": "Os Dois Amores",
+  "bn000105": "Marília de Dirceu",
+  "bn000106": "Cartas Chilenas",
+  "bn000107": "O Uruguay",
+  "bn000108": "Caramuru",
+  "bn000109": "I-Juca-Pirama",
+  "bn000110": "Os Timbiras",
+  "bn000111": "Primeiros Cantos",
+  "bn000112": "As Primaveras",
+  "bn000113": "Suspiros Poéticos e Saudades",
+  "bn000114": "A Confederação dos Tamoios",
+  "bn000115": "A Escrava Isaura",
+  "bn000116": "O Seminarista",
+  "bn000117": "Inocência",
+  "bn000118": "O Ateneu",
+  "bn000119": "Canções Sem Palavras",
+};
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const id = searchParams.get("id");
@@ -49,48 +172,34 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "ID da obra não fornecido." }, { status: 400 });
   }
 
-  const url = `http://www.dominiopublico.gov.br/download/texto/${id}.txt`;
+  let text: string | null = null;
+  let source = "nenhuma";
 
-  try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 15000);
+  // 1. Try Domínio Público first
+  text = await tryDominioPublico(id);
+  if (text) source = "dominio-publico";
 
-    const response = await fetch(url, {
-      signal: controller.signal,
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-      }
-    });
-
-    clearTimeout(timeoutId);
-
-    if (!response.ok) {
-      return NextResponse.json(
-        { error: `Erro ao buscar obra no Domínio Público (status ${response.status}).` },
-        { status: response.status }
-      );
+  // 2. Fallback: Gutendex / Gutenberg (Portuguese)
+  if (!text) {
+    const title = DP_TITLE_MAP[id];
+    if (title) {
+      text = await tryGutendex(title);
+      if (text) source = "gutenberg";
     }
+  }
 
-    const rawText = await response.text();
-    const cleanedText = cleanDominioPublicoText(rawText);
-
-    return new NextResponse(cleanedText, {
+  if (text) {
+    return new NextResponse(text, {
       headers: {
         "Content-Type": "text/plain; charset=utf-8",
-        "Cache-Control": "public, max-age=86400"
-      }
+        "Cache-Control": "public, max-age=86400",
+        "X-Text-Source": source,
+      },
     });
-  } catch (error) {
-    if (error instanceof DOMException && error.name === "AbortError") {
-      return NextResponse.json(
-        { error: "Tempo limite excedido ao conectar ao Domínio Público." },
-        { status: 504 }
-      );
-    }
-    console.error(`Erro ao obter obra Domínio Público ID ${id}:`, error);
-    return NextResponse.json(
-      { error: "Erro interno do servidor ao carregar a obra." },
-      { status: 500 }
-    );
   }
+
+  return NextResponse.json(
+    { error: "Obra não encontrada em nenhuma fonte disponível." },
+    { status: 404 }
+  );
 }

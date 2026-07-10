@@ -163,10 +163,22 @@ export default function DetalheLivro() {
   const [fullTextContent, setFullTextContent] = useState<string>("");
   const [textLoading, setTextLoading] = useState<boolean>(false);
   const [textLoadProgress, setTextLoadProgress] = useState<number>(0);
+  const [hasLoadedFullText, setHasLoadedFullText] = useState<boolean>(false);
 
-  // Fetch full text from hosted files under public/downloads (supports chunks)
+  // Determine if displayFullText is a short preview or full content
+  const isPreview = useMemo(() => {
+    return displayFullText.length > 0 && displayFullText.length < 5000;
+  }, [displayFullText]);
+
+  // Load text: if preview exists, use it immediately; otherwise fetch from downloadFile
   useEffect(() => {
     if (!book) return;
+    setHasLoadedFullText(false);
+
+    if (displayFullText && displayFullText.length > 0) {
+      setFullTextContent(displayFullText);
+      return;
+    }
 
     const loadText = async () => {
       setTextLoading(true);
@@ -175,13 +187,12 @@ export default function DetalheLivro() {
       try {
         const result = await loadBookText(
           displayDownloadFile,
-          displayFullText || undefined,
+          undefined,
           (p) => setTextLoadProgress(p.percent)
         );
         setFullTextContent(result.text);
       } catch (err) {
-        console.warn("Could not load book text, using fallback:", err);
-        setFullTextContent(displayFullText);
+        console.warn("Could not load book text:", err);
       } finally {
         setTextLoading(false);
       }
@@ -189,6 +200,32 @@ export default function DetalheLivro() {
 
     loadText();
   }, [book?.id, currentLang, displayFullText, displayDownloadFile]);
+
+  const handleLoadFullText = useMemo(() => {
+    return async () => {
+      setTextLoading(true);
+      setTextLoadProgress(0);
+
+      try {
+        const result = await loadBookText(
+          displayDownloadFile,
+          undefined,
+          (p) => setTextLoadProgress(p.percent)
+        );
+        setFullTextContent(result.text);
+        setHasLoadedFullText(true);
+        if (typeof window !== "undefined") {
+          try {
+            sessionStorage.setItem(`gargbooks_fulltext_${book?.id}_${currentLang}`, result.text);
+          } catch { /* quota exceeded, ignore */ }
+        }
+      } catch (err) {
+        console.warn("Could not load full text:", err);
+      } finally {
+        setTextLoading(false);
+      }
+    };
+  }, [displayDownloadFile, book?.id, currentLang]);
 
   // Create runtime text download url using Blob based on loaded full text
   useEffect(() => {
@@ -569,8 +606,8 @@ export default function DetalheLivro() {
                   >
                     <span>📥</span> Baixar TXT Integral
                   </a>
-                )}
-              </div>
+                  )}
+                </div>
 
               {/* Instruction tooltip */}
               <p className="text-[10px] text-center text-stone-500 font-mono italic tracking-wide">
@@ -675,8 +712,8 @@ export default function DetalheLivro() {
                       )}
                     </div>
                   ) : (
-                    /* Renders paragraphs split by double newline */
-                    fullTextContent.split("\n\n").map((para, idx) => {
+                    <div>
+                      {fullTextContent.split("\n\n").map((para, idx) => {
                       const isHighlighted = savedParagraphIdx === idx;
                       const isHeading2 = para.startsWith("##");
                       const isHeading3 = para.startsWith("###");
@@ -728,7 +765,47 @@ export default function DetalheLivro() {
                           </div>
                         </div>
                       );
-                    })
+                    })}
+                    {isPreview && !hasLoadedFullText && (
+                      <div className="text-center py-12 border-t border-current/10 mt-12">
+                        <button
+                          onClick={handleLoadFullText}
+                          disabled={textLoading}
+                          className={`px-8 py-4 rounded-full font-mono text-xs uppercase tracking-widest font-bold transition-all cursor-pointer ${
+                            textLoading
+                              ? "bg-current/10 text-current/40 cursor-not-allowed"
+                              : "bg-accent text-white hover:bg-accent-hover shadow-lg shadow-accent/20"
+                          }`}
+                        >
+                          {textLoading ? (
+                            <span className="flex items-center gap-2">
+                              <span className="animate-spin">🌀</span>
+                              {textLoadProgress > 0
+                                ? `Carregando... ${textLoadProgress}%`
+                                : "Carregando..."}
+                            </span>
+                          ) : (
+                            <span className="flex items-center gap-2">
+                              📖 Ler restante do livro em{" "}
+                              {currentLang === "pt-br"
+                                ? "Português 🇧🇷"
+                                : currentLang === "en"
+                                  ? "Inglês 🇬🇧"
+                                  : "Espanhol 🇪🇸"}
+                            </span>
+                          )}
+                        </button>
+                        {textLoadProgress > 0 && (
+                          <div className="w-64 h-1 bg-current/10 rounded-full mx-auto mt-3 overflow-hidden">
+                            <div
+                              className="h-full bg-accent transition-all duration-300 rounded-full"
+                              style={{ width: `${textLoadProgress}%` }}
+                            />
+                          </div>
+                        )}
+                      </div>
+                    )}
+                    </div>
                   )}
                 </div>
               )}
