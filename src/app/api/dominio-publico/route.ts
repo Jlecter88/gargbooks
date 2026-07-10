@@ -164,6 +164,37 @@ const DP_TITLE_MAP: Record<string, string> = {
   "bn000119": "Canções Sem Palavras",
 };
 
+const WIKI_CANDIDATES: Record<string, string> = {
+  "bn000077": "A_Moreninha",
+  "bn000078": "Lucíola",
+  "bn000079": "Diva",
+  "bn000080": "Til",
+  "bn000081": "O_Sertanejo",
+  "bn000082": "Helena",
+  "bn000083": "Iaiá_Garcia",
+  "bn000084": "Esaú_e_Jacó",
+  "bn000095": "O_Mulato",
+  "bn000105": "Marília_de_Dirceu",
+  "bn000106": "Cartas_Chilenas",
+  "bn000109": "I-Juca-Pirama",
+  "bn000112": "As_Primaveras",
+  "bn000113": "Suspiros_Poéticos_e_Saudades",
+  "bn000117": "Inocência",
+};
+
+async function tryWikisource(id: string): Promise<string | null> {
+  const page = WIKI_CANDIDATES[id];
+  if (!page) return null;
+  try {
+    const url = `https://pt.wikisource.org/w/index.php?title=${encodeURIComponent(page)}&action=raw`;
+    const res = await fetch(url, { signal: AbortSignal.timeout(10000) });
+    if (!res.ok) return null;
+    const text = await res.text();
+    if (text && text.length > 500) return text;
+  } catch { /* ignore */ }
+  return null;
+}
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const id = searchParams.get("id");
@@ -179,7 +210,13 @@ export async function GET(request: Request) {
   text = await tryDominioPublico(id);
   if (text) source = "dominio-publico";
 
-  // 2. Fallback: Gutendex / Gutenberg (Portuguese)
+  // 2. Fallback: Wikisource
+  if (!text) {
+    text = await tryWikisource(id);
+    if (text) source = "wikisource";
+  }
+
+  // 3. Fallback: Gutendex / Gutenberg (Portuguese)
   if (!text) {
     const title = DP_TITLE_MAP[id];
     if (title) {
