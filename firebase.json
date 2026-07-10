@@ -1,12 +1,10 @@
 {
   "firestore": {
     "rules": "firestore.rules",
-    "indexes": "firestore.indexes.json",
-    "database": "(default)"
+    "indexes": "firestore.indexes.json"
   },
   "storage": {
-    "rules": "storage.rules",
-    "bucket": "gargbooks-ecccf.firebasestorage.app"
+    "rules": "storage.rules"
   },
   "apphosting": {
     "backendId": "gargbooks",
@@ -17,7 +15,6 @@
       "firebase-debug.log",
       "firebase-debug.*.log",
       "functions"
-    ],
-    "alwaysDeployFromSource": true
+    ]
   }
 }
