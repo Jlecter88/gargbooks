@@ -209,8 +209,15 @@ export function BookProvider({ children }: { children: React.ReactNode }) {
     try {
       const trimmed = books.map((b) => {
         if (b.isUserPublished) return b;
-        const { fullText, translations, ...meta } = b;
-        return meta;
+        const { fullText, ...rest } = b;
+        // Keep translation metadata (title, synopsis, downloadFile) but strip fullText inside them
+        if (rest.translations) {
+          for (const code of Object.keys(rest.translations)) {
+            const { fullText: _ft, ...meta } = rest.translations[code] as any;
+            (rest.translations as any)[code] = meta;
+          }
+        }
+        return rest;
       });
       localStorage.setItem("gargbooks_list", JSON.stringify(trimmed));
     } catch {

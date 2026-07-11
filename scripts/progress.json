@@ -18307,5 +18307,20 @@
     "bn000117": true,
     "bn000118": false,
     "bn000119": false
+  },
+  "missingTexts": {
+    "bn000067": "done",
+    "bn000069": "done",
+    "bn000070": "done",
+    "bn000082": "done",
+    "bn000083": "done",
+    "bn000084": "done",
+    "bn000085": "done",
+    "bn000086": "done",
+    "bn000087": "done",
+    "bn000088": "done",
+    "bn000089": "done",
+    "bn000090": "done",
+    "bn000071": "done"
   }
 }

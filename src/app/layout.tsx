@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Outfit, Pinyon_Script } from "next/font/google";
+import Script from "next/script";
 import { BookProvider } from "@/context/BookContext";
 import { UserProvider } from "@/context/UserContext";
 import CustomCursor from "@/components/CustomCursor";
@@ -44,6 +45,12 @@ export default function RootLayout({
           <BookProvider>
             {children}
             <CustomCursor />
+            <Script
+              async
+              src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2716163694456305"
+              crossOrigin="anonymous"
+              strategy="beforeInteractive"
+            />
           </BookProvider>
         </UserProvider>
       </body>

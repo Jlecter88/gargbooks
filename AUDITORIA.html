@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auditoria Completa — Gargbooks</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #121213; color: #F0E3CF; font-family: 'Outfit', sans-serif; line-height: 1.6; padding: 40px 20px; }
+  .container { max-width: 1000px; margin: 0 auto; }
+  h1 { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.25em; }
+  h1 span { font-style: italic; color: #C6A45C; }
+  h2 { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-top: 2.5em; margin-bottom: 0.5em; border-bottom: 1px solid #C6A45C30; padding-bottom: 0.3em; }
+  h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; margin-top: 1.5em; margin-bottom: 0.5em; color: #C6A45C; }
+  h4 { font-weight: 600; font-size: 1rem; margin-top: 1.2em; color: #C6A45C; }
+  p, li { font-size: 0.92rem; color: #D4C9B0; }
+  .subtitle { font-family: 'Outfit', sans-serif; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.15em; color: #C6A45C; margin-bottom: 2em; }
+  .meta { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: #8A7F6B; margin-bottom: 3em; }
+  .severity { display: inline-block; padding: 2px 10px; border-radius: 20px; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; }
+  .critical { background: #7F1D1D; color: #FCA5A5; border: 1px solid #DC2626; }
+  .high { background: #78350F; color: #FDBA74; border: 1px solid #D97706; }
+  .medium { background: #1E3A5F; color: #93C5FD; border: 1px solid #3B82F6; }
+  .low { background: #14532D; color: #86EFAC; border: 1px solid #22C55E; }
+  .info { background: #2D1B69; color: #C4B5FD; border: 1px solid #7C3AED; }
+  table { width: 100%; border-collapse: collapse; margin: 1em 0; font-size: 0.85rem; }
+  th { text-align: left; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: #C6A45C; padding: 10px 12px; border-bottom: 1px solid #C6A45C30; }
+  td { padding: 10px 12px; border-bottom: 1px solid #FFFFFF08; }
+  tr:hover td { background: #FFFFFF05; }
+  .badge { display: inline-block; padding: 1px 8px; border-radius: 10px; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; font-weight: 700; }
+  .badge-green { background: #14532D; color: #86EFAC; }
+  .badge-red { background: #7F1D1D; color: #FCA5A5; }
+  .badge-yellow { background: #78350F; color: #FDBA74; }
+  .badge-blue { background: #1E3A5F; color: #93C5FD; }
+  .card { background: #1A1A1E; border: 1px solid #FFFFFF10; border-radius: 16px; padding: 24px; margin: 1em 0; }
+  .card-title { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em; color: #C6A45C; margin-bottom: 8px; }
+  .code { background: #0D0D0F; border: 1px solid #FFFFFF10; border-radius: 8px; padding: 16px; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; overflow-x: auto; white-space: pre-wrap; color: #D4C9B0; margin: 0.8em 0; }
+  .code .comment { color: #6B7280; }
+  .code .key { color: #93C5FD; }
+  .code .string { color: #86EFAC; }
+  .step { display: flex; gap: 16px; align-items: flex-start; margin: 1.2em 0; padding: 16px; background: #FFFFFF03; border-left: 3px solid #C6A45C; border-radius: 0 12px 12px 0; }
+  .step-num { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: #C6A45C; line-height: 1; min-width: 36px; }
+  .step-content { flex: 1; }
+  .step-content p { margin-bottom: 0.3em; }
+  .step-content .code { margin: 0.5em 0; }
+  ul, ol { padding-left: 1.5em; margin: 0.5em 0; }
+  li { margin-bottom: 0.3em; }
+  strong { color: #F0E3CF; }
+  a { color: #C6A45C; }
+  .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin: 1.5em 0; }
+  .stat { text-align: center; padding: 20px; background: #1A1A1E; border-radius: 12px; border: 1px solid #FFFFFF08; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 700; color: #C6A45C; }
+  .stat-label { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: #8A7F6B; margin-top: 4px; }
+  .prompt-box { background: #1A1A2E; border: 1px solid #7C3AED40; border-radius: 12px; padding: 20px; margin: 1em 0; }
+  .prompt-box .prompt-title { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: #C4B5FD; margin-bottom: 8px; }
+  .prompt-box .code { border-color: #7C3AED30; background: #0D0D15; }
+  @media (max-width: 600px) { h1 { font-size: 2rem; } .summary-grid { grid-template-columns: 1fr 1fr; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Auditoria <span>Gargbooks</span></h1>
+<p class="subtitle">Diagnóstico Completo &middot; Mapeamento de APIs &middot; Plano de Execução</p>
+<p class="meta">Gerado em 09/07/2026 &middot; Projeto: gargbooks (Next.js 16 + Firebase + TypeScript)</p>
+
+<!-- ============================================================ -->
+<div class="card">
+<div class="card-title">Resumo Executivo</div>
+<p>O Gargbooks é uma plataforma literária premium com curadoria gótico/premium. O projeto <strong>já possui toda a infraestrutura necessária</strong> para ter um acervo massivo, mas as obras não estão sendo carregadas no site por <strong>4 problemas centrais</strong>:</p>
+<ol style="margin-top:12px">
+  <li><strong>O arquivo <code>livros-mock.json</code> só contém 7 dos 70+ livros</strong> que o orquestrador já baixou e traduziu.</li>
+  <li><strong>O orquestrador (<code>scripts/orchestrator.js</code>) depende de LM Studio + Stable Diffusion locais</strong> que não estão rodando, travando o pipeline.</li>
+  <li><strong>Não há integração com APIs brasileiras</strong> (Domínio Público, Brasiliana, Open Library) para acervo nacional.</li>
+  <li><strong>O Firebase Firestore está configurado mas não populado</strong> — toda a persistência é localStorage.</li>
+</ol>
+</div>
+
+<!-- ============================================================ -->
+<h2>1. Diagnóstico do Acervo Atual</h2>
+
+<div class="summary-grid">
+  <div class="stat"><div class="stat-num">25</div><div class="stat-label">Livros no mock</div></div>
+  <div class="stat"><div class="stat-num">40</div><div class="stat-label">Contos no mock</div></div>
+  <div class="stat"><div class="stat-num">50+</div><div class="stat-label">Obras BR definidas no orquestrador</div></div>
+  <div class="stat"><div class="stat-num">25</div><div class="stat-label">Livros com texto em /downloads</div></div>
+  <div class="stat"><div class="stat-num">0</div><div class="stat-label">Obras BR no site</div></div>
+  <div class="stat"><div class="stat-num">50+</div><div class="stat-label">Obras BR faltando</div></div>
+</div>
+
+<h3>1.1 Livros Presentes em <code>livros-mock.json</code> (25)</h3>
+<table>
+<tr><th>#</th><th>ID</th><th>Título</th><th>Domínio Público</th></tr>
+<tr><td>1</td><td>castelo-otranto</td><td>O Castelo de Otranto</td><td>✅</td></tr>
+<tr><td>2</td><td>silmarillion</td><td>O Silmarillion</td><td>❌ Copyright</td></tr>
+<tr><td>3</td><td>memorias-postumas</td><td>Memórias Póstumas de Brás Cubas</td><td>✅</td></tr>
+<tr><td>4</td><td>neuromancer</td><td>Neuromancer</td><td>❌ Copyright</td></tr>
+<tr><td>5</td><td>dracula</td><td>Drácula</td><td>✅</td></tr>
+<tr><td>6</td><td>the-metamorphosis</td><td>A Metamorfose</td><td>✅</td></tr>
+<tr><td>7</td><td>alice-s-adventures-in-wonderland</td><td>Alice no País das Maravilhas</td><td>✅</td></tr>
+<tr><td>8</td><td>frankenstein</td><td>Frankenstein</td><td>✅</td></tr>
+<tr><td>9</td><td>pride-and-prejudice</td><td>Orgulho e Preconceito</td><td>✅</td></tr>
+<tr><td>10</td><td>moby-dick</td><td>Moby Dick</td><td>✅</td></tr>
+<tr><td>11</td><td>a-tale-of-two-cities</td><td>Um Conto de Duas Cidades</td><td>✅</td></tr>
+<tr><td>12</td><td>the-picture-of-dorian-gray</td><td>O Retrato de Dorian Gray</td><td>✅</td></tr>
+<tr><td>13</td><td>the-war-of-the-worlds</td><td>A Guerra dos Mundos</td><td>✅</td></tr>
+<tr><td>14</td><td>dr-jekyll-and-mr-hyde</td><td>O Médico e o Monstro</td><td>✅</td></tr>
+<tr><td>15</td><td>heart-of-darkness</td><td>Coração das Trevas</td><td>✅</td></tr>
+<tr><td>16</td><td>the-time-machine</td><td>A Máquina do Tempo</td><td>✅</td></tr>
+<tr><td>17</td><td>romeo-and-juliet</td><td>Romeu e Julieta</td><td>✅</td></tr>
+<tr><td>18</td><td>crime-and-punishment</td><td>Crime e Castigo</td><td>✅</td></tr>
+<tr><td>19</td><td>the-adventures-of-sherlock-holmes</td><td>As Aventuras de Sherlock Holmes</td><td>✅</td></tr>
+<tr><td>20</td><td>treasure-island</td><td>A Ilha do Tesouro</td><td>✅</td></tr>
+<tr><td>21</td><td>the-jungle-book</td><td>O Livro da Selva</td><td>✅</td></tr>
+<tr><td>22</td><td>the-count-of-monte-cristo</td><td>O Conde de Monte Cristo</td><td>✅</td></tr>
+<tr><td>23</td><td>the-odyssey</td><td>A Odisseia</td><td>✅</td></tr>
+<tr><td>24</td><td>don-quixote</td><td>Dom Quixote</td><td>✅</td></tr>
+<tr><td>25</td><td>twenty-thousand-leagues-under-the-seas</td><td>Vinte Mil Léguas Submarinas</td><td>✅</td></tr>
+</table>
+<p style="margin-top:8px;font-size:0.85rem;">Status do acervo principal: <strong>25 livros cadastrados</strong>, sendo 23 de domínio público com texto completo, 2 com copyright (apenas metadados + links de compra). <strong>Boa base</strong>, mas ainda faltam as 50+ obras brasileiras.</p>
+
+<h3>1.3 Obras Brasileiras Definidas no Orquestrador (50+) mas ZERO no site</h3>
+<table>
+<tr><th>Autor</th><th>Obras</th><th>Status</th></tr>
+<tr><td>Machado de Assis</td><td>13 obras (Dom Casmurro, Quincas Borba, O Alienista, Helena, etc.)</td><td><span class="badge badge-red">Ausente</span></td></tr>
+<tr><td>José de Alencar</td><td>10 obras (Iracema, O Guarani, Senhora, Lucíola, etc.)</td><td><span class="badge badge-red">Ausente</span></td></tr>
+<tr><td>Aluísio Azevedo</td><td>4 obras (O Cortiço, O Mulato, Casa de Pensão, etc.)</td><td><span class="badge badge-red">Ausente</span></td></tr>
+<tr><td>Castro Alves</td><td>4 obras (O Navio Negreiro, Espumas Flutuantes, etc.)</td><td><span class="badge badge-red">Ausente</span></td></tr>
+<tr><td>Álvares de Azevedo</td><td>3 obras (Noite na Taverna, Lira dos Vinte Anos, Macário)</td><td><span class="badge badge-red">Ausente</span></td></tr>
+<tr><td>Outros autores BR</td><td>16+ obras (A Moreninha, O Ateneu, A Escrava Isaura, etc.)</td><td><span class="badge badge-red">Ausente</span></td></tr>
+</table>
+<p style="margin-top:8px;font-size:0.85rem;"><strong>Problema:</strong> O orquestrador tem a lista completa de 50+ obras brasileiras do Domínio Público (linhas 186-246 do <code>orchestrator.js</code>) mas <strong>nunca as processou</strong> porque depende de LM Studio local que não está rodando.</p>
+
+<h3>1.4 Contos — Situação</h3>
+<p>Total de <strong>40 contos</strong> cadastrados, gerados por IA editorial através do orquestrador. Abaixo, a distribuição por persona e total:</p>
+<table>
+<tr><th>Persona</th><th>Gênero</th><th>Qtd.</th><th>Status</th></tr>
+<tr><td>Thomas Kael</td><td>Fantasia Épica</td><td>8</td><td><span class="badge badge-green">OK</span></td></tr>
+<tr><td>Alistair Vance</td><td>Terror Gótico +18</td><td>5</td><td><span class="badge badge-green">OK</span></td></tr>
+<tr><td>Luna Novak</td><td>Cyberpunk</td><td>5</td><td><span class="badge badge-green">OK</span></td></tr>
+<tr><td>Jax Mercer</td><td>Noir Thriller +18</td><td>6</td><td><span class="badge badge-green">OK</span></td></tr>
+<tr><td>Isabela Requena</td><td>Realismo Mágico</td><td>1</td><td><span class="badge badge-green">OK</span></td></tr>
+<tr><td>Chloe Mercier</td><td>Drama Romântico</td><td>1</td><td><span class="badge badge-green">OK</span></td></tr>
+<tr><td>Rex Obsidian</td><td>Sci-Fi Militar</td><td>1</td><td><span class="badge badge-green">OK</span></td></tr>
+<tr><td>Viktor Draum</td><td>Horror Psicológico +18</td><td>1</td><td><span class="badge badge-green">OK</span></td></tr>
+<tr><td>Elena Thorne</td><td>Romance Erótico +18</td><td>5</td><td><span class="badge badge-green">OK</span></td></tr>
+<tr><td>Valerie Cross</td><td>Drama Psicológico</td><td>3</td><td><span class="badge badge-green">OK</span></td></tr>
+<tr><td>Aida Sterling</td><td>Realismo Poético</td><td>2</td><td><span class="badge badge-green">OK</span></td></tr>
+<tr><td>Marcus Vance</td><td>Drama Histórico</td><td>2</td><td><span class="badge badge-green">OK</span></td></tr>
+</table>
+<p style="margin-top:8px;font-size:0.85rem;"><strong>Status:</strong> 40 contos no mock, cobrindo 12 personas editoriais e 12 gêneros. Acervo de contos está <strong>bem dimensionado</strong>. Foco principal agora é trazer as obras brasileiras.</p>
+
+<!-- ============================================================ -->
+<h2>2. APIs Disponíveis — Mapeamento Completo</h2>
+
+<h3>2.1 APIs JÁ Integradas (parcialmente)</h3>
+
+<div class="card">
+<div class="card-title">📡 Gutendex API (https://gutendex.com)</div>
+<table>
+<tr><th>Aspecto</th><th>Status</th></tr>
+<tr><td>Busca por termo</td><td><span class="badge badge-green">OK</span> — funciona na aba "Biblioteca Gutenberg"</td></tr>
+<tr><td>Listar populares</td><td><span class="badge badge-green">OK</span> — carrega na inicialização da aba</td></tr>
+<tr><td>Filtrar por idioma</td><td><span class="badge badge-green">OK</span> — pt, en, all</td></tr>
+<tr><td>Texto completo</td><td><span class="badge badge-green">OK</span> — via /api/gutenberg?id=X (proxy)</td></tr>
+<tr><td>Catálogo pré-carregado</td><td><span class="badge badge-red">Não</span> — só busca sob demanda</td></tr>
+<tr><td>Cache de texto</td><td><span class="badge badge-green">OK</span> — 24h Cache-Control</td></tr>
+</table>
+</div>
+
+<div class="card">
+<div class="card-title">📡 Google Books API (via /api/amazon)</div>
+<table>
+<tr><th>Aspecto</th><th>Status</th></tr>
+<tr><td>Busca por termo</td><td><span class="badge badge-green">OK</span> — funciona na aba "Catálogo Comercial"</td></tr>
+<tr><td>API Key configurada</td><td><span class="badge badge-red"><strong>NÃO</strong></span> — sem key = 10 req/dia, severamente limitado</td></tr>
+<tr><td>Links de afiliado Amazon</td><td><span class="badge badge-green">OK</span> — BR e PT com tags</td></tr>
+<tr><td>Preços reais</td><td><span class="badge badge-red">Não</span> — preços são estimados (fake)</td></tr>
+<tr><td>Capa dos livros</td><td><span class="badge badge-green">OK</span> — quando disponível no Google Books</td></tr>
+</table>
+</div>
+
+<h3>2.2 APIs Faltando (necessárias)</h3>
+
+<div class="card">
+<div class="card-title">📡 Domínio Público API (governo brasileiro)</div>
+<table>
+<tr><th>Aspecto</th><th>Detalhe</th></tr>
+<tr><td>Endpoint</td><td><code>http://www.dominiopublico.gov.br/download/texto/{id}.txt</code></td></tr>
+<tr><td>Catálogo</td><td>~15.000+ obras em português (literatura BR, Portugal, traduções)</td></tr>
+<tr><td>Já mapeado no orquestrador</td><td><span class="badge badge-green">Sim</span> — 50+ IDs bnXXXXXX nas linhas 186-246</td></tr>
+<tr><td>Disponível no site</td><td><span class="badge badge-red"><strong>NÃO</strong></span> — nunca foi integrado ao frontend</td></tr>
+<tr><td>Ação necessária</td><td>Criar rota <code>/api/dominio-publico</code> similar ao Gutenberg + aba no frontend</td></tr>
+</table>
+</div>
+
+<div class="card">
+<div class="card-title">📡 Open Library API (https://openlibrary.org)</div>
+<table>
+<tr><th>Aspecto</th><th>Detalhe</th></tr>
+<tr><td>Endpoint busca</td><td><code>https://openlibrary.org/search.json?q=...</code></td></tr>
+<tr><td>Endpoint obra</td><td><code>https://openlibrary.org/works/{id}.json</code></td></tr>
+<tr><td>Capa</td><td><code>https://covers.openlibrary.org/b/id/{id}-L.jpg</code></td></tr>
+<tr><td>Texto completo</td><td>Via <code>https://openlibrary.org/works/{id}/editions.json</code> (links externos)</td></tr>
+<tr><td>Já usada</td><td><span class="badge badge-yellow">Parcial</span> — só para capas no orchestrator</td></tr>
+<tr><td>Ação necessária</td><td>Criar rota <code>/api/openlibrary</code> para buscar obras com texto gratuito</td></tr>
+</table>
+</div>
+
+<div class="card">
+<div class="card-title">📡 Amazon Product Advertising API (opcional mas recomendado)</div>
+<table>
+<tr><th>Aspecto</th><th>Detalhe</th></tr>
+<tr><td>Endpoints</td><td>PAAPI v5: <code>https://webservices.amazon.com/paapi5/searchitems</code></td></tr>
+<tr><td>Dados reais</td><td>Preços reais, avaliações, disponibilidade, imagens oficiais</td></tr>
+<tr><td>Complexidade</td><td>Requer conta de afiliado, chaves AWS, Signed Requests</td></tr>
+<tr><td>Alternativa atual</td><td>Google Books + links de afiliado manuais (suficiente para começo)</td></tr>
+<tr><td>Prioridade</td><td><span class="badge badge-low">Baixa</span> — pode ser implementado depois</td></tr>
+</table>
+</div>
+
+<div class="card">
+<div class="card-title">📡 WorldCat / ISBNdb (alternativa ao Google Books)</div>
+<table>
+<tr><th>Aspecto</th><th>Detalhe</th></tr>
+<tr><td>WorldCat Search API</td><td><code>https://www.worldcat.org/search?q=...</code> (gratuito, sem key)</td></tr>
+<tr><td>ISBNdb</td><td><code>https://api.isbndb.com/books/{isbn}</code> (requer key, plano gratuito limitado)</td></tr>
+<tr><td>Utilidade</td><td>Fallback quando Google Books rate-limitar</td></tr>
+<tr><td>Prioridade</td><td><span class="badge badge-low">Baixa</span> — implementar após resolver acervo principal</td></tr>
+</table>
+</div>
+
+<!-- ============================================================ -->
+<h2>3. Problemas Identificados — Por Gravidade</h2>
+
+<table>
+<tr><th>#</th><th>Problema</th><th>Severidade</th><th>Impacto</th></tr>
+<tr>
+  <td>P1</td>
+  <td><strong>50+ obras brasileiras definidas no orquestrador mas zero no site</strong></td>
+  <td><span class="severity critical">Crítico</span></td>
+  <td>Acervo nacional completamente ausente</td>
+</tr>
+<tr>
+  <td>P2</td>
+  <td><strong>Orquestrador trava por dependência de LM Studio + SD locais</strong></td>
+  <td><span class="severity high">Alto</span></td>
+  <td>Pipeline de tradução, geração de contos e covers parado</td>
+</tr>
+<tr>
+  <td>P3</td>
+  <td><strong>Google Books API sem chave → 10 req/dia</strong></td>
+  <td><span class="severity high">Alto</span></td>
+  <td>Catálogo comercial praticamente inutilizável</td>
+</tr>
+<tr>
+  <td>P4</td>
+  <td><strong>Chunks de texto não são remontados no frontend</strong></td>
+  <td><span class="severity high">Alto</span></td>
+  <td>downloads/ tem .chunk.n.txt mas o leitor não os junta</td>
+</tr>
+<tr>
+  <td>P5</td>
+  <td><strong>Firestore não populado, só localStorage</strong></td>
+  <td><span class="severity medium">Médio</span></td>
+  <td>Dados do usuário não persistem entre dispositivos</td>
+</tr>
+<tr>
+  <td>P6</td>
+  <td><strong>Nenhum endpoint de API para obras brasileiras</strong></td>
+  <td><span class="severity medium">Médio</span></td>
+  <td>Usuários não encontram literatura nacional</td>
+</tr>
+<tr>
+  <td>P7</td>
+  <td><strong>Sem fallback para chunks corrompidos/faltantes</strong></td>
+  <td><span class="severity medium">Médio</span></td>
+  <td>Leitura quebra se arquivo não existir</td>
+</tr>
+<tr>
+  <td>P8</td>
+  <td><strong>Preços Amazon são estimados, não reais</strong></td>
+  <td><span class="severity low">Baixo</span></td>
+  <td>Pode diferir do preço real na Amazon</td>
+</tr>
+<tr>
+  <td>P9</td>
+  <td><strong>Sem lazy loading na grade de livros</strong></td>
+  <td><span class="severity low">Baixo</span></td>
+  <td>Performance degrada com 200+ livros</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>4. Plano de Execução — Ordem Recomendada</h2>
+
+<p>As etapas estão ordenadas por dependência: cada fase desbloqueia a próxima.</p>
+
+<!-- FASE 1 -->
+<h3 style="margin-top:2em;color:#F0E3CF;">Fase 1 — Resgate Imediato do Acervo (dias 1-3)</h3>
+<p style="color:#8A7F6B;font-size:0.85rem;">Sem depender de LM Studio ou Firebase. Usar apenas Node.js + scripts existentes.</p>
+
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-content">
+    <strong>Criar endpoint /api/dominio-publico (análogo ao /api/gutenberg)</strong>
+    <p>Criar <code>src/app/api/dominio-publico/route.ts</code> que baixa do <code>dominiopublico.gov.br/download/texto/{id}.txt</code>, limpa headers/footers, e retorna texto puro com cache. Usar o mesmo padrão do <code>gutenberg/route.ts</code>.</p>
+    <div class="code">// GET /api/dominio-publico?id=bn000067
+// Baixa de http://www.dominiopublico.gov.br/download/texto/bn000067.txt
+// Limpa cabeçalho/rodapé do governo
+// Retorna text/plain com Cache-Control: public, max-age=86400</div>
+    <span class="severity critical">Crítico</span> &nbsp; <span class="severity info">~1h de trabalho</span>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-content">
+    <strong>Adicionar TODAS as 50+ obras brasileiras ao livros-mock.json</strong>
+    <p>Usar as listas do orquestrador (DOMINIO_PUBLICO_WORKS, linhas 186-246) para gerar entries completas com <code>downloadFile</code> apontando para o novo endpoint, traduções (pt-br default), capas via Open Library covers, e gradientes.</p>
+    <span class="severity critical">Crítico</span> &nbsp; <span class="severity info">~4h de trabalho</span>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-content">
+    <strong>Criar script de inicialização (bootstrap) que baixa as obras brasileiras</strong>
+    <p>Script Node.js que baixa TODAS as 50+ obras do Domínio Público de uma só vez, gera entries para o livros-mock.json, e prepara tudo para o deploy. Independente de LM Studio.</p>
+    <div class="code">node scripts/bootstrap-brasil.js
+// 1. Baixa 50+ obras Domínio Público → /downloads
+// 2. Gera entries para livros-mock.json
+// 3. Salva progresso</div>
+    <span class="severity high">Alto impacto</span> &nbsp; <span class="severity info">~3h de trabalho</span>
+  </div>
+</div>
+
+<!-- FASE 2 -->
+<h3 style="margin-top:2em;color:#F0E3CF;">Fase 2 — APIs e Frontend (dias 4-6)</h3>
+
+<div class="step">
+  <div class="step-num">5</div>
+  <div class="step-content">
+    <strong>Criar obra brasileira em destaque com aba autônoma "Acervo Brasileiro"</strong>
+    <p>Nova ContentTab <code>"brasil"</code> no frontend que filtra <code>publicDomain: true, language: "pt-br"</code>. Adicionar filtro por autor (Machado, Alencar, etc.) e período literário (Romantismo, Realismo, etc.).</p>
+    <span class="severity medium">Médio</span> &nbsp; <span class="severity info">~3h de trabalho</span>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">6</div>
+  <div class="step-content">
+    <strong>Configurar Google Books API Key</strong>
+    <p>Criar chave no Google Cloud Console, ativar Books API, adicionar ao <code>.env.local</code> como <code>NEXT_PUBLIC_GOOGLE_BOOKS_KEY</code>, atualizar <code>/api/amazon/route.ts</code> para usar a key. Isso libera 1000 req/dia.</p>
+    <div class="code">// .env.local
+GOOGLE_BOOKS_API_KEY=sua_chave_aqui</div>
+    <span class="severity high">Alto impacto</span> &nbsp; <span class="severity info">~30min</span>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">7</div>
+  <div class="step-content">
+    <strong>Resolver chunks no leitor de livros</strong>
+    <p>O <code>public/downloads/</code> tem arquivos chunkados (<code>.chunk.0.txt</code>). O leitor (<code>src/app/livros/[id]/page.tsx</code>) precisa detectar chunks, baixá-los em paralelo, concatená-los na ordem correta, e exibir o texto completo.</p>
+    <div class="code">async function loadFullText(downloadFile: string) {
+  const base = downloadFile.replace('.txt', '');
+  const chunks = [];
+  for (let i = 0; ; i++) {
+    const res = await fetch(`${base}.chunk.${i}.txt`);
+    if (!res.ok) break;
+    chunks.push(await res.text());
+  }
+  return chunks.length > 0 ? chunks.join('\n') : await fetch(downloadFile).then(r => r.text());
+}</div>
+    <span class="severity high">Alto</span> &nbsp; <span class="severity info">~2h de trabalho</span>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">8</div>
+  <div class="step-content">
+    <strong>Adicionar carregamento lazy + paginação na grade</strong>
+    <p>Com 70+ livros, a grade atual (renderiza todos de uma vez) vai ficar lenta. Implementar <code>IntersectionObserver</code> com carregamento de 12-16 por página, ou paginação clássica.</p>
+    <span class="severity low">Baixo</span> &nbsp; <span class="severity info">~2h de trabalho</span>
+  </div>
+</div>
+
+<!-- FASE 3 -->
+<h3 style="margin-top:2em;color:#F0E3CF;">Fase 3 — Firebase e Persistência (dias 7-10)</h3>
+
+<div class="step">
+  <div class="step-num">9</div>
+  <div class="step-content">
+    <strong>Rodar db-feeder.js para popular Firestore</strong>
+    <p>O script <code>scripts/db-feeder.js</code> foi criado para migrar os dados do JSON para o Firestore. Executá-lo vai popular a base e permitir que o site leia do Firestore em vez de localStorage.</p>
+    <div class="code">node scripts/db-feeder.js
+// Usa firebase-admin para:
+// - Upload de livros → firestore collection "books"
+// - Upload de contos → firestore collection "contos"
+// - Upload de covers → storage bucket</div>
+    <span class="severity high">Alto impacto</span> &nbsp; <span class="severity info">~2h de trabalho</span>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">10</div>
+  <div class="step-content">
+    <strong>Migrar BookContext para ler do Firestore (com fallback para JSON)</strong>
+    <p>Modificar <code>BookContext.tsx</code> para tentar carregar do Firestore primeiro, e cair para o JSON local se falhar. Isso permite escalar para milhares de livros sem engessar o bundle.</p>
+    <span class="severity medium">Médio</span> &nbsp; <span class="severity info">~4h de trabalho</span>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">11</div>
+  <div class="step-content">
+    <strong>Mover textos completos para Firebase Storage</strong>
+    <p>Os TXT em <code>public/downloads/</code> ficam no bundle. Mover para Firebase Storage, com o leitor baixando sob demanda via URL assinada ou pública. Reduz o tamanho do deploy em 95%.</p>
+    <span class="severity medium">Médio</span> &nbsp; <span class="severity info">~3h de trabalho</span>
+  </div>
+</div>
+
+<!-- FASE 4 -->
+<h3 style="margin-top:2em;color:#F0E3CF;">Fase 4 — Orquestrador Autônomo (dias 11-15)</h3>
+
+<div class="step">
+  <div class="step-num">12</div>
+  <div class="step-content">
+    <strong>Modificar orquestrador para modo "offline" (sem LM Studio)</strong>
+    <p>Separar o pipeline em 2 modos: (a) <strong>download-only</strong>: baixa textos do Gutenberg/DP, gera metadados, salva no Firestore — funciona sem LM Studio. (b) <strong>full</strong>: com IA para tradução e contos. O modo (a) já desbloqueia todo o acervo.</p>
+    <span class="severity high">Alto impacto</span> &nbsp; <span class="severity info">~4h de trabalho</span>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">13</div>
+  <div class="step-content">
+    <strong>Auto-descoberta de novas obras do Gutenberg</strong>
+    <p>O orquestrador já tem lógica de auto-discovery (linhas ~1000+). Usar Gutendex para descobrir novas obras populares em português e adicionar automaticamente ao acervo.</p>
+    <span class="severity low">Baixo</span> &nbsp; <span class="severity info">~2h de trabalho</span>
+  </div>
+</div>
+
+<!-- FASE 5 -->
+<h3 style="margin-top:2em;color:#F0E3CF;">Fase 5 — Contínuo (dias 16+)</h3>
+
+<div class="step">
+  <div class="step-num">14</div>
+  <div class="step-content">
+    <strong>Depurar truncamento de textos grandes no leitor</strong>
+    <p>Alguns textos no <code>livros-mock.json</code> estão truncados (especialmente os que têm <code>fullText</code> inline em vez de <code>downloadFile</code>). Garantir que todos os livros usem <code>downloadFile</code> + chunk loading.</p>
+    <span class="severity medium">Médio</span> &nbsp; <span class="severity info">~2h de trabalho</span>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">15</div>
+  <div class="step-content">
+    <strong>Implementar Amazon PAAPI para preços reais</strong>
+    <p>Substituir os preços estimados por preços reais da Amazon via Product Advertising API v5. Requer conta de afiliado e configuração de Signed Requests.</p>
+    <span class="severity low">Baixo</span> &nbsp; <span class="severity info">~4h de trabalho</span>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">16</div>
+  <div class="step-content">
+    <strong>Adicionar Open Library como fallback de capas e metadados</strong>
+    <p>Quando Google Books rate-limitar, usar Open Library para buscar metadata e capas. Implementar rota <code>/api/openlibrary</code>.</p>
+    <span class="severity low">Baixo</span> &nbsp; <span class="severity info">~2h de trabalho</span>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<h2>5. Prompts para Solicitar a Resolução</h2>
+
+<p>Copie e cole cada prompt em uma nova conversa com o agente opencode para executar as tarefas.</p>
+
+<div class="prompt-box">
+<div class="prompt-title">📋 PROMPT 1 — Criar endpoint Domínio Público + acervo brasileiro</div>
+<div class="code">No projeto gargbooks, preciso criar:
+
+1. Um endpoint de API em src/app/api/dominio-publico/route.ts que:
+   - Aceita GET /api/dominio-publico?id={id}
+   - Baixa de http://www.dominiopublico.gov.br/download/texto/{id}.txt
+   - Limpa cabeçalhos/rodapés do governo (similar ao gutenberg/route.ts)
+   - Retorna text/plain com Cache-Control de 24h
+   - Trata erros (404, timeout) com mensagens em português
+
+2. Adicionar as ~50 obras brasileiras ao src/data/livros-mock.json
+   - Usar a lista DOMINIO_PUBLICO_WORKS do scripts/orchestrator.js (linhas 186-246)
+   - Cada obra com downloadFile apontando para /api/dominio-publico?id={id}
+   - genre incluir "Clássicos Brasileiros" + gênero específico
+   - coverGradient baseado no título
+   - publicDomain: true, language: "pt-br"
+
+3. Uma nova ContentTab "brasil" em src/app/page.tsx que filtra obras brasileiras
+   - Similar à aba "livros" mas filtrando language === "pt-br"
+   - Ordenar por autor (Machado, Alencar, etc.)
+   - Adicionar filtro por período literário (Romantismo, Realismo, etc.)
+
+Verificar com npm run build depois.</div>
+</div>
+
+<div class="prompt-box">
+<div class="prompt-title">📋 PROMPT 2 — Resolver chunks no leitor de livros</div>
+<div class="code">No projeto gargbooks, o public/downloads/ contém arquivos chunkados (.chunk.0.txt, .chunk.1.txt, etc.) para livros grandes. O leitor atual em src/app/livros/[id]/page.tsx tenta baixar o downloadFile único, mas não monta os chunks.
+
+TAREFA: Modificar a lógica de carregamento de texto no leitor para:
+1. Ao encontrar um downloadFile, verificar se existem chunks (ex: {base}.chunk.0.txt)
+2. Se sim, baixar TODOS os chunks sequencialmente, concatenar na ordem
+3. Se não, baixar o arquivo único normalmente
+4. Tratar erros: se chunks falharem, tentar fallback para fullText do JSON
+5. Adicionar indicador de progresso "Carregando texto completo... (X%)"
+6. Usar Promise.all para baixar chunks em paralelo quando possível
+
+A função deve ficar em src/context/BookContext.tsx ou em um utils/textLoader.ts
+
+Incluir tipagem TypeScript completa.
+Verificar com npm run build.</div>
+</div>
+
+<div class="prompt-box">
+<div class="prompt-title">📋 PROMPT 3 — Script bootstrap para baixar acervo brasileiro</div>
+<div class="code">No projeto gargbooks, criar scripts/bootstrap-brasil.js que:
+
+1. Baixa TODAS as 50+ obras do Domínio Público (IDs bnXXXXXX da lista DOMINIO_PUBLICO_WORKS em scripts/orchestrator.js, linhas 186-246) para public/downloads/
+2. Gera entries para src/data/livros-mock.json no final do arquivo
+3. Cada entry deve ter: id, title, author, year, genres (incluindo "Clássicos Brasileiros"), coverGradient, synopsis automática, downloadFile apontando para /api/dominio-publico?id={id}, editions com link Amazon, reviews, publicDomain: true, language: "pt-br"
+4. Salva progresso em scripts/progress.json
+5. Não depende de LM Studio
+
+Usar fetch nativo (Node 18+).
+O script deve logar cada etapa e tratar erros (timeout, 404, etc.).</div>
+</div>
+
+<div class="prompt-box">
+<div class="prompt-title">📋 PROMPT 4 — Configurar Google Books API Key</div>
+<div class="code">No projeto gargbooks, em src/app/api/amazon/route.ts, a API do Google Books está sem chave, limitando a 10 requisições/dia.
+
+TAREFA:
+1. Criar chave de API no Google Cloud Console (Books API) 
+2. Adicionar ao .env.local como:
+   GOOGLE_BOOKS_API_KEY=sua_chave_real_aqui
+3. Modificar src/app/api/amazon/route.ts para enviar a key no parâmetro 'key' da URL
+4. O arquivo .env.local não deve ser commitado (já está no .gitignore)
+5. Adicionar tratamento de erro 403 (rate limit) com mensagem amigável
+
+Criar também instruções em AGENTS.md sobre como gerar a chave.</div>
+</div>
+
+<div class="prompt-box">
+<div class="prompt-title">📋 PROMPT 5 — Popular Firestore + migrar persistência</div>
+<div class="code">No projeto gargbooks, o Firebase Firestore está configurado mas vazio. O arquivo scripts/db-feeder.js já existe para popular.
+
+TAREFA:
+1. Executar scripts/db-feeder.js para enviar livros-mock.json, contos-mock.json, users, forum, banners etc. para o Firestore
+2. Garantir que as variáveis de ambiente do Firebase Admin estão no .env.local:
+   FIREBASE_PROJECT_ID, FIREBASE_CLIENT_EMAIL, FIREBASE_PRIVATE_KEY
+3. Modificar src/context/BookContext.tsx para:
+   - Tentar carregar livros do Firestore primeiro
+   - Se falhar, cair para o JSON local
+   - Suportar paginação (limit + startAfter) para 200+ livros
+4. Manter localStorage como cache offline
+
+Após terminar, verificar npm run build.</div>
+</div>
+
+<!-- ============================================================ -->
+<h2>6. Arquitetura Recomendada — Fluxo de Dados Final</h2>
+
+<pre class="code" style="margin:1em 0;">
+┌─────────────────────────────────────────────────────────────┐
+│                    GARGBOOKS — Fluxo Final                    │
+└─────────────────────────────────────────────────────────────┘
+
+                    ┌──────────────────┐
+                    │   Bootstrap.js    │  (executa 1x)
+                    │ Baixa TUDO ↓     │
+                    └────────┬─────────┘
+                             │
+              ┌──────────────┼──────────────┐
+              ▼              ▼              ▼
+     ┌──────────────┐ ┌──────────────┐ ┌──────────────┐
+     │ Gutenberg     │ │Domínio Público│ │ Open Library │
+     │ 20 clássicos  │ │50+ obras BR  │ │ Capas extras │
+     └──────┬───────┘ └──────┬───────┘ └──────┬───────┘
+            │                │                │
+            ▼                ▼                ▼
+     ┌──────────────────────────────────────────┐
+     │        public/downloads/*.txt             │
+     │        (textos completos + chunks)        │
+     └────────────────┬─────────────────────────┘
+                      │
+                      ▼
+     ┌──────────────────────────────────────────┐
+     │    scripts/db-feeder.js                   │
+     │    Sobe TUDO para Firebase ↓              │
+     └────────────────┬─────────────────────────┘
+                      │
+         ┌────────────┴────────────┐
+         ▼                         ▼
+  ┌──────────────┐       ┌────────────────┐
+  │  Firestore    │       │ Firebase Storage│
+  │  (metadados)  │       │ (textos + capas)│
+  └──────┬───────┘       └───────┬────────┘
+         │                       │
+         ▼                       ▼
+  ┌──────────────────────────────────────────┐
+  │         NEXT.JS APP ROUTER               │
+  │                                          │
+  │  / → grade com 70+ livros                │
+  │  /livros/[id] → leitor com chunks        │
+  │  /api/gutenberg → proxy Gutenberg        │
+  │  /api/dominio-publico → proxy DP         │
+  │  /api/amazon → Google Books + key        │
+  └──────────────────────────────────────────┘
+</pre>
+
+<!-- ============================================================ -->
+<h2>7. Resumo do Que Precisa Ser Feito — Checklist</h2>
+
+<table>
+<tr><th>#</th><th>Tarefa</th><th>Fase</th><th>Tempo</th><th>Depende de</th></tr>
+<tr><td>1</td><td>Criar endpoint /api/dominio-publico</td><td>F1</td><td>1h</td><td>—</td></tr>
+<tr><td>2</td><td>Adicionar 50+ obras brasileiras ao mock JSON</td><td>F1</td><td>4h</td><td>#1</td></tr>
+<tr><td>3</td><td>Criar script bootstrap-brasil.js</td><td>F1</td><td>3h</td><td>—</td></tr>
+<tr><td>4</td><td>Criar aba "Acervo Brasileiro" no frontend</td><td>F2</td><td>3h</td><td>#2</td></tr>
+<tr><td>5</td><td>Configurar Google Books API Key</td><td>F2</td><td>30min</td><td>—</td></tr>
+<tr><td>6</td><td>Resolver chunks no leitor</td><td>F2</td><td>2h</td><td>—</td></tr>
+<tr><td>7</td><td>Lazy loading na grade de livros</td><td>F2</td><td>2h</td><td>—</td></tr>
+<tr><td>8</td><td>Rodar db-feeder.js para Firestore</td><td>F3</td><td>2h</td><td>#2</td></tr>
+<tr><td>9</td><td>Migrar BookContext para Firestore</td><td>F3</td><td>4h</td><td>#8</td></tr>
+<tr><td>10</td><td>Mover textos para Firebase Storage</td><td>F3</td><td>3h</td><td>#9</td></tr>
+<tr><td>11</td><td>Orquestrador modo offline (sem LM Studio)</td><td>F4</td><td>4h</td><td>—</td></tr>
+<tr><td>12</td><td>Auto-descoberta de novas obras</td><td>F4</td><td>2h</td><td>#11</td></tr>
+<tr><td>13</td><td>Depurar truncamento de textos</td><td>F5</td><td>2h</td><td>—</td></tr>
+<tr><td>14</td><td>Amazon PAAPI para preços reais</td><td>F5</td><td>4h</td><td>—</td></tr>
+<tr><td>15</td><td>Open Library como fallback</td><td>F5</td><td>2h</td><td>—</td></tr>
+</table>
+
+<p style="margin-top:2em;color:#8A7F6B;font-size:0.85rem;border-top:1px solid #FFFFFF10;padding-top:1em;">
+<strong>Estimativa total:</strong> ~37h de trabalho distribuídas em 5 fases.<br>
+<strong>Prioridade máxima:</strong> Fase 1 (dias 1-2) — endpoint Domínio Público + 50 obras brasileiras no site.<br>
+<strong>Meta:</strong> Cada prompt acima pode ser copiado e colado em uma conversa com o agente opencode para execução autônoma.
+</p>
+
+</div>
+</body>
+</html>

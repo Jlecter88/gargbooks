@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import React, { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { useBooks, Edition } from "@/context/BookContext";
@@ -29,6 +29,22 @@ export default function DetalheLivro() {
   const displaySynopsis = translation?.synopsis || book?.synopsis || "";
   const displayFullText = translation?.fullText || book?.fullText || "";
   const displayDownloadFile = translation?.downloadFile || book?.downloadFile || (book ? `/downloads/${book.id}.txt` : "");
+
+  // Persist language preference across visits
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("gargbooks_language");
+      if (saved && ["en", "pt-br", "pt-pt", "es", "fr"].includes(saved)) {
+        setCurrentLang(saved);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("gargbooks_language", currentLang);
+    }
+  }, [currentLang]);
 
   // Tabs state
   const [activeTab, setActiveTab] = useState<"reader" | "editions" | "forum" | "reviews">("reader");
@@ -164,6 +180,8 @@ export default function DetalheLivro() {
   const [textLoading, setTextLoading] = useState<boolean>(false);
   const [textLoadProgress, setTextLoadProgress] = useState<number>(0);
   const [hasLoadedFullText, setHasLoadedFullText] = useState<boolean>(false);
+  const [textLoadError, setTextLoadError] = useState<string>("");
+  const textLoadToken = useRef(0);
 
   // Determine if displayFullText is a short preview or full content
   const isPreview = useMemo(() => {
@@ -174,6 +192,8 @@ export default function DetalheLivro() {
   useEffect(() => {
     if (!book) return;
     setHasLoadedFullText(false);
+    setTextLoadError("");
+    const token = ++textLoadToken.current;
 
     if (displayFullText && displayFullText.length > 0) {
       setFullTextContent(displayFullText);
@@ -190,41 +210,51 @@ export default function DetalheLivro() {
           undefined,
           (p) => setTextLoadProgress(p.percent)
         );
+        if (token !== textLoadToken.current) return;
         setFullTextContent(result.text);
       } catch (err) {
+        if (token !== textLoadToken.current) return;
         console.warn("Could not load book text:", err);
+        setTextLoadError("Não foi possível carregar o texto da obra. Verifique sua conexão.");
       } finally {
-        setTextLoading(false);
+        if (token === textLoadToken.current) {
+          setTextLoading(false);
+        }
       }
     };
 
     loadText();
   }, [book?.id, currentLang, displayFullText, displayDownloadFile]);
 
-  const handleLoadFullText = useMemo(() => {
-    return async () => {
-      setTextLoading(true);
-      setTextLoadProgress(0);
+  const handleLoadFullText = useCallback(async () => {
+    setTextLoading(true);
+    setTextLoadProgress(0);
+    setTextLoadError("");
+    const token = ++textLoadToken.current;
 
-      try {
-        const result = await loadBookText(
-          displayDownloadFile,
-          undefined,
-          (p) => setTextLoadProgress(p.percent)
-        );
-        setFullTextContent(result.text);
-        setHasLoadedFullText(true);
-        if (typeof window !== "undefined") {
-          try {
-            sessionStorage.setItem(`gargbooks_fulltext_${book?.id}_${currentLang}`, result.text);
-          } catch { /* quota exceeded, ignore */ }
-        }
-      } catch (err) {
-        console.warn("Could not load full text:", err);
-      } finally {
+    try {
+      const result = await loadBookText(
+        displayDownloadFile,
+        undefined,
+        (p) => setTextLoadProgress(p.percent)
+      );
+      if (token !== textLoadToken.current) return;
+      setFullTextContent(result.text);
+      setHasLoadedFullText(true);
+      if (typeof window !== "undefined") {
+        try {
+          sessionStorage.setItem(`gargbooks_fulltext_${book?.id}_${currentLang}`, result.text);
+        } catch { /* quota exceeded, ignore */ }
+      }
+    } catch (err) {
+      if (token !== textLoadToken.current) return;
+      console.warn("Could not load full text:", err);
+      setTextLoadError("Não foi possível carregar o texto completo. Verifique sua conexão ou tente novamente.");
+    } finally {
+      if (token === textLoadToken.current) {
         setTextLoading(false);
       }
-    };
+    }
   }, [displayDownloadFile, book?.id, currentLang]);
 
   // Create runtime text download url using Blob based on loaded full text
@@ -572,9 +602,11 @@ export default function DetalheLivro() {
                       { code: 'es', flag: '🇪🇸', label: 'ES' },
                       { code: 'fr', flag: '🇫🇷', label: 'FR' }
                     ].map((lang) => {
-                      const isAvailable = book?.translations && Object.keys(book.translations).length > 0
-                        ? !!book.translations[lang.code]
-                        : (book?.language ? book.language === lang.code : lang.code === 'pt-br');
+                      const translations = book?.translations;
+                      const hasTranslations = translations && Object.keys(translations).length > 0;
+                      const isAvailable = hasTranslations
+                        ? !!translations[lang.code]
+                        : true;
                       return (
                         <button
                           key={lang.code}
@@ -711,6 +743,25 @@ export default function DetalheLivro() {
                         </div>
                       )}
                     </div>
+                  ) : textLoadError ? (
+                    <div className="py-20 text-center space-y-4 font-mono text-xs">
+                      <span className="block text-3xl">⚠️</span>
+                      <span className="block text-red-400 font-bold uppercase tracking-widest">
+                        Erro ao carregar texto
+                      </span>
+                      <span className="block text-stone-400 max-w-md mx-auto">
+                        {textLoadError}
+                      </span>
+                      <button
+                        onClick={() => {
+                          setTextLoadError("");
+                          setHasLoadedFullText(false);
+                        }}
+                        className="px-6 py-3 bg-accent text-white rounded-full text-xs font-bold uppercase tracking-widest hover:bg-accent-hover transition-all cursor-pointer mt-4"
+                      >
+                        Tentar novamente
+                      </button>
+                    </div>
                   ) : (
                     <div>
                       {fullTextContent.split("\n\n").map((para, idx) => {
@@ -791,7 +842,11 @@ export default function DetalheLivro() {
                                 ? "Português 🇧🇷"
                                 : currentLang === "en"
                                   ? "Inglês 🇬🇧"
-                                  : "Espanhol 🇪🇸"}
+                                  : currentLang === "pt-pt"
+                                    ? "Português 🇵🇹"
+                                    : currentLang === "es"
+                                      ? "Espanhol 🇪🇸"
+                                      : "Francês 🇫🇷"}
                             </span>
                           )}
                         </button>
@@ -801,6 +856,11 @@ export default function DetalheLivro() {
                               className="h-full bg-accent transition-all duration-300 rounded-full"
                               style={{ width: `${textLoadProgress}%` }}
                             />
+                          </div>
+                        )}
+                        {textLoadError && (
+                          <div className="mt-4 px-6 py-3 bg-red-950/30 border border-red-500/30 rounded-xl text-xs text-red-300 font-mono inline-flex items-center gap-2">
+                            <span>⚠️</span> {textLoadError}
                           </div>
                         )}
                       </div>

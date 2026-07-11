@@ -1,0 +1,25 @@
+<pages index="Yayá Garcia.djvu" include=6 header=1 prev="" next="" current="" next="" notas="{{download}}" />
+{{quebra de página|separador=2}}
+{{t2|Sumário}}
+* [[Iaiá Garcia/I|Capítulo I]]
+* [[Iaiá Garcia/II|Capítulo II]]
+* [[Iaiá Garcia/III|Capítulo III]]
+* [[Iaiá Garcia/IV|Capítulo IV]]
+* [[Iaiá Garcia/V|Capítulo V]]
+* [[Iaiá Garcia/VI|Capítulo VI]]
+* [[Iaiá Garcia/VII|Capítulo VII]]
+* [[Iaiá Garcia/VIII|Capítulo VIII]]
+* [[Iaiá Garcia/IX|Capítulo IX]]
+* [[Iaiá Garcia/X|Capítulo X]]
+* [[Iaiá Garcia/XI|Capítulo XI]]
+* [[Iaiá Garcia/XII|Capítulo XII]]
+* [[Iaiá Garcia/XIII|Capítulo XIII]]
+* [[Iaiá Garcia/XIV|Capítulo XIV]]
+* [[Iaiá Garcia/XV|Capítulo XV]]
+* [[Iaiá Garcia/XVI|Capítulo XVI]]
+* [[Iaiá Garcia/XVII|Capítulo XVII]]
+
+[[Categoria:1878]]
+[[Categoria:Machado de Assis]]
+[[Categoria:Romances brasileiros]]
+[[Categoria:Iaiá Garcia| ]]
