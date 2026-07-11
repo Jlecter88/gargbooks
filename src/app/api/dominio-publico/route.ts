@@ -225,6 +225,35 @@ export async function GET(request: Request) {
     }
   }
 
+  // 4. Fallback: Archive.org (plain text)
+  if (!text) {
+    const title = DP_TITLE_MAP[id];
+    if (title) {
+      try {
+        const searchUrl = `https://archive.org/advancedsearch.php?q=${encodeURIComponent(title)}+languageSorter:portuguese&fl[]=identifier&rows=3&page=1&output=json`;
+        const searchRes = await fetch(searchUrl, { signal: AbortSignal.timeout(10000) });
+        if (searchRes.ok) {
+          const searchData = await searchRes.json();
+          const docs = searchData?.response?.docs || [];
+          if (docs.length > 0) {
+            const iaId = docs[0].identifier;
+            const textRes = await fetch(`https://archive.org/stream/${iaId}/${iaId}_djvu.txt`, {
+              signal: AbortSignal.timeout(30000),
+              headers: { 'User-Agent': 'Mozilla/5.0' }
+            });
+            if (textRes.ok) {
+              const rawText = await textRes.text();
+              if (rawText.length > 500) {
+                text = rawText;
+                source = "archive-org";
+              }
+            }
+          }
+        }
+      } catch { /* ignore */ }
+    }
+  }
+
   if (text) {
     return new NextResponse(text, {
       headers: {
@@ -236,7 +265,10 @@ export async function GET(request: Request) {
   }
 
   return NextResponse.json(
-    { error: "Obra não encontrada em nenhuma fonte disponível." },
+    { 
+      error: "Obra não encontrada em nenhuma fonte disponível no momento.",
+      tip: "Esta obra está em domínio público mas não foi encontrada nos acervos online disponíveis. Tente novamente mais tarde ou utilize a aba 'Catálogo Comercial' para buscar edições físicas."
+    },
     { status: 404 }
   );
 }
