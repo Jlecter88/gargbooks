@@ -18,8 +18,8 @@ const DOWNLOADS_DIR = path.join(__dirname, '..', 'public', 'downloads');
 const PROGRESS_PATH = path.join(__dirname, 'progress.json');
 
 // Configuração de Tags de Afiliado (Substitua pelos seus tags reais da Amazon)
-const AMAZON_TAG_BR = 'gargbooks-20';
-const AMAZON_TAG_PT = 'gargbookspt-21';
+const AMAZON_TAG_BR = 'prycco-20';
+const AMAZON_TAG_PT = 'prycco-21';
 
 // Intervalo de execução (10 minutos por padrão)
 const ORCHESTRATOR_INTERVAL = 10 * 60 * 1000;

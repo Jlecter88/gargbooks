@@ -72,8 +72,8 @@ export default function Home() {
         description: "O clássico supremo do terror gótico em edição de luxo com capa dura e ilustrações.",
         image: "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=300&auto=format&fit=crop&q=60",
         prices: {
-          BR: { current: 49.90, original: 69.90, store: "Amazon BR", link: "https://www.amazon.com.br/s?k=Dracula+Bram+Stoker+Capa+Dura&tag=gargbooks-20" },
-          PT: { current: 14.90, original: 19.90, store: "Amazon ES", link: "https://www.amazon.es/s?k=Dracula+Bram+Stoker+Tapa+Dura&tag=gargbookspt-21" }
+          BR: { current: 49.90, original: 69.90, store: "Amazon BR", link: "https://www.amazon.com.br/s?k=Dracula+Bram+Stoker+Capa+Dura&tag=prycco-20" },
+          PT: { current: 14.90, original: 19.90, store: "Amazon ES", link: "https://www.amazon.es/s?k=Dracula+Bram+Stoker+Tapa+Dura&tag=prycco-21" }
         }
       },
       {
@@ -83,8 +83,8 @@ export default function Home() {
         description: "A obra definitiva do Cyberpunk que inspirou Matrix e definiu a ficção científica moderna.",
         image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=300&auto=format&fit=crop&q=60",
         prices: {
-          BR: { current: 39.90, original: 55.00, store: "Amazon BR", link: "https://www.amazon.com.br/s?k=Neuromancer+William+Gibson&tag=gargbooks-20" },
-          PT: { current: 12.50, original: 16.00, store: "Amazon ES", link: "https://www.amazon.es/s?k=Neuromancer+William+Gibson&tag=gargbookspt-21" }
+          BR: { current: 39.90, original: 55.00, store: "Amazon BR", link: "https://www.amazon.com.br/s?k=Neuromancer+William+Gibson&tag=prycco-20" },
+          PT: { current: 12.50, original: 16.00, store: "Amazon ES", link: "https://www.amazon.es/s?k=Neuromancer+William+Gibson&tag=prycco-21" }
         }
       },
       {
@@ -94,8 +94,8 @@ export default function Home() {
         description: "A cosmologia da Terra-média em uma edição ilustrada essencial para todo fã de fantasia.",
         image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=300&auto=format&fit=crop&q=60",
         prices: {
-          BR: { current: 59.90, original: 79.90, store: "Amazon BR", link: "https://www.amazon.com.br/s?k=O+Silmarillion+Tolkien+Ilustrado&tag=gargbooks-20" },
-          PT: { current: 18.90, original: 24.90, store: "Amazon ES", link: "https://www.amazon.es/s?k=El+Silmarillion+Tolkien+Ilustrado&tag=gargbookspt-21" }
+          BR: { current: 59.90, original: 79.90, store: "Amazon BR", link: "https://www.amazon.com.br/s?k=O+Silmarillion+Tolkien+Ilustrado&tag=prycco-20" },
+          PT: { current: 18.90, original: 24.90, store: "Amazon ES", link: "https://www.amazon.es/s?k=El+Silmarillion+Tolkien+Ilustrado&tag=prycco-21" }
         }
       }
     ];
