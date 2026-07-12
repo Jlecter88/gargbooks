@@ -45,3 +45,11 @@ env:
     availability:
       - BUILD
       - RUNTIME
+  - variable: AMAZON_AFFILIATE_TAG_BR
+    value: prycco-20
+    availability:
+      - RUNTIME
+  - variable: AMAZON_AFFILIATE_TAG_PT
+    value: prycco-21
+    availability:
+      - RUNTIME

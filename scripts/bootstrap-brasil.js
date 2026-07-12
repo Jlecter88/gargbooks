@@ -264,8 +264,8 @@ function generateEntry(work, size) {
         coverType: "Digital",
         priceBR: 0,
         pricePT: 0,
-        linkBR: `https://www.amazon.com.br/s?k=${query}&tag=gargbooks-20`,
-        linkPT: `https://www.amazon.es/s?k=${query}&tag=gargbookspt-21`,
+        linkBR: `https://www.amazon.com.br/s?k=${query}&tag=prycco-20`,
+        linkPT: `https://www.amazon.es/s?k=${query}&tag=prycco-21`,
       },
     ],
     reviews: [

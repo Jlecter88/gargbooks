@@ -104,8 +104,8 @@ export async function GET(request: Request) {
             coverType: "Brochura / Capa Comum / Digital",
             priceBR: priceBR,
             pricePT: pricePT,
-            linkBR: `https://www.amazon.com.br/s?k=${encodeURIComponent(title + " " + firstAuthor)}&tag=prycco-20`,
-            linkPT: `https://www.amazon.es/s?k=${encodeURIComponent(title + " " + firstAuthor)}&tag=prycco-21`
+            linkBR: `https://www.amazon.com.br/s?k=${encodeURIComponent(title + " " + firstAuthor)}&tag=${process.env.AMAZON_AFFILIATE_TAG_BR || "prycco-20"}`,
+            linkPT: `https://www.amazon.es/s?k=${encodeURIComponent(title + " " + firstAuthor)}&tag=${process.env.AMAZON_AFFILIATE_TAG_PT || "prycco-21"}`
           }
         ],
         reviews: [],

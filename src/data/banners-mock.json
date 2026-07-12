@@ -3,7 +3,7 @@
     "id": "banner-1",
     "title": "Drácula - Edição Especial de Luxo",
     "imageUrl": "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=1200&auto=format&fit=crop&q=80",
-    "link": "https://www.amazon.com.br/s?k=Dracula+Bram+Stoker+Capa+Dura&tag=gargbooks-20",
+    "link": "https://www.amazon.com.br/s?k=Dracula+Bram+Stoker+Capa+Dura&tag=prycco-20",
     "order": 1,
     "active": true
   },
@@ -11,7 +11,7 @@
     "id": "banner-2",
     "title": "Neuromancer - 40 Anos do Cyberpunk",
     "imageUrl": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&auto=format&fit=crop&q=80",
-    "link": "https://www.amazon.com.br/s?k=Neuromancer+William+Gibson&tag=gargbooks-20",
+    "link": "https://www.amazon.com.br/s?k=Neuromancer+William+Gibson&tag=prycco-20",
     "order": 2,
     "active": true
   },
@@ -19,7 +19,7 @@
     "id": "banner-3",
     "title": "O Silmarillion - Cosmologia de Tolkien",
     "imageUrl": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200&auto=format&fit=crop&q=80",
-    "link": "https://www.amazon.com.br/s?k=O+Silmarillion+Tolkien+Ilustrado&tag=gargbooks-20",
+    "link": "https://www.amazon.com.br/s?k=O+Silmarillion+Tolkien+Ilustrado&tag=prycco-20",
     "order": 3,
     "active": true
   }
