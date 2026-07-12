@@ -11,7 +11,20 @@ import RecommendedSection from "@/components/RecommendedSection";
 import { getRecommendations } from "@/utils/recommendations";
 import { Book } from "@/context/BookContext";
 
-type ContentTab = "todos" | "livros" | "contos" | "gutenberg" | "comerciais" | "brasil";
+type ContentTab = "todos" | "livros" | "contos" | "gutenberg" | "comerciais" | "brasil" | "mercadolivre";
+
+interface MlResultItem {
+  id: string;
+  title: string;
+  author: string;
+  price: number;
+  currency: string;
+  installments: { quantity: number; amount: number } | null;
+  thumbnail: string | null;
+  condition: "Novo" | "Usado";
+  store: string;
+  link: string;
+}
 
 export default function Home() {
   const router = useRouter();
@@ -140,6 +153,11 @@ export default function Home() {
   const [loadingAmazon, setLoadingAmazon] = useState(false);
   const [hasSearchedAmazon, setHasSearchedAmazon] = useState(false);
 
+  // Mercado Livre Search states
+  const [mlResults, setMlResults] = useState<MlResultItem[]>([]);
+  const [loadingMl, setLoadingMl] = useState(false);
+  const [hasSearchedMl, setHasSearchedMl] = useState(false);
+
   // Search Project Gutenberg (Gutendex API with CORS enabled)
   const handleGutenbergSearch = async () => {
     if (!searchTerm.trim()) return;
@@ -213,6 +231,26 @@ export default function Home() {
       console.error("Falha ao buscar na Amazon:", err);
     } finally {
       setLoadingAmazon(false);
+    }
+  };
+
+  // Search Mercado Livre with affiliate links
+  const handleMlSearch = async () => {
+    if (!searchTerm.trim()) return;
+    setLoadingMl(true);
+    setHasSearchedMl(true);
+    try {
+      const response = await fetch(`/api/mercadolivre?q=${encodeURIComponent(searchTerm)}`);
+      if (response.ok) {
+        const data = await response.json();
+        setMlResults(data.results || []);
+      } else {
+        console.error("Erro na busca do Mercado Livre");
+      }
+    } catch (err) {
+      console.error("Falha ao buscar no Mercado Livre:", err);
+    } finally {
+      setLoadingMl(false);
     }
   };
 
@@ -453,6 +491,56 @@ export default function Home() {
     );
   };
 
+  const renderMlCard = (item: MlResultItem) => {
+    const isNew = item.condition === "Novo";
+    const priceBRL = item.price?.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+    return (
+      <a
+        key={item.id}
+        href={item.link}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`border rounded-2xl p-6 flex flex-col justify-between items-center text-center hover:border-amber-500 hover:shadow-xl transition-all duration-300 ${borderClasses} bg-current/3 book-card group`}
+      >
+        <div className="w-[120px] h-[175px] shadow-lg rounded-md overflow-hidden bg-stone-850 flex items-center justify-center mb-4 relative">
+          {item.thumbnail ? (
+            <img src={item.thumbnail} alt={item.title} className="w-full h-full object-cover" />
+          ) : (
+            <div className="w-full h-full bg-gradient-to-br from-amber-900/40 to-amber-700/20 p-3 flex flex-col justify-between text-left">
+              <span className="text-[8px] font-mono uppercase text-white/50">{item.author}</span>
+              <span className="text-[10px] font-serif font-bold text-white leading-tight line-clamp-3">{item.title}</span>
+            </div>
+          )}
+          <div className="absolute top-2 right-2 bg-amber-600 text-white text-[7px] font-mono font-bold px-1.5 py-0.5 rounded">
+            ML
+          </div>
+          {isNew && (
+            <div className="absolute top-2 left-2 px-1.5 py-0.5 bg-emerald-600 text-white text-[6px] font-mono font-bold rounded">
+              NOVO
+            </div>
+          )}
+        </div>
+        <div className="flex-1 flex flex-col justify-between w-full">
+          <div>
+            <h3 className="font-serif text-xs font-bold line-clamp-2 mb-1 text-stone-200">{item.title}</h3>
+            <p className="font-mono text-[9px] opacity-60 uppercase tracking-wider mb-1">{item.author}</p>
+            <div className="flex justify-center items-center gap-2 mt-2">
+              <span className="text-amber-400 font-serif text-base font-bold">{priceBRL}</span>
+              {item.installments && (
+                <span className="text-[8px] font-mono opacity-60">
+                  {item.installments.quantity}x {item.installments.amount.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+                </span>
+              )}
+            </div>
+          </div>
+          <button className="mt-4 px-4 py-2 bg-amber-600 text-white rounded-full font-mono text-[8px] font-bold uppercase tracking-wider w-full cursor-pointer hover:bg-amber-700 transition-colors group-hover:shadow-lg group-hover:shadow-amber-600/20">
+            Comprar no Mercado Livre ↗
+          </button>
+        </div>
+      </a>
+    );
+  };
+
   // Theme classes
   const themeClasses = {
     dark: "bg-[#121213] text-[#F0E3CF]",
@@ -491,6 +579,7 @@ export default function Home() {
     gutenberg: "70k+",
     comerciais: "1M+",
     brasil: livros.filter(b => b.language === "pt-br").length,
+    mercadolivre: "ML",
   };
 
   return (
@@ -788,6 +877,12 @@ export default function Home() {
                   icon: "🛒",
                   description: "Pesquise e compre edições comerciais na Amazon",
                 },
+                {
+                  id: "mercadolivre",
+                  label: "Mercado Livre",
+                  icon: "🛍️",
+                  description: "Preços e ofertas em tempo real do Mercado Livre com link de afiliado",
+                },
               ] as { id: ContentTab; label: string; icon: string; description: string }[]
             ).map((tab) => (
               <button
@@ -827,6 +922,8 @@ export default function Home() {
               "🌐 Biblioteca Gutenberg — Busque e leia na hora mais de 70.000 clássicos de domínio público inteiramente grátis."}
             {activeTab === "comerciais" &&
               "🛒 Catálogo Geral (Amazon) — Encontre milhões de livros comerciais e compre na Amazon via link de afiliado."}
+            {activeTab === "mercadolivre" &&
+              "🛍️ Mercado Livre — Busque livros com preços REAIS do Mercado Livre. Resultados com link de afiliado e condições de frete."}
           </p>
         </section>
 
@@ -873,6 +970,33 @@ export default function Home() {
                 <button
                   type="submit"
                   className="px-5 py-2.5 bg-accent hover:bg-accent-hover text-[#121213] font-mono text-[10px] uppercase tracking-widest font-bold rounded-full transition-all active:scale-95 cursor-pointer shrink-0"
+                >
+                  Buscar
+                </button>
+              </form>
+            </div>
+          </section>
+        ) : activeTab === "mercadolivre" ? (
+          <section className="mb-12 flex flex-col gap-6 lg:flex-row lg:items-center justify-end animate-fade-in-up">
+            {/* ML search input form */}
+            <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
+              <form
+                onSubmit={(e) => { e.preventDefault(); handleMlSearch(); }}
+                className="relative flex-1 sm:w-80 flex gap-2"
+              >
+                <div className="relative flex-1">
+                  <input
+                    type="text"
+                    placeholder="Buscar livros no Mercado Livre..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className={`w-full px-5 py-2.5 pl-10 text-[11px] font-mono rounded-full border outline-none transition-all ${inputClasses}`}
+                  />
+                  <span className="absolute left-4 top-3 text-[11px] opacity-60">🔍</span>
+                </div>
+                <button
+                  type="submit"
+                  className="px-5 py-2.5 bg-amber-600 hover:bg-amber-700 text-white font-mono text-[10px] uppercase tracking-widest font-bold rounded-full transition-all active:scale-95 cursor-pointer shrink-0"
                 >
                   Buscar
                 </button>
@@ -995,6 +1119,43 @@ export default function Home() {
                     {popularGutenberg.map((gbook) => renderGutenbergCard(gbook))}
                   </div>
                 )}
+              </div>
+            )}
+          </div>
+        ) : activeTab === "mercadolivre" ? (
+          <div>
+            {loadingMl ? (
+              <div className="text-center py-24">
+                <span className="block animate-spin text-3xl text-amber-500 mb-3">🌀</span>
+                <p className="font-mono text-xs opacity-60">Consultando Mercado Livre...</p>
+              </div>
+            ) : hasSearchedMl ? (
+              /* ML Search Results */
+              mlResults.length === 0 ? (
+                <div className="text-center py-24 border border-dashed rounded-3xl border-current/15">
+                  <span className="text-5xl block mb-4">🔍</span>
+                  <h3 className="font-serif text-xl font-bold mb-2">Nenhum livro encontrado no Mercado Livre</h3>
+                  <p className={`text-xs ${mutedTextClasses} max-w-sm mx-auto`}>
+                    Verifique a ortografia ou tente um termo de busca diferente.
+                  </p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 animate-fade-in-up">
+                  {mlResults.map((item: MlResultItem) => renderMlCard(item))}
+                </div>
+              )
+            ) : (
+              /* Search Prompt for Mercado Livre */
+              <div className="text-center py-24 border border-dashed rounded-3xl border-current/15 max-w-3xl mx-auto px-6">
+                <span className="text-5xl block mb-6 animate-pulse">🛍️</span>
+                <h3 className="font-serif text-2xl font-bold mb-3 text-stone-250">Busque Livros no Mercado Livre</h3>
+                <p className={`text-xs md:text-sm ${mutedTextClasses} max-w-lg mx-auto leading-relaxed mb-8`}>
+                  Pesquise títulos de livros e veja preços REAIS praticados no Mercado Livre.
+                  Os links incluem nosso código de afiliado para apoiar o projeto.
+                </p>
+                <div className="flex justify-center">
+                  <div className="h-[1px] w-24 bg-accent/20" />
+                </div>
               </div>
             )}
           </div>
