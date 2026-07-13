@@ -11,6 +11,7 @@
     "migrate-chunks": "node scripts/migrate-chunks.js"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "firebase": "^12.15.0",
     "firebase-admin": "^14.1.0",
     "next": "16.2.10",
