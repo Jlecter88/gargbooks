@@ -58,6 +58,10 @@ export interface Book {
   reactions?: Record<string, string[]>; // mapping reaction type to user IDs
   publicDomain?: boolean;
   language?: string;
+  // Content rating and sensitivity flags
+  ageRating?: "livre" | "+16" | "+18";
+  sensitiveContent?: boolean;
+  triggers?: string[]; // e.g. ["violencia", "morte", "sangue", "panico"]
 }
 
 export interface Bookmark {
