@@ -16,14 +16,21 @@ const GRADIENT_PRESETS = [
 ];
 
 const GENRE_OPTIONS = [
+  "Terror",
   "Terror Gótico",
-  "Clássicos",
+  "Romance",
   "Fantasia",
-  "Épico",
-  "Realismo",
   "Ficção Científica",
   "Cyberpunk",
-  "Adulto +18",
+  "Erótico (+18)",
+  "Drama",
+  "Comédia",
+  "Mistério",
+  "Aventura",
+  "Suspense",
+  "Realismo",
+  "Poesia",
+  "Original",
 ];
 
 export default function PublicarLivro() {
@@ -42,6 +49,9 @@ export default function PublicarLivro() {
   const [isCompressing, setIsCompressing] = useState(false);
   const [compressionInfo, setCompressionInfo] = useState<CompressionResult | null>(null);
   const [publishWithRealPhoto, setPublishWithRealPhoto] = useState(true);
+  const [ageRating, setAgeRating] = useState<"livre" | "+16" | "+18">("livre");
+  const [sensitiveContent, setSensitiveContent] = useState(false);
+  const [triggers, setTriggers] = useState<string[]>([]);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
 
@@ -96,21 +106,26 @@ export default function PublicarLivro() {
       return;
     }
 
-    const isAdult = selectedGenres.includes("Adulto +18");
+    const isAdult = ageRating === "+18" || selectedGenres.includes("Erótico (+18)");
 
     addBook({
       title,
       author: isAdult && !publishWithRealPhoto ? "Autor Anônimo" : author,
       authorId: currentUser?.id,
       year: Number(year),
-      genres: selectedGenres,
+      genres: isAdult && !selectedGenres.includes("Erótico (+18)")
+        ? [...selectedGenres, "Erótico (+18)"]
+        : selectedGenres,
       coverGradient: selectedGradient,
       coverImage: coverImage || undefined,
       synopsis,
       fullText,
-      editions: [], // User-published works don't have physical editions initially
-      type: "conto", // User-published originals are short stories
+      editions: [],
+      type: "conto",
       publishWithRealPhoto: isAdult ? publishWithRealPhoto : undefined,
+      ageRating,
+      sensitiveContent,
+      triggers,
     });
 
     setSuccess(true);
@@ -133,15 +148,15 @@ export default function PublicarLivro() {
           </span>
         </div>
         <h1 className="font-serif text-3xl md:text-4xl font-bold tracking-tight mb-8">
-          Publicar Obra
+          Publicar Conto
         </h1>
 
         {success ? (
           <div className="bg-emerald-950/40 border border-emerald-500/30 text-emerald-200 p-8 rounded-3xl text-center max-w-xl mx-auto my-12 animate-fade-in">
             <span className="text-4xl block mb-4">🎉</span>
-            <h3 className="font-serif text-xl font-bold mb-2">Obra publicada com sucesso!</h3>
+            <h3 className="font-serif text-xl font-bold mb-2">Conto publicado com sucesso! 🎉</h3>
             <p className="text-xs text-emerald-400/80">
-              Sua obra foi adicionada à Estante Virtual. Redirecionando...
+              Seu conto foi adicionado ao portal. Redirecionando...
             </p>
           </div>
         ) : (
@@ -279,13 +294,12 @@ export default function PublicarLivro() {
                   )}
                 </div>
 
-                {/* +18 Privacy Toggle Option */}
-                {selectedGenres.includes("Adulto +18") && (
-                  <div className="animate-fade-in">
-                    <label className="block text-xs font-mono text-stone-400 uppercase tracking-wider mb-2">
-                      Privacidade do Autor (+18)
+                {ageRating === "+18" && (
+                  <div className="animate-fade-in p-4 rounded-2xl border border-red-500/20 bg-red-950/10">
+                    <label className="block text-xs font-mono text-red-400 uppercase tracking-wider mb-2">
+                      🔞 Privacidade do Autor (+18)
                     </label>
-                    <div className="flex gap-4 items-center h-[42px]">
+                    <div className="flex gap-4 items-center">
                       <button
                         type="button"
                         onClick={() => setPublishWithRealPhoto(true)}
@@ -306,13 +320,13 @@ export default function PublicarLivro() {
                             : "bg-neutral-900 border-white/10 text-stone-500 hover:border-white/20"
                         }`}
                       >
-                        Anonimizar Foto/Nome
+                        Anonimizar
                       </button>
                     </div>
-                    <p className="text-[9px] font-sans text-stone-550 leading-tight mt-1.5">
+                    <p className="text-[9px] font-sans text-stone-500 leading-tight mt-1.5">
                       {publishWithRealPhoto
-                        ? "Sua foto de perfil e nome real serão exibidos na capa e leitura deste conto."
-                        : "O conto será publicado sob a alcunha de 'Autor Anônimo' e usará um avatar mascarado genérico."}
+                        ? "Sua foto de perfil e nome real serão exibidos."
+                        : "Publicado como 'Autor Anônimo' com avatar genérico."}
                     </p>
                   </div>
                 )}
@@ -342,6 +356,82 @@ export default function PublicarLivro() {
                     );
                   })}
                 </div>
+              </div>
+
+              {/* Age Rating */}
+              <div>
+                <label className="block text-xs font-mono text-stone-400 uppercase tracking-wider mb-2">
+                  Classificação Etária
+                </label>
+                <div className="flex gap-3">
+                  {[
+                    { value: "livre", label: "📖 Livre", desc: "Para todas as idades" },
+                    { value: "+16", label: "🔞 +16", desc: "Conteúdo adolescente" },
+                    { value: "+18", label: "🔞 +18", desc: "Conteúdo adulto/erótico" },
+                  ].map(({ value, label, desc }) => (
+                    <button
+                      key={value}
+                      type="button"
+                      onClick={() => {
+                        setAgeRating(value as "livre" | "+16" | "+18");
+                        if (value === "+18" && !selectedGenres.includes("Erótico (+18)")) {
+                          setSelectedGenres(prev => [...prev, "Erótico (+18)"]);
+                        }
+                      }}
+                      className={`flex-1 p-3 rounded-xl border text-left transition-all ${
+                        ageRating === value
+                          ? value === "+18"
+                            ? "bg-red-950/20 border-red-500/30"
+                            : "bg-accent/20 border-accent"
+                          : "bg-neutral-900 border-white/10 hover:border-white/20"
+                      }`}
+                    >
+                      <span className="text-xs font-bold block">{label}</span>
+                      <span className="text-[9px] text-stone-500 font-sans">{desc}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Sensitive Content (Terror) */}
+              <div className="p-4 rounded-2xl border border-orange-500/15 bg-orange-950/5">
+                <label className="block text-xs font-mono text-orange-400 uppercase tracking-wider mb-2">
+                  ⚠️ Conteúdo Sensível
+                </label>
+                <div className="flex items-center gap-3 mb-3">
+                  <input
+                    type="checkbox"
+                    checked={sensitiveContent}
+                    onChange={(e) => setSensitiveContent(e.target.checked)}
+                    className="accent-orange-500 w-4 h-4"
+                  />
+                  <span className="text-xs text-stone-300">
+                    Este conto contém temas sensíveis (violência, terror psicológico, etc.)
+                  </span>
+                </div>
+                {sensitiveContent && (
+                  <div className="animate-fade-in ml-7">
+                    <p className="text-[10px] font-mono text-stone-500 mb-2">Triggers:</p>
+                    <div className="flex gap-2 flex-wrap">
+                      {["violência", "morte", "sangue", "pânico", "assassinato", "suicídio"].map((t) => (
+                        <button
+                          key={t}
+                          type="button"
+                          onClick={() => setTriggers(prev =>
+                            prev.includes(t) ? prev.filter(x => x !== t) : [...prev, t]
+                          )}
+                          className={`px-3 py-1 text-[10px] font-mono rounded-full border transition-all ${
+                            triggers.includes(t)
+                              ? "bg-orange-900/20 border-orange-500/30 text-orange-400"
+                              : "bg-neutral-900 border-white/10 text-stone-500 hover:border-white/20"
+                          }`}
+                        >
+                          {t}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Synopsis Input */}
@@ -390,7 +480,7 @@ export default function PublicarLivro() {
                   type="submit"
                   className="px-8 py-3 bg-accent text-white rounded-full hover:bg-accent-hover text-xs font-semibold transition-all active:scale-95 shadow-lg shadow-accent/20"
                 >
-                  Publicar Obra ↗
+                  ✍️ Publicar Conto ↗
                 </button>
               </div>
             </form>
