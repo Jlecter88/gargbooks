@@ -1,5 +1,32 @@
 import { NextResponse } from "next/server";
 
+interface GoogleBooksVolume {
+  id: string;
+  volumeInfo?: {
+    title?: string;
+    authors?: string[];
+    publishedDate?: string;
+    pageCount?: number;
+    categories?: string[];
+    averageRating?: number;
+    description?: string;
+    language?: string;
+    publisher?: string;
+    imageLinks?: {
+      thumbnail?: string;
+      smallThumbnail?: string;
+    };
+    industryIdentifiers?: Array<{
+      type: string;
+      identifier: string;
+    }>;
+  };
+}
+
+interface GoogleBooksResponse {
+  items?: GoogleBooksVolume[];
+}
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const query = searchParams.get("q");
@@ -34,7 +61,7 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: "Erro ao consultar catálogo de livros." }, { status: response.status });
     }
 
-    const data = await response.json();
+    const data: GoogleBooksResponse = await response.json();
     const items = data.items || [];
 
     const gradients = [
@@ -46,7 +73,7 @@ export async function GET(request: Request) {
       "from-purple-950 via-slate-950 to-neutral-900"
     ];
 
-    const results = items.map((item: any) => {
+    const results = items.map((item: GoogleBooksVolume) => {
       const volumeInfo = item.volumeInfo || {};
       const title = volumeInfo.title || "Obra Sem Título";
       const authors = volumeInfo.authors || [];
@@ -72,7 +99,7 @@ export async function GET(request: Request) {
         }
       }
 
-      const isbnObj = volumeInfo.industryIdentifiers?.find((id: any) => id.type === "ISBN_13" || id.type === "ISBN_10");
+      const isbnObj = volumeInfo.industryIdentifiers?.find((id: { type: string; identifier: string }) => id.type === "ISBN_13" || id.type === "ISBN_10");
       const isbn = isbnObj ? isbnObj.identifier : "978-XXXXXXXXXX";
       const pages = volumeInfo.pageCount || 280;
 

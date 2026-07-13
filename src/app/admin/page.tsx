@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, startTransition } from "react";
 import Link from "next/link";
 import { User } from "@/utils/rpgMatchmaker";
 
@@ -140,13 +140,8 @@ export default function AdminDashboard() {
   // Users Search
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Initial Fetches
-  useEffect(() => {
-    fetchUsers();
-    fetchBanners();
-    fetchAds();
-    fetchAffiliates();
-  }, []);
+  // ID counter for new items (avoids Date.now() during render)
+  const idCounter = useRef(1);
 
   // --- Fetch Methods ---
   const fetchUsers = async () => {
@@ -208,6 +203,16 @@ export default function AdminDashboard() {
       setLoadingAffiliates(false);
     }
   };
+
+  // Initial Fetches
+  useEffect(() => {
+    startTransition(() => {
+      fetchUsers();
+      fetchBanners();
+      fetchAds();
+      fetchAffiliates();
+    });
+  }, []);
 
   // --- Save / Write Methods ---
   const saveUsersList = async (updated: User[]) => {
@@ -298,7 +303,7 @@ export default function AdminDashboard() {
       );
     } else {
       const newBanner: Banner = {
-        id: `banner-${Date.now()}`,
+        id: `banner-${idCounter.current++}`,
         title: bannerTitle,
         imageUrl: bannerImageUrl,
         link: bannerLink,
@@ -355,7 +360,7 @@ export default function AdminDashboard() {
       );
     } else {
       const newAd: Ad = {
-        id: `ad-${Date.now()}`,
+        id: `ad-${idCounter.current++}`,
         title: adTitle,
         imageUrl: adImageUrl,
         link: adLink,
@@ -430,7 +435,7 @@ export default function AdminDashboard() {
       );
     } else {
       const newAff: Affiliate = {
-        id: `aff-${Date.now()}`,
+        id: `aff-${idCounter.current++}`,
         name: affiliateName,
         code: affiliateCode.trim().toUpperCase(),
         conversions: Number(affiliateConversions),
@@ -795,8 +800,8 @@ export default function AdminDashboard() {
                         src={banner.imageUrl}
                         alt={banner.title}
                         className="w-full h-full object-cover opacity-80"
-                        onError={(e: any) => {
-                          e.target.src = "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=600&auto=format&fit=crop&q=80";
+                        onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+                          (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=600&auto=format&fit=crop&q=80";
                         }}
                       />
                       <span className={`absolute top-4 right-4 px-2.5 py-0.5 rounded text-[8px] font-mono font-bold uppercase tracking-widest border ${
@@ -962,7 +967,7 @@ export default function AdminDashboard() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {adsList.map((ad) => {
                   const ctr = ad.impressions > 0 ? ((ad.clicks / ad.impressions) * 100).toFixed(1) : "0.0";
-                  const positionLabels: any = {
+                  const positionLabels: Record<string, string> = {
                     sidebar: "Barra Lateral",
                     top: "Topo do Site",
                     inline: "Feed / Conteúdo"
@@ -974,8 +979,8 @@ export default function AdminDashboard() {
                           src={ad.imageUrl}
                           alt={ad.title}
                           className="w-full h-full object-cover opacity-75"
-                          onError={(e: any) => {
-                            e.target.src = "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400&auto=format&fit=crop&q=80";
+                        onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+                            (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400&auto=format&fit=crop&q=80";
                           }}
                         />
                         <span className={`absolute top-3 right-3 px-2 py-0.5 rounded text-[8px] font-mono font-bold uppercase tracking-widest border ${

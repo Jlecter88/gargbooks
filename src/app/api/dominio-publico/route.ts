@@ -1,5 +1,13 @@
 import { NextResponse } from "next/server";
 
+interface GutendexBook {
+  id: number;
+  title: string;
+  authors?: Array<{ name: string }>;
+  languages?: string[];
+  formats?: Record<string, string>;
+}
+
 const GUTENDEX_PT = "https://gutendex.com/books/?languages=pt&search=";
 
 function cleanDominioPublicoText(rawText: string): string {
@@ -86,10 +94,11 @@ async function tryGutendex(title: string): Promise<string | null> {
     const data = await searchRes.json();
     if (!data.results || data.results.length === 0) return null;
 
-    const match = data.results.find((b: any) => {
+    const results: GutendexBook[] = data.results;
+    const match = results.find((b: GutendexBook) => {
       const titleWords = title.toLowerCase().split(" ").filter((w: string) => w.length > 3);
       return titleWords.some((w: string) => b.title.toLowerCase().includes(w));
-    }) || data.results[0];
+    }) || results[0];
     if (!match) return null;
 
     const gUrl = `https://www.gutenberg.org/cache/epub/${match.id}/pg${match.id}.txt`;

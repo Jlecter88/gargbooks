@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, startTransition } from "react";
 
 export default function CustomCursor() {
   const [mousePos, setMousePos] = useState({ x: -100, y: -100 });
@@ -10,7 +10,7 @@ export default function CustomCursor() {
 
   // Guard against Hydration Mismatch: only execute on client side
   useEffect(() => {
-    setIsMounted(true);
+    startTransition(() => setIsMounted(true));
   }, []);
 
   // Track mouse coordinates

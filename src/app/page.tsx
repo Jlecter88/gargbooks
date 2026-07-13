@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo, useEffect, startTransition } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useBooks } from "@/context/BookContext";
+import { useBooks, Edition } from "@/context/BookContext";
+import type { Review } from "@/context/BookContext";
 import { useUserSession } from "@/context/UserContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -12,6 +13,67 @@ import { getRecommendations } from "@/utils/recommendations";
 import { Book } from "@/context/BookContext";
 
 type ContentTab = "todos" | "livros" | "contos" | "gutenberg" | "comerciais" | "brasil" | "mercadolivre";
+
+interface GutendexBook {
+  id: number;
+  title: string;
+  authors?: Array<{ name: string; birth_year?: number; death_year?: number }>;
+  formats?: Record<string, string>;
+  languages?: string[];
+  subjects?: string[];
+}
+
+interface PromoItem {
+  id: string;
+  title: string;
+  author: string;
+  description: string;
+  image: string;
+  prices: {
+    BR: { current: number; original: number; store: string; link: string };
+    PT: { current: number; original: number; store: string; link: string };
+  };
+}
+
+interface CommercialBook {
+  id: string;
+  title: string;
+  author: string;
+  year: number;
+  genres: string[];
+  rating: number;
+  coverGradient: string;
+  coverImage: string | null;
+  synopsis: string;
+  fullText: string;
+  type: string;
+  publicDomain: boolean;
+  language: string;
+  editions: Array<{
+    id: string;
+    publisher: string;
+    year: number;
+    isbn: string;
+    pages: number;
+    coverType: string;
+    priceBR: number;
+    pricePT: number;
+    linkBR: string;
+    linkPT: string;
+  }>;
+}
+
+interface PromoItem {
+  id: string;
+  title: string;
+  author: string;
+  description: string;
+  image: string;
+  prices: {
+    BR: { current: number; original: number; store: string; link: string };
+    PT: { current: number; original: number; store: string; link: string };
+  };
+}
 
 interface MlResultItem {
   id: string;
@@ -40,25 +102,27 @@ export default function Home() {
 
   // Project Gutenberg Search & Popular States
   const [gutenbergSearchLang, setGutenbergSearchLang] = useState<"all" | "pt" | "en">("all");
-  const [popularGutenberg, setPopularGutenberg] = useState<any[]>([]);
+  const [popularGutenberg, setPopularGutenberg] = useState<GutendexBook[]>([]);
   const [loadingPopularGutenberg, setLoadingPopularGutenberg] = useState(false);
 
   // Client hydration mount guard
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    startTransition(() => setMounted(true));
   }, []);
 
   // Detect region upon login or browser language
   useEffect(() => {
     if (typeof window !== "undefined") {
       const lang = navigator.language || "";
-      if (lang.toLowerCase().includes("pt-pt") || lang.toLowerCase().includes("es") || lang.toLowerCase().includes("de") || lang.toLowerCase().includes("gb") || lang.toLowerCase().includes("uk")) {
-        setUserRegion("PT");
-      } else {
-        setUserRegion("BR");
-      }
+      startTransition(() => {
+        if (lang.toLowerCase().includes("pt-pt") || lang.toLowerCase().includes("es") || lang.toLowerCase().includes("de") || lang.toLowerCase().includes("gb") || lang.toLowerCase().includes("uk")) {
+          setUserRegion("PT");
+        } else {
+          setUserRegion("BR");
+        }
+      });
     }
   }, [currentUser]);
 
@@ -101,7 +165,7 @@ export default function Home() {
     ];
   }, []);
 
-  const [promoList, setPromoList] = useState<any[]>(amazonPromotions);
+  const [promoList, setPromoList] = useState<PromoItem[]>(amazonPromotions);
   const [currentPromoIndex, setCurrentPromoIndex] = useState(0);
 
   // Load banners from API
@@ -111,9 +175,10 @@ export default function Home() {
         const res = await fetch("/api/banners");
         if (res.ok) {
           const data = await res.json();
-          const activeBanners = data.filter((b: any) => b.active).sort((a: any, b: any) => a.order - b.order);
+          interface BannerItem { active: boolean; order: number; id: string; title: string; author?: string; description?: string; imageUrl: string; price?: number; originalPrice?: number; price_eur?: number; originalPrice_eur?: number; link: string; prices?: PromoItem["prices"]; }
+          const activeBanners = (data as BannerItem[]).filter((b) => b.active).sort((a, b) => a.order - b.order);
           if (activeBanners.length > 0) {
-            const mapped = activeBanners.map((b: any) => ({
+            const mapped = activeBanners.map((b: BannerItem) => ({
               id: b.id,
               title: b.title,
               author: b.author || "Curadoria Editorial",
@@ -144,12 +209,12 @@ export default function Home() {
   }, [promoList]);
 
   // Project Gutenberg Global Search states
-  const [gutenbergResults, setGutenbergResults] = useState<any[]>([]);
+  const [gutenbergResults, setGutenbergResults] = useState<GutendexBook[]>([]);
   const [loadingGutenberg, setLoadingGutenberg] = useState(false);
   const [hasSearchedGutenberg, setHasSearchedGutenberg] = useState(false);
 
   // Amazon Search states
-  const [amazonResults, setAmazonResults] = useState<any[]>([]);
+  const [amazonResults, setAmazonResults] = useState<CommercialBook[]>([]);
   const [loadingAmazon, setLoadingAmazon] = useState(false);
   const [hasSearchedAmazon, setHasSearchedAmazon] = useState(false);
 
@@ -255,12 +320,12 @@ export default function Home() {
   };
 
   // Add Project Gutenberg book to local Context and route to reader
-  const handleOpenGutenbergBook = (gbook: any) => {
+  const handleOpenGutenbergBook = (gbook: GutendexBook) => {
     const bookId = `gutenberg-${gbook.id}`;
     const existing = books.find(b => b.id === bookId);
     
     if (!existing) {
-      const coverImg = gbook.formats["image/jpeg"] || null;
+      const coverImg = gbook.formats?.["image/jpeg"] ?? null;
       const authorName = gbook.authors && gbook.authors.length > 0 
         ? gbook.authors[0].name.split(',').reverse().join(' ').trim() 
         : "Autor Desconhecido";
@@ -281,8 +346,8 @@ export default function Home() {
         type: "livro" as const,
         publicDomain: true,
         language: "en",
-        editions: [],
-        reviews: [],
+        editions: [] as Edition[],
+        reviews: [] as Review[],
         translations: {
           "en": {
             title: gbook.title,
@@ -299,14 +364,15 @@ export default function Home() {
         }
       };
       
-      addBook(newBook);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      addBook(newBook as any);
     }
     
     router.push(`/livros/${bookId}`);
   };
 
   // Catalog commercial book and route to details page
-  const handleOpenAmazonBook = (aBook: any) => {
+  const handleOpenAmazonBook = (aBook: CommercialBook) => {
     const bookId = aBook.id;
     const existing = books.find(b => b.id === bookId);
     
@@ -314,7 +380,8 @@ export default function Home() {
       addBook({
         ...aBook,
         isUserPublished: false
-      });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } as any);
     }
     
     router.push(`/livros/${bookId}`);
@@ -336,12 +403,22 @@ export default function Home() {
     document.documentElement.style.setProperty('--foreground', fg);
   }, [appTheme]);
 
+  const completePreloader = (tab: ContentTab) => {
+    startTransition(() => {
+      setActiveTab(tab);
+      setPreloaderActive(false);
+    });
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem("gargbooks_preloader_shown", "true");
+    }
+  };
+
   // 2. Preloader — auto-dismiss after a brief splash
   useEffect(() => {
     if (typeof window !== "undefined") {
       const shown = sessionStorage.getItem("gargbooks_preloader_shown");
       if (shown === "true") {
-        setPreloaderActive(false);
+        startTransition(() => setPreloaderActive(false));
         return;
       }
     }
@@ -367,14 +444,6 @@ export default function Home() {
       clearTimeout(autoDismiss);
     };
   }, [preloaderActive]);
-
-  const completePreloader = (tab: ContentTab) => {
-    setActiveTab(tab);
-    setPreloaderActive(false);
-    if (typeof window !== "undefined") {
-      sessionStorage.setItem("gargbooks_preloader_shown", "true");
-    }
-  };
 
   // Recommendations (computed only when user is logged in)
   const recommendations = useMemo(() => {
@@ -423,8 +492,8 @@ export default function Home() {
     setSortBy(tab === "brasil" ? "author-asc" : "year-desc");
   };
 
-  const renderGutenbergCard = (gbook: any) => {
-    const coverImg = gbook.formats["image/jpeg"];
+  const renderGutenbergCard = (gbook: GutendexBook) => {
+    const coverImg = gbook.formats?.["image/jpeg"] ?? null;
     const author = gbook.authors && gbook.authors.length > 0 
       ? gbook.authors[0].name.split(',').reverse().join(' ').trim() 
       : "Autor Desconhecido";
@@ -458,7 +527,7 @@ export default function Home() {
     );
   };
 
-  const renderCommercialCard = (book: any) => {
+  const renderCommercialCard = (book: CommercialBook) => {
     return (
       <div 
         key={book.id} 

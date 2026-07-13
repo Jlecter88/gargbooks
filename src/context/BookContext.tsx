@@ -142,7 +142,6 @@ export function BookProvider({ children }: { children: React.ReactNode }) {
         // 2. If Firestore failed/empty, fall back to localStorage + JSON
         if (!loadedBooks) {
           const storedBooks = localStorage.getItem("gargbooks_list");
-          const storedBookmarks = localStorage.getItem("gargbooks_bookmarks");
 
           const typedLivros = (initialBooks as Omit<Book, "type">[]).map(b => ({
             ...b,
@@ -213,8 +212,8 @@ export function BookProvider({ children }: { children: React.ReactNode }) {
         // Keep translation metadata (title, synopsis, downloadFile) but strip fullText inside them
         if (rest.translations) {
           for (const code of Object.keys(rest.translations)) {
-            const { fullText: _ft, ...meta } = rest.translations[code] as any;
-            (rest.translations as any)[code] = meta;
+            const { fullText: _ft, ...meta } = rest.translations[code]!;
+            rest.translations[code] = meta as BookTranslation;
           }
         }
         return rest;

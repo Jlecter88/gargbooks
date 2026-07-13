@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useMemo, useCallback } from "react";
+import React, { useState, useEffect, useRef, useMemo, startTransition } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { useBooks, Edition } from "@/context/BookContext";
@@ -35,7 +35,7 @@ export default function DetalheLivro() {
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem("gargbooks_language");
       if (saved && ["en", "pt-br", "pt-pt", "es", "fr"].includes(saved)) {
-        setCurrentLang(saved);
+        startTransition(() => setCurrentLang(saved));
       }
     }
   }, []);
@@ -130,11 +130,13 @@ export default function DetalheLivro() {
       : [book.language || "pt-br"];
       
     if (!availableLangs.includes(currentLang)) {
-      if (availableLangs.includes("pt-br")) {
-        setCurrentLang("pt-br");
-      } else if (availableLangs.length > 0) {
-        setCurrentLang(availableLangs[0]);
-      }
+      startTransition(() => {
+        if (availableLangs.includes("pt-br")) {
+          setCurrentLang("pt-br");
+        } else if (availableLangs.length > 0) {
+          setCurrentLang(availableLangs[0]);
+        }
+      });
     }
   }, [book, currentLang]);
 
@@ -191,12 +193,14 @@ export default function DetalheLivro() {
   // Load text: if preview exists, use it immediately; otherwise fetch from downloadFile
   useEffect(() => {
     if (!book) return;
-    setHasLoadedFullText(false);
-    setTextLoadError("");
+    startTransition(() => {
+      setHasLoadedFullText(false);
+      setTextLoadError("");
+    });
     const token = ++textLoadToken.current;
 
     if (displayFullText && displayFullText.length > 0) {
-      setFullTextContent(displayFullText);
+      startTransition(() => setFullTextContent(displayFullText));
       return;
     }
 
@@ -226,7 +230,7 @@ export default function DetalheLivro() {
     loadText();
   }, [book?.id, currentLang, displayFullText, displayDownloadFile]);
 
-  const handleLoadFullText = useCallback(async () => {
+  const handleLoadFullText = async () => {
     setTextLoading(true);
     setTextLoadProgress(0);
     setTextLoadError("");
@@ -255,14 +259,14 @@ export default function DetalheLivro() {
         setTextLoading(false);
       }
     }
-  }, [displayDownloadFile, book?.id, currentLang]);
+  };
 
   // Create runtime text download url using Blob based on loaded full text
   useEffect(() => {
     if (!fullTextContent) return;
     const blob = new Blob([fullTextContent], { type: "text/plain;charset=utf-8" });
     const url = URL.createObjectURL(blob);
-    setDownloadUrl(url);
+    startTransition(() => setDownloadUrl(url));
 
     return () => {
       URL.revokeObjectURL(url);
