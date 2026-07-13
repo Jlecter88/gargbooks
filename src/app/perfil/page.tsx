@@ -132,6 +132,17 @@ export default function PerfilPage() {
     return getRecommendations(currentUser, books, 9);
   }, [currentUser, books]);
 
+  // User's published contos (by authorId or matching name/username)
+  const userContos = useMemo(() => {
+    if (!currentUser) return [];
+    return books.filter((b) => {
+      if (b.type !== "conto") return false;
+      if (b.authorId === currentUser.id) return true;
+      if (b.author === currentUser.name) return true;
+      return false;
+    });
+  }, [books, currentUser]);
+
   if (!currentUser) {
     return (
       <div className="min-h-screen bg-corto-dark text-stone-100 flex flex-col">
@@ -168,15 +179,7 @@ export default function PerfilPage() {
     ? books.find((b) => b.id === currentUser.reading_now)
     : null;
 
-  // User's published contos (by authorId or matching name/username)
-  const userContos = useMemo(() => {
-    return books.filter((b) => {
-      if (b.type !== "conto") return false;
-      if (b.authorId === currentUser.id) return true;
-      if (b.author === currentUser.name) return true;
-      return false;
-    });
-  }, [books, currentUser]);
+  // userContos hook relocated above early return
 
   // Save profile edits
   const handleSaveProfile = async () => {

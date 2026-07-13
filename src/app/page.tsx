@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useBooks } from "@/context/BookContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import initialUsers from "@/data/users-mock.json";
 
 type ContentTab = "contos" | "populares" | "terror" | "eroticos" | "recentes";
 
@@ -15,6 +16,7 @@ export default function Home() {
   const [selectedGenre, setSelectedGenre] = useState("Todos");
   const [activeTab, setActiveTab] = useState<ContentTab>("contos");
   const [mounted, setMounted] = useState(false);
+  const [activeAuthor, setActiveAuthor] = useState<string | null>(null);
 
   useEffect(() => {
     startTransition(() => setMounted(true));
@@ -24,6 +26,10 @@ export default function Home() {
     const allGenres = contos.flatMap((b) => b.genres);
     return ["Todos", ...Array.from(new Set(allGenres))];
   }, [contos]);
+
+  const authors = useMemo(() => {
+    return initialUsers.filter(u => u.is_ai_persona);
+  }, []);
 
   // Filter and sort contos
   const filteredContos = useMemo(() => {
@@ -57,8 +63,13 @@ export default function Home() {
       pool = pool.filter(c => c.genres.includes(selectedGenre));
     }
 
+    // Author filter
+    if (activeAuthor) {
+      pool = pool.filter(c => c.author.toLowerCase() === activeAuthor.toLowerCase());
+    }
+
     return pool;
-  }, [contos, activeTab, searchTerm, selectedGenre]);
+  }, [contos, activeTab, searchTerm, selectedGenre, activeAuthor]);
 
   // Categorias de contos para a landing
   const categories = [
@@ -171,6 +182,101 @@ export default function Home() {
           </div>
         </section>
 
+        {/* ── Autoras em Destaque ── */}
+        <section className="mb-12 animate-fade-in-up">
+          <div className="flex items-center gap-3 mb-6">
+            <span className="h-[1px] w-8 bg-accent" />
+            <span className="font-mono text-xs uppercase tracking-widest text-accent font-bold">
+              Autoras em Destaque
+            </span>
+          </div>
+          
+          <div className="flex items-center gap-6 overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
+            {/* "Todas" button */}
+            <button
+              onClick={() => setActiveAuthor(null)}
+              className="flex flex-col items-center gap-2 cursor-pointer group shrink-0"
+            >
+              <div className={`w-14 h-14 rounded-full border-2 flex items-center justify-center transition-all ${
+                activeAuthor === null
+                  ? "border-accent shadow-[0_0_15px_rgba(167,139,250,0.4)] scale-105"
+                  : "border-white/10 bg-white/5 text-stone-400 group-hover:border-accent/40"
+              }`}>
+                <span className="text-xl">👥</span>
+              </div>
+              <span className={`text-[10px] font-mono font-medium transition-colors ${
+                activeAuthor === null ? "text-stone-100" : "text-stone-400 group-hover:text-stone-200"
+              }`}>
+                Todas
+              </span>
+            </button>
+
+            {authors.map((auth) => {
+              const isActive = activeAuthor === auth.name;
+              const avatarPath = auth.avatar_url ? `/${auth.avatar_url}` : `https://api.dicebear.com/7.x/initials/svg?seed=${auth.name}`;
+              
+              return (
+                <div
+                  key={auth.id}
+                  className="relative group/item shrink-0"
+                >
+                  <button
+                    onClick={() => setActiveAuthor(isActive ? null : auth.name)}
+                    className="flex flex-col items-center gap-2 cursor-pointer group/btn"
+                  >
+                    <div className={`w-14 h-14 rounded-full border-2 overflow-hidden relative transition-all ${
+                      isActive
+                        ? "border-accent shadow-[0_0_15px_rgba(167,139,250,0.4)] scale-105"
+                        : "border-white/10 group-hover/btn:border-accent/40 group-hover/btn:scale-105"
+                    }`}>
+                      <img
+                        src={avatarPath}
+                        alt={auth.name}
+                        className="w-full h-full object-cover"
+                      />
+                      <span className="absolute bottom-0.5 right-0.5 w-3.5 h-3.5 bg-cyan-400 border border-zinc-950 rounded-full flex items-center justify-center text-[6px] text-zinc-950 font-bold" title="Perfil Verificado">
+                        ✓
+                      </span>
+                    </div>
+                    <span className={`text-[10px] font-mono font-medium transition-colors ${
+                      isActive ? "text-stone-100 font-bold" : "text-stone-400 group-hover/btn:text-stone-200"
+                    }`}>
+                      {auth.name.split(" ")[0]}
+                    </span>
+                  </button>
+
+                  {/* Profile Card Tooltip */}
+                  <div className="absolute top-[75px] left-1/2 -translate-x-1/2 w-64 bg-zinc-900/95 border border-white/10 rounded-2xl p-4 shadow-[0_10px_30px_rgba(0,0,0,0.5)] backdrop-blur-md opacity-0 invisible group-hover/item:opacity-100 group-hover/item:visible transition-all duration-300 z-50 pointer-events-none translate-y-2 group-hover/item:translate-y-0">
+                    <div className="flex items-center gap-3 mb-3">
+                      <img
+                        src={avatarPath}
+                        alt={auth.name}
+                        className="w-10 h-10 rounded-full object-cover border border-accent/40"
+                      />
+                      <div>
+                        <h5 className="font-serif text-xs font-bold text-stone-100 flex items-center gap-1">
+                          {auth.name}
+                          <span className="text-[10px] text-cyan-400" title="Perfil Verificado">✓</span>
+                        </h5>
+                        <span className="text-[9px] font-mono text-stone-500">
+                          @{auth.username}
+                        </span>
+                      </div>
+                    </div>
+                    <p className="text-[10px] text-stone-300 font-serif leading-relaxed italic mb-2">
+                      &ldquo;{auth.bio}&rdquo;
+                    </p>
+                    <div className="flex items-center justify-between text-[8px] font-mono text-accent uppercase tracking-wider">
+                      <span>Estilo: {auth.favorite_style}</span>
+                      <span>Verificada</span>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
         {/* ── Tab Navigation ── */}
         <section className="mb-10">
           <div className="flex flex-wrap items-center gap-2 border-b border-white/10 pb-0">
@@ -210,12 +316,25 @@ export default function Home() {
               <p className="text-sm text-stone-500 max-w-sm mx-auto mb-6">
                 Nenhum conto corresponde aos filtros selecionados.
               </p>
-              <Link
-                href="/publicar"
-                className="inline-block px-6 py-3 bg-accent text-zinc-950 rounded-full font-mono text-xs font-bold uppercase tracking-widest hover:bg-accent-hover transition-all"
-              >
-                ✍️ Seja o primeiro a publicar
-              </Link>
+              <div className="flex flex-wrap gap-4 justify-center items-center">
+                <Link
+                  href="/publicar"
+                  className="inline-block px-6 py-3 bg-accent text-zinc-950 rounded-full font-mono text-xs font-bold uppercase tracking-widest hover:bg-accent-hover transition-all"
+                >
+                  ✍️ Seja o primeiro a publicar
+                </Link>
+                <button
+                  onClick={() => {
+                    setSelectedGenre("Todos");
+                    setActiveTab("contos");
+                    setSearchTerm("");
+                    setActiveAuthor(null);
+                  }}
+                  className="px-6 py-3 border border-white/10 bg-white/5 text-stone-300 rounded-full font-mono text-xs font-bold uppercase tracking-widest hover:bg-white/10 transition-all cursor-pointer"
+                >
+                  Limpar Filtros
+                </button>
+              </div>
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 animate-fade-in-up">

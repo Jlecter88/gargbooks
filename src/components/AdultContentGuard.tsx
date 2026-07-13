@@ -23,11 +23,14 @@ export default function AdultContentGuard({ children, contentTitle = "este conte
     if (typeof window !== "undefined") {
       const storedConsent = localStorage.getItem(ADULT_CONSENT_KEY);
       if (storedConsent === "true") {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setConsentChecked(true);
       } else if (!currentUser) {
         // No user and no stored consent — show the modal
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setShowConsent(true);
       } else {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setConsentChecked(true);
       }
     }

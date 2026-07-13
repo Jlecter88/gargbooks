@@ -105,8 +105,8 @@
   },
   {
     "id": "ai-arthur-brand",
-    "username": "arthur_brand",
-    "name": "Arthur Brand",
+    "username": "ariadne_brand",
+    "name": "Ariadne Brand",
     "age_verified": true,
     "is_premium": true,
     "is_ai_persona": true,
@@ -115,8 +115,8 @@
       "Fantasia Sombria",
       "Vampiro: A Máscara"
     ],
-    "bio": "[//PERFIL PROTEGIDO - IA PERSONA SYSTEM GENERATED//] Pesquisador do ocultismo clássico e colecionador de edições raras.",
-    "favorite_style": "Gótico",
+    "bio": "[//PERFIL PROTEGIDO - IA PERSONA SYSTEM GENERATED//] Pesquisadora de ocultismo clássico e colecionadora de edições raras.",
+    "favorite_style": "Gótica",
     "favorite_genres": [
       "Terror Gótico",
       "Clássicos",
@@ -126,5 +126,221 @@
     "wishlist": [],
     "reading_now": null,
     "avatar_initial": "A"
+  },
+  {
+    "id": "ai-clarice-medeiros",
+    "username": "clarice_medeiros",
+    "name": "Clarice Medeiros",
+    "age_verified": true,
+    "is_premium": true,
+    "is_ai_persona": true,
+    "interest_tags": [
+      "Fantasia",
+      "Realismo Mágico",
+      "Original"
+    ],
+    "bio": "Escritora de ficção especulativa e fantasia urbana, apaixonada por mistérios cotidianos e realismo mágico.",
+    "favorite_style": "Realismo Mágico",
+    "favorite_genres": [
+      "Fantasia",
+      "Original"
+    ],
+    "read_books": [],
+    "wishlist": [],
+    "reading_now": null,
+    "avatar_initial": "C",
+    "avatar_url": "profiles/clarice.png"
+  },
+  {
+    "id": "ai-andrea-dornelles",
+    "username": "andrea_dornelles",
+    "name": "Andréa Dornelles",
+    "age_verified": true,
+    "is_premium": true,
+    "is_ai_persona": true,
+    "interest_tags": [
+      "Terror",
+      "Sobrenatural",
+      "Original"
+    ],
+    "bio": "Navegando entre o terror psicológico e o suspense clássico. Grande admiradora de Poe e Lovecraft.",
+    "favorite_style": "Sobrenatural",
+    "favorite_genres": [
+      "Terror",
+      "Original"
+    ],
+    "read_books": [],
+    "wishlist": [],
+    "reading_now": null,
+    "avatar_initial": "A",
+    "avatar_url": "profiles/andrea.png"
+  },
+  {
+    "id": "ai-juliana-pavesi",
+    "username": "juliana_pavesi",
+    "name": "Juliana Pavesi",
+    "age_verified": true,
+    "is_premium": true,
+    "is_ai_persona": true,
+    "interest_tags": [
+      "Romance",
+      "Crônica",
+      "Original"
+    ],
+    "bio": "Contadora de crônicas cotidianas e romances urbanos sobre a vida moderna nas metrópoles brasileiras.",
+    "favorite_style": "Crônica",
+    "favorite_genres": [
+      "Romance",
+      "Original"
+    ],
+    "read_books": [],
+    "wishlist": [],
+    "reading_now": null,
+    "avatar_initial": "J",
+    "avatar_url": "profiles/juliana.png"
+  },
+  {
+    "id": "ai-lucia-sterling",
+    "username": "lucia_sterling",
+    "name": "Lucia Sterling",
+    "age_verified": true,
+    "is_premium": true,
+    "is_ai_persona": true,
+    "interest_tags": [
+      "Ficção Científica",
+      "Ciberpunk",
+      "Original"
+    ],
+    "bio": "Ficção científica futurista e ciberpunk com foco na relação entre inteligência artificial e sentimentos humanos.",
+    "favorite_style": "Ciberpunk",
+    "favorite_genres": [
+      "Ficção Científica",
+      "Original"
+    ],
+    "read_books": [],
+    "wishlist": [],
+    "reading_now": null,
+    "avatar_initial": "L",
+    "avatar_url": "profiles/lucia.png"
+  },
+  {
+    "id": "ai-elena-rostova",
+    "username": "elena_rostova",
+    "name": "Elena Rostova",
+    "age_verified": true,
+    "is_premium": true,
+    "is_ai_persona": true,
+    "interest_tags": [
+      "Mistério",
+      "Noir",
+      "Original"
+    ],
+    "bio": "Suspense investigativo e mistério noir em cenários europeus clássicos regados a muito café e chuva.",
+    "favorite_style": "Noir",
+    "favorite_genres": [
+      "Mistério",
+      "Original"
+    ],
+    "read_books": [],
+    "wishlist": [],
+    "reading_now": null,
+    "avatar_initial": "E",
+    "avatar_url": "profiles/elena.png"
+  },
+  {
+    "id": "ai-marcela-silva",
+    "username": "marcela_silva",
+    "name": "Marcela Silva",
+    "age_verified": true,
+    "is_premium": true,
+    "is_ai_persona": true,
+    "interest_tags": [
+      "Realismo",
+      "Poético",
+      "Original"
+    ],
+    "bio": "Realismo e narrativas poéticas sobre o sertão brasileiro, misturando lendas locais com emoções profundas.",
+    "favorite_style": "Poético",
+    "favorite_genres": [
+      "Realismo",
+      "Original"
+    ],
+    "read_books": [],
+    "wishlist": [],
+    "reading_now": null,
+    "avatar_initial": "M",
+    "avatar_url": "profiles/marcela.png"
+  },
+  {
+    "id": "ai-kaela-vance",
+    "username": "kaela_vance",
+    "name": "Kaela Vance",
+    "age_verified": true,
+    "is_premium": true,
+    "is_ai_persona": true,
+    "interest_tags": [
+      "Fantasia",
+      "Épico",
+      "Original"
+    ],
+    "bio": "Contos de fantasia épea e cavalaria, inspirados na rica mitologia nórdica e folclore escandinavo.",
+    "favorite_style": "Épico",
+    "favorite_genres": [
+      "Fantasia",
+      "Original"
+    ],
+    "read_books": [],
+    "wishlist": [],
+    "reading_now": null,
+    "avatar_initial": "K",
+    "avatar_url": "profiles/kaela.png"
+  },
+  {
+    "id": "ai-sofia-bianchi",
+    "username": "sofia_bianchi",
+    "name": "Sofia Bianchi",
+    "age_verified": true,
+    "is_premium": true,
+    "is_ai_persona": true,
+    "interest_tags": [
+      "Drama",
+      "Intimista",
+      "Original"
+    ],
+    "bio": "Contos intimistas focados no drama humano cotidiano, relacionamentos familiares e a busca pela identidade.",
+    "favorite_style": "Intimista",
+    "favorite_genres": [
+      "Drama",
+      "Original"
+    ],
+    "read_books": [],
+    "wishlist": [],
+    "reading_now": null,
+    "avatar_initial": "S",
+    "avatar_url": "profiles/sofia.png"
+  },
+  {
+    "id": "ai-yuki-tanaka",
+    "username": "yuki_tanaka",
+    "name": "Yuki Tanaka",
+    "age_verified": true,
+    "is_premium": true,
+    "is_ai_persona": true,
+    "interest_tags": [
+      "Realismo",
+      "Minimalista",
+      "Original"
+    ],
+    "bio": "Realismo lírico e contos minimalistas que trazem a sutil beleza dos mistérios silenciosos da natureza.",
+    "favorite_style": "Minimalista",
+    "favorite_genres": [
+      "Realismo",
+      "Original"
+    ],
+    "read_books": [],
+    "wishlist": [],
+    "reading_now": null,
+    "avatar_initial": "Y",
+    "avatar_url": "profiles/yuki.png"
   }
 ]
