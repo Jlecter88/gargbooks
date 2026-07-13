@@ -10,6 +10,7 @@ export interface User {
   id: string;
   username: string;
   name: string;
+  role?: "leitor" | "escritor";
   age_verified: boolean;
   is_premium: boolean;
   is_ai_persona: boolean;

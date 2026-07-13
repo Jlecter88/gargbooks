@@ -52,7 +52,7 @@ const ALL_GENRES = [
   "Geral",
 ];
 
-type ProfileTab = "visao-geral" | "lidos" | "wishlist" | "recomendacoes";
+type ProfileTab = "visao-geral" | "lidos" | "wishlist" | "recomendacoes" | "meus-contos";
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
@@ -168,6 +168,16 @@ export default function PerfilPage() {
     ? books.find((b) => b.id === currentUser.reading_now)
     : null;
 
+  // User's published contos (by authorId or matching name/username)
+  const userContos = useMemo(() => {
+    return books.filter((b) => {
+      if (b.type !== "conto") return false;
+      if (b.authorId === currentUser.id) return true;
+      if (b.author === currentUser.name) return true;
+      return false;
+    });
+  }, [books, currentUser]);
+
   // Save profile edits
   const handleSaveProfile = async () => {
     setIsSaving(true);
@@ -223,6 +233,7 @@ export default function PerfilPage() {
     { id: "visao-geral", label: "Visão Geral", icon: "◈" },
     { id: "lidos", label: `Lidos (${readBooks.length})`, icon: "✓" },
     { id: "wishlist", label: `Quero Ler (${wishlistBooks.length})`, icon: "♡" },
+    { id: "meus-contos", label: `Meus Contos (${userContos.length})`, icon: "✍️" },
     { id: "recomendacoes", label: "Recomendações", icon: "✦" },
   ];
 
@@ -259,6 +270,11 @@ export default function PerfilPage() {
                   Premium
                 </span>
               )}
+              {userContos.length > 0 && (
+                <span className="absolute -bottom-1.5 -left-1.5 text-[8px] font-mono font-bold bg-emerald-600 text-white px-2 py-0.5 rounded-full uppercase tracking-widest flex items-center gap-1">
+                  ✍️ Escritor
+                </span>
+              )}
             </div>
 
             {/* Identity */}
@@ -288,6 +304,7 @@ export default function PerfilPage() {
               {/* Reading stats row */}
               <div className="mt-5 flex flex-wrap gap-4">
                 {[
+                  { label: "Contos", value: userContos.length, icon: "✍️" },
                   { label: "Lidos", value: readBooks.length, icon: "📚" },
                   { label: "Quero Ler", value: wishlistBooks.length, icon: "♡" },
                   { label: "Seguidores", value: currentUser.followers?.length ?? 0, icon: "👥" },
@@ -802,6 +819,91 @@ export default function PerfilPage() {
                         </div>
                       </div>
                     </div>
+                  );
+                })}
+              </div>
+            )}
+          </section>
+        )}
+
+        {/* ── TAB: Meus Contos ─────────────────────────────────────────── */}
+        {activeTab === "meus-contos" && (
+          <section className="animate-fade-in-up">
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="font-serif text-2xl font-bold">
+                Meus <span className="font-light italic text-accent">Contos</span>
+              </h2>
+              <Link
+                href="/publicar"
+                className="px-4 py-2 text-[10px] font-mono font-bold uppercase tracking-widest bg-accent text-white rounded-full hover:bg-accent-hover transition-all"
+              >
+                ✍️ Publicar Novo
+              </Link>
+            </div>
+
+            {userContos.length === 0 ? (
+              <div className="text-center py-20 border border-dashed border-white/10 rounded-3xl">
+                <span className="text-5xl block mb-4">✍️</span>
+                <p className="font-serif text-xl text-stone-400">Nenhum conto publicado ainda.</p>
+                <p className="text-xs text-stone-600 font-mono mt-2 mb-8">
+                  Publique seu primeiro conto e compartilhe com leitores do mundo inteiro.
+                </p>
+                <Link
+                  href="/publicar"
+                  className="px-6 py-3 text-[11px] font-mono font-bold uppercase tracking-widest border border-accent text-accent rounded-full hover:bg-accent hover:text-white transition-all"
+                >
+                  Publicar Primeiro Conto →
+                </Link>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {userContos.map((conto) => {
+                  const isErotic = conto.genres.some(g => g.toLowerCase().includes("erótico") || g === "+18");
+                  const isTerror = conto.genres.some(g => g.toLowerCase().includes("terror"));
+                  return (
+                    <Link
+                      key={conto.id}
+                      href={`/contos/${conto.id}`}
+                      className="group relative rounded-2xl border border-white/8 hover:border-accent/30 bg-white/3 transition-all duration-500 overflow-hidden flex flex-col"
+                    >
+                      <div className={`h-28 w-full bg-gradient-to-tr ${conto.coverGradient || "from-stone-900 via-zinc-800 to-stone-900"}`}>
+                        <div className="flex gap-2 mt-3 ml-3">
+                          {isErotic && (
+                            <span className="px-2 py-0.5 text-[8px] font-mono font-bold uppercase tracking-widest rounded-full bg-red-900/80 border border-red-400/30 text-red-300">
+                              🔞 +18
+                            </span>
+                          )}
+                          {isTerror && !isErotic && (
+                            <span className="px-2 py-0.5 text-[8px] font-mono font-bold uppercase tracking-widest rounded-full bg-orange-900/80 border border-orange-400/30 text-orange-300">
+                              👻 Terror
+                            </span>
+                          )}
+                          {!isErotic && !isTerror && (
+                            <span className="px-2 py-0.5 text-[8px] font-mono font-bold uppercase tracking-widest rounded-full bg-violet-950/80 border border-violet-400/30 text-violet-300">
+                              ✍️ Conto
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                      <div className="p-4 flex flex-col flex-1">
+                        <h3 className="font-serif text-base font-bold mb-0.5">{conto.title}</h3>
+                        <p className="text-[9px] font-mono uppercase tracking-widest text-stone-500 mb-2">
+                          {conto.author} · {conto.year}
+                        </p>
+                        <div className="flex flex-wrap gap-1 mb-3">
+                          {conto.genres.slice(0, 3).map(g => (
+                            <span key={g} className="px-2 py-0.5 text-[7px] font-mono bg-accent/10 text-accent rounded border border-accent/10">
+                              {g}
+                            </span>
+                          ))}
+                        </div>
+                        <div className="mt-auto flex gap-2">
+                          <span className="flex-1 text-center px-3 py-2 text-[9px] font-mono font-bold uppercase tracking-widest border border-white/10 rounded-xl group-hover:border-accent/40 group-hover:text-accent transition-all">
+                            Ler Conto ↗
+                          </span>
+                        </div>
+                      </div>
+                    </Link>
                   );
                 })}
               </div>
