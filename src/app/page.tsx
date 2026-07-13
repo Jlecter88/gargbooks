@@ -2,20 +2,14 @@
 
 import React, { useState, useMemo, useEffect, startTransition } from "react";
 import Link from "next/link";
-import { useBooks, Book } from "@/context/BookContext";
-import { useUserSession } from "@/context/UserContext";
+import { useBooks } from "@/context/BookContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 type ContentTab = "contos" | "populares" | "terror" | "eroticos" | "recentes";
 
-interface EnhancedBook extends Book {
-  reactionCount?: number;
-}
-
 export default function Home() {
-  const { books, contos } = useBooks();
-  const { currentUser } = useUserSession();
+  const { contos } = useBooks();
 
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("Todos");
@@ -26,7 +20,6 @@ export default function Home() {
     startTransition(() => setMounted(true));
   }, []);
 
-  // Get all unique genres from contos
   const genres = useMemo(() => {
     const allGenres = contos.flatMap((b) => b.genres);
     return ["Todos", ...Array.from(new Set(allGenres))];
