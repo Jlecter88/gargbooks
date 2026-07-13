@@ -2,1400 +2,268 @@
 
 import React, { useState, useMemo, useEffect, startTransition } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useBooks, Edition } from "@/context/BookContext";
-import type { Review } from "@/context/BookContext";
-import { useUserSession } from "@/context/UserContext";
+import { useBooks } from "@/context/BookContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import RecommendedSection from "@/components/RecommendedSection";
-import { getRecommendations } from "@/utils/recommendations";
-import { Book } from "@/context/BookContext";
 
-type ContentTab = "todos" | "livros" | "contos" | "gutenberg" | "comerciais" | "brasil" | "mercadolivre";
-
-interface GutendexBook {
-  id: number;
-  title: string;
-  authors?: Array<{ name: string; birth_year?: number; death_year?: number }>;
-  formats?: Record<string, string>;
-  languages?: string[];
-  subjects?: string[];
-}
-
-interface PromoItem {
-  id: string;
-  title: string;
-  author: string;
-  description: string;
-  image: string;
-  prices: {
-    BR: { current: number; original: number; store: string; link: string };
-    PT: { current: number; original: number; store: string; link: string };
-  };
-}
-
-interface CommercialBook {
-  id: string;
-  title: string;
-  author: string;
-  year: number;
-  genres: string[];
-  rating: number;
-  coverGradient: string;
-  coverImage: string | null;
-  synopsis: string;
-  fullText: string;
-  type: string;
-  publicDomain: boolean;
-  language: string;
-  editions: Array<{
-    id: string;
-    publisher: string;
-    year: number;
-    isbn: string;
-    pages: number;
-    coverType: string;
-    priceBR: number;
-    pricePT: number;
-    linkBR: string;
-    linkPT: string;
-  }>;
-}
-
-interface PromoItem {
-  id: string;
-  title: string;
-  author: string;
-  description: string;
-  image: string;
-  prices: {
-    BR: { current: number; original: number; store: string; link: string };
-    PT: { current: number; original: number; store: string; link: string };
-  };
-}
-
-interface MlResultItem {
-  id: string;
-  title: string;
-  author: string;
-  price: number;
-  currency: string;
-  installments: { quantity: number; amount: number } | null;
-  thumbnail: string | null;
-  condition: "Novo" | "Usado";
-  store: string;
-  link: string;
-}
+type ContentTab = "contos" | "populares" | "terror" | "eroticos" | "recentes";
 
 export default function Home() {
-  const router = useRouter();
-  const { books, livros, contos, addBook } = useBooks();
-  const { currentUser } = useUserSession();
+  const { contos } = useBooks();
 
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("Todos");
-  const [sortBy, setSortBy] = useState("year-desc");
-  const [appTheme, setAppTheme] = useState<"dark" | "sepia" | "light">("light");
-  const [activeTab, setActiveTab] = useState<ContentTab>("livros");
-  const [userRegion, setUserRegion] = useState<"BR" | "PT">("BR");
-
-  // Project Gutenberg Search & Popular States
-  const [gutenbergSearchLang, setGutenbergSearchLang] = useState<"all" | "pt" | "en">("all");
-  const [popularGutenberg, setPopularGutenberg] = useState<GutendexBook[]>([]);
-  const [loadingPopularGutenberg, setLoadingPopularGutenberg] = useState(false);
-
-  // Client hydration mount guard
+  const [activeTab, setActiveTab] = useState<ContentTab>("contos");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     startTransition(() => setMounted(true));
   }, []);
 
-  // Detect region upon login or browser language
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const lang = navigator.language || "";
-      startTransition(() => {
-        if (lang.toLowerCase().includes("pt-pt") || lang.toLowerCase().includes("es") || lang.toLowerCase().includes("de") || lang.toLowerCase().includes("gb") || lang.toLowerCase().includes("uk")) {
-          setUserRegion("PT");
-        } else {
-          setUserRegion("BR");
-        }
-      });
-    }
-  }, [currentUser]);
-
-  // Curated book promotions database (Amazon Affiliate)
-  const amazonPromotions = useMemo(() => {
-    return [
-      {
-        id: "promo-1",
-        title: "Drácula (Edição Especial)",
-        author: "Bram Stoker",
-        description: "O clássico supremo do terror gótico em edição de luxo com capa dura e ilustrações.",
-        image: "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=300&auto=format&fit=crop&q=60",
-        prices: {
-          BR: { current: 49.90, original: 69.90, store: "Amazon BR", link: "https://www.amazon.com.br/s?k=Dracula+Bram+Stoker+Capa+Dura&tag=prycco-20" },
-          PT: { current: 14.90, original: 19.90, store: "Amazon ES", link: "https://www.amazon.es/s?k=Dracula+Bram+Stoker+Tapa+Dura&tag=prycco-21" }
-        }
-      },
-      {
-        id: "promo-2",
-        title: "Neuromancer",
-        author: "William Gibson",
-        description: "A obra definitiva do Cyberpunk que inspirou Matrix e definiu a ficção científica moderna.",
-        image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=300&auto=format&fit=crop&q=60",
-        prices: {
-          BR: { current: 39.90, original: 55.00, store: "Amazon BR", link: "https://www.amazon.com.br/s?k=Neuromancer+William+Gibson&tag=prycco-20" },
-          PT: { current: 12.50, original: 16.00, store: "Amazon ES", link: "https://www.amazon.es/s?k=Neuromancer+William+Gibson&tag=prycco-21" }
-        }
-      },
-      {
-        id: "promo-3",
-        title: "O Silmarillion",
-        author: "J.R.R. Tolkien",
-        description: "A cosmologia da Terra-média em uma edição ilustrada essencial para todo fã de fantasia.",
-        image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=300&auto=format&fit=crop&q=60",
-        prices: {
-          BR: { current: 59.90, original: 79.90, store: "Amazon BR", link: "https://www.amazon.com.br/s?k=O+Silmarillion+Tolkien+Ilustrado&tag=prycco-20" },
-          PT: { current: 18.90, original: 24.90, store: "Amazon ES", link: "https://www.amazon.es/s?k=El+Silmarillion+Tolkien+Ilustrado&tag=prycco-21" }
-        }
-      }
-    ];
-  }, []);
-
-  const [promoList, setPromoList] = useState<PromoItem[]>(amazonPromotions);
-  const [currentPromoIndex, setCurrentPromoIndex] = useState(0);
-
-  // Load banners from API
-  useEffect(() => {
-    async function loadPromos() {
-      try {
-        const res = await fetch("/api/banners");
-        if (res.ok) {
-          const data = await res.json();
-          interface BannerItem { active: boolean; order: number; id: string; title: string; author?: string; description?: string; imageUrl: string; price?: number; originalPrice?: number; price_eur?: number; originalPrice_eur?: number; link: string; prices?: PromoItem["prices"]; }
-          const activeBanners = (data as BannerItem[]).filter((b) => b.active).sort((a, b) => a.order - b.order);
-          if (activeBanners.length > 0) {
-            const mapped = activeBanners.map((b: BannerItem) => ({
-              id: b.id,
-              title: b.title,
-              author: b.author || "Curadoria Editorial",
-              description: b.description || "Destaque selecionado por nossa curadoria literária. Clique para conferir.",
-              image: b.imageUrl,
-              prices: b.prices || {
-                BR: { current: b.price || 49.90, original: b.originalPrice || 69.90, store: "Amazon BR", link: b.link },
-                PT: { current: b.price_eur || 14.90, original: b.originalPrice_eur || 19.90, store: "Amazon ES", link: b.link }
-              }
-            }));
-            setPromoList(mapped);
-          }
-        }
-      } catch (err) {
-        console.error("Erro ao carregar banners dinâmicos:", err);
-      }
-    }
-    loadPromos();
-  }, [amazonPromotions]);
-
-  // Auto-advance promotion carousel
-  useEffect(() => {
-    if (promoList.length === 0) return;
-    const interval = setInterval(() => {
-      setCurrentPromoIndex((prev) => (prev + 1) % promoList.length);
-    }, 6000);
-    return () => clearInterval(interval);
-  }, [promoList]);
-
-  // Project Gutenberg Global Search states
-  const [gutenbergResults, setGutenbergResults] = useState<GutendexBook[]>([]);
-  const [loadingGutenberg, setLoadingGutenberg] = useState(false);
-  const [hasSearchedGutenberg, setHasSearchedGutenberg] = useState(false);
-
-  // Amazon Search states
-  const [amazonResults, setAmazonResults] = useState<CommercialBook[]>([]);
-  const [loadingAmazon, setLoadingAmazon] = useState(false);
-  const [hasSearchedAmazon, setHasSearchedAmazon] = useState(false);
-
-  // Mercado Livre Search states
-  const [mlResults, setMlResults] = useState<MlResultItem[]>([]);
-  const [loadingMl, setLoadingMl] = useState(false);
-  const [hasSearchedMl, setHasSearchedMl] = useState(false);
-
-  // Search Project Gutenberg (Gutendex API with CORS enabled)
-  const handleGutenbergSearch = async () => {
-    if (!searchTerm.trim()) return;
-    setLoadingGutenberg(true);
-    setHasSearchedGutenberg(true);
-    // Clear Amazon search results to avoid cluttering
-    setAmazonResults([]);
-    setHasSearchedAmazon(false);
-    try {
-      let url = `https://gutendex.com/books/?search=${encodeURIComponent(searchTerm)}`;
-      if (gutenbergSearchLang !== "all") {
-        url += `&languages=${gutenbergSearchLang}`;
-      }
-      const response = await fetch(url);
-      if (response.ok) {
-        const data = await response.json();
-        setGutenbergResults(data.results || []);
-      } else {
-        console.error("Erro na busca do Gutendex");
-      }
-    } catch (err) {
-      console.error("Falha ao buscar no Gutenberg:", err);
-    } finally {
-      setLoadingGutenberg(false);
-    }
-  };
-
-  // Fetch popular Gutenberg books by language on mount/tab change
-  useEffect(() => {
-    if (activeTab !== "gutenberg") return;
-    
-    async function fetchPopular() {
-      setLoadingPopularGutenberg(true);
-      try {
-        let url = "https://gutendex.com/books/";
-        if (gutenbergSearchLang !== "all") {
-          url += `?languages=${gutenbergSearchLang}`;
-        }
-        const response = await fetch(url);
-        if (response.ok) {
-          const data = await response.json();
-          setPopularGutenberg(data.results || []);
-        }
-      } catch (err) {
-        console.error("Erro ao buscar livros populares do Gutenberg:", err);
-      } finally {
-        setLoadingPopularGutenberg(false);
-      }
-    }
-
-    fetchPopular();
-  }, [activeTab, gutenbergSearchLang]);
-
-  // Search Amazon using our new Next.js route
-  const handleAmazonSearch = async () => {
-    if (!searchTerm.trim()) return;
-    setLoadingAmazon(true);
-    setHasSearchedAmazon(true);
-    // Clear Gutenberg search results to avoid cluttering
-    setGutenbergResults([]);
-    setHasSearchedGutenberg(false);
-    try {
-      const response = await fetch(`/api/amazon?q=${encodeURIComponent(searchTerm)}`);
-      if (response.ok) {
-        const data = await response.json();
-        setAmazonResults(data.results || []);
-      } else {
-        console.error("Erro na busca da Amazon");
-      }
-    } catch (err) {
-      console.error("Falha ao buscar na Amazon:", err);
-    } finally {
-      setLoadingAmazon(false);
-    }
-  };
-
-  // Search Mercado Livre with affiliate links
-  const handleMlSearch = async () => {
-    if (!searchTerm.trim()) return;
-    setLoadingMl(true);
-    setHasSearchedMl(true);
-    try {
-      const response = await fetch(`/api/mercadolivre?q=${encodeURIComponent(searchTerm)}`);
-      if (response.ok) {
-        const data = await response.json();
-        setMlResults(data.results || []);
-      } else {
-        console.error("Erro na busca do Mercado Livre");
-      }
-    } catch (err) {
-      console.error("Falha ao buscar no Mercado Livre:", err);
-    } finally {
-      setLoadingMl(false);
-    }
-  };
-
-  // Add Project Gutenberg book to local Context and route to reader
-  const handleOpenGutenbergBook = (gbook: GutendexBook) => {
-    const bookId = `gutenberg-${gbook.id}`;
-    const existing = books.find(b => b.id === bookId);
-    
-    if (!existing) {
-      const coverImg = gbook.formats?.["image/jpeg"] ?? null;
-      const authorName = gbook.authors && gbook.authors.length > 0 
-        ? gbook.authors[0].name.split(',').reverse().join(' ').trim() 
-        : "Autor Desconhecido";
-      
-      const newBook = {
-        id: bookId,
-        title: gbook.title,
-        author: authorName,
-        year: gbook.authors && gbook.authors.length > 0 && gbook.authors[0].birth_year 
-          ? gbook.authors[0].birth_year + 25 
-          : 1850,
-        genres: gbook.subjects || ["Clássicos"],
-        coverGradient: "from-stone-900 via-neutral-950 to-neutral-900",
-        coverImage: coverImg,
-        synopsis: `Obra clássica importada do acervo global do Project Gutenberg.`,
-        fullText: "Carregando o texto completo do Project Gutenberg...",
-        downloadFile: `/api/gutenberg?id=${gbook.id}`,
-        type: "livro" as const,
-        publicDomain: true,
-        language: "en",
-        editions: [] as Edition[],
-        reviews: [] as Review[],
-        translations: {
-          "en": {
-            title: gbook.title,
-            synopsis: `Classic work from Project Gutenberg.`,
-            fullText: "Carregando...",
-            downloadFile: `/api/gutenberg?id=${gbook.id}`
-          },
-          "pt-br": {
-            title: gbook.title,
-            synopsis: `Obra clássica importada do Project Gutenberg.`,
-            fullText: "Carregando...",
-            downloadFile: `/api/gutenberg?id=${gbook.id}`
-          }
-        }
-      };
-      
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      addBook(newBook as any);
-    }
-    
-    router.push(`/livros/${bookId}`);
-  };
-
-  // Catalog commercial book and route to details page
-  const handleOpenAmazonBook = (aBook: CommercialBook) => {
-    const bookId = aBook.id;
-    const existing = books.find(b => b.id === bookId);
-    
-    if (!existing) {
-      addBook({
-        ...aBook,
-        isUserPublished: false
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } as any);
-    }
-    
-    router.push(`/livros/${bookId}`);
-  };
-
-  // Preloader state
-  const [preloaderActive, setPreloaderActive] = useState(true);
-  const [progress, setProgress] = useState(0);
-  const [enterVisible, setEnterVisible] = useState(false);
-
-  // Featured book reveal state
-  const [featuredRevealed, setFeaturedRevealed] = useState(false);
-
-  // 1. Dynamic CSS Variables update for theme sync
-  useEffect(() => {
-    const bg = appTheme === "light" ? "#F0E3CF" : appTheme === "dark" ? "#121213" : "#EAE5DC";
-    const fg = appTheme === "light" ? "#121213" : appTheme === "dark" ? "#F0E3CF" : "#3E3529";
-    document.documentElement.style.setProperty('--background', bg);
-    document.documentElement.style.setProperty('--foreground', fg);
-  }, [appTheme]);
-
-  const completePreloader = (tab: ContentTab) => {
-    startTransition(() => {
-      setActiveTab(tab);
-      setPreloaderActive(false);
-    });
-    if (typeof window !== "undefined") {
-      sessionStorage.setItem("gargbooks_preloader_shown", "true");
-    }
-  };
-
-  // 2. Preloader — auto-dismiss after a brief splash
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const shown = sessionStorage.getItem("gargbooks_preloader_shown");
-      if (shown === "true") {
-        startTransition(() => setPreloaderActive(false));
-        return;
-      }
-    }
-
-    if (!preloaderActive) return;
-
-    const timer = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(timer);
-          return 100;
-        }
-        return prev + Math.floor(Math.random() * 8) + 4;
-      });
-    }, 40);
-
-    const autoDismiss = setTimeout(() => {
-      completePreloader("livros");
-    }, 1800);
-
-    return () => {
-      clearInterval(timer);
-      clearTimeout(autoDismiss);
-    };
-  }, [preloaderActive]);
-
-  // Recommendations (computed only when user is logged in)
-  const recommendations = useMemo(() => {
-    if (!currentUser || books.length === 0) return [];
-    return getRecommendations(currentUser, books, 6);
-  }, [currentUser, books]);
-
-  // Active pool based on tab
-  const activePool: Book[] = useMemo(() => {
-    if (activeTab === "livros") return livros;
-    if (activeTab === "brasil") return livros.filter(b => b.language === "pt-br");
-    if (activeTab === "contos") return contos;
-    return books;
-  }, [activeTab, books, livros, contos]);
-
-  // Get all unique genres from current pool
   const genres = useMemo(() => {
-    const allGenres = activePool.flatMap((b) => b.genres);
+    const allGenres = contos.flatMap((b) => b.genres);
     return ["Todos", ...Array.from(new Set(allGenres))];
-  }, [activePool]);
+  }, [contos]);
 
-  // Filter and sort
-  const filteredBooks = useMemo(() => {
-    return activePool
-      .filter((book) => {
-        const matchesSearch =
-          book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          book.author.toLowerCase().includes(searchTerm.toLowerCase());
-        const matchesGenre = selectedGenre === "Todos" || book.genres.includes(selectedGenre);
-        return matchesSearch && matchesGenre;
-      })
-      .sort((a, b) => {
-        if (sortBy === "title-asc") return a.title.localeCompare(b.title);
-        if (sortBy === "author-asc") return a.author.localeCompare(b.author);
-        if (sortBy === "year-desc") return b.year - a.year;
-        if (sortBy === "year-asc") return a.year - b.year;
-        if (sortBy === "rating-desc") return b.rating - a.rating;
-        return 0;
-      });
-  }, [activePool, searchTerm, selectedGenre, sortBy]);
-
-  // When tab changes, reset genre filter
-  const handleTabChange = (tab: ContentTab) => {
-    setActiveTab(tab);
-    setSelectedGenre("Todos");
-    setSortBy(tab === "brasil" ? "author-asc" : "year-desc");
-  };
-
-  const renderGutenbergCard = (gbook: GutendexBook) => {
-    const coverImg = gbook.formats?.["image/jpeg"] ?? null;
-    const author = gbook.authors && gbook.authors.length > 0 
-      ? gbook.authors[0].name.split(',').reverse().join(' ').trim() 
-      : "Autor Desconhecido";
+  // Filter and sort contos
+  const filteredContos = useMemo(() => {
+    let pool = contos;
     
-    return (
-      <div 
-        key={gbook.id} 
-        onClick={() => handleOpenGutenbergBook(gbook)}
-        className={`border rounded-2xl p-6 flex flex-col justify-between items-center text-center cursor-pointer hover:border-accent hover:shadow-xl transition-all duration-300 ${borderClasses} bg-current/3 book-card`}
-      >
-        <div className="w-[120px] h-[175px] shadow-lg rounded-md overflow-hidden bg-stone-850 flex items-center justify-center mb-4 relative">
-          {coverImg ? (
-            <img src={coverImg} alt={gbook.title} className="w-full h-full object-cover" />
-          ) : (
-            <div className="p-3 text-[9px] text-white/60 font-serif font-bold uppercase">{gbook.title}</div>
-          )}
-          <div className="absolute top-2 right-2 bg-accent/85 text-[#121213] text-[7px] font-mono font-bold px-1.5 py-0.5 rounded">
-            GUTENBERG
-          </div>
-        </div>
-        <div className="flex-1 flex flex-col justify-between">
-          <div>
-            <h3 className="font-serif text-xs font-bold line-clamp-2 mb-1 text-stone-200">{gbook.title}</h3>
-            <p className="font-mono text-[9px] opacity-60 uppercase tracking-wider mb-3">{author}</p>
-          </div>
-          <button className="px-4 py-2 bg-accent text-[#121213] rounded-full font-mono text-[8px] font-bold uppercase tracking-wider w-full cursor-pointer hover:bg-accent-hover transition-colors">
-            Ler Livro Completo
-          </button>
-        </div>
-      </div>
-    );
-  };
+    // Tab-based filtering
+    if (activeTab === "terror") {
+      pool = pool.filter(c => 
+        c.genres.some(g => g.toLowerCase().includes("terror") || g.toLowerCase().includes("horror"))
+      );
+    } else if (activeTab === "eroticos") {
+      pool = pool.filter(c => 
+        c.genres.some(g => g.toLowerCase().includes("erótico") || g.toLowerCase().includes("adulto") || g === "+18")
+      );
+    } else if (activeTab === "populares") {
+      pool = [...pool].sort((a, b) => (b.rating || 0) - (a.rating || 0));
+    } else if (activeTab === "recentes") {
+      pool = [...pool].sort((a, b) => b.year - a.year);
+    }
 
-  const renderCommercialCard = (book: CommercialBook) => {
-    return (
-      <div 
-        key={book.id} 
-        onClick={() => handleOpenAmazonBook(book)}
-        className={`border rounded-2xl p-6 flex flex-col justify-between items-center text-center cursor-pointer hover:border-emerald-500 hover:shadow-xl transition-all duration-300 ${borderClasses} bg-current/3 book-card`}
-      >
-        <div className="w-[120px] h-[175px] shadow-lg rounded-md overflow-hidden bg-stone-850 flex items-center justify-center mb-4 relative">
-          {book.coverImage ? (
-            <img src={book.coverImage} alt={book.title} className="w-full h-full object-cover" />
-          ) : (
-            <div className={`w-full h-full bg-gradient-to-br ${book.coverGradient} p-3 flex flex-col justify-between text-left`}>
-              <span className="text-[8px] font-mono uppercase text-white/50">{book.author}</span>
-              <span className="text-[10px] font-serif font-bold text-white leading-tight line-clamp-3">{book.title}</span>
-            </div>
-          )}
-          <div className="absolute top-2 right-2 bg-emerald-600 text-white text-[7px] font-mono font-bold px-1.5 py-0.5 rounded">
-            COMERCIAL
-          </div>
-        </div>
-        <div className="flex-1 flex flex-col justify-between">
-          <div>
-            <h3 className="font-serif text-xs font-bold line-clamp-2 mb-1 text-stone-200">{book.title}</h3>
-            <p className="font-mono text-[9px] opacity-60 uppercase tracking-wider mb-3">{book.author}</p>
-          </div>
-          <button className="px-4 py-2 bg-emerald-600 text-white rounded-full font-mono text-[8px] font-bold uppercase tracking-wider w-full cursor-pointer hover:bg-emerald-700 transition-colors">
-            Ver Ofertas na Amazon
-          </button>
-        </div>
-      </div>
-    );
-  };
+    // Search filter
+    if (searchTerm.trim()) {
+      pool = pool.filter(c =>
+        c.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        c.author.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
 
-  const renderMlCard = (item: MlResultItem) => {
-    const isNew = item.condition === "Novo";
-    const priceBRL = item.price?.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
-    return (
-      <a
-        key={item.id}
-        href={item.link}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={`border rounded-2xl p-6 flex flex-col justify-between items-center text-center hover:border-amber-500 hover:shadow-xl transition-all duration-300 ${borderClasses} bg-current/3 book-card group`}
-      >
-        <div className="w-[120px] h-[175px] shadow-lg rounded-md overflow-hidden bg-stone-850 flex items-center justify-center mb-4 relative">
-          {item.thumbnail ? (
-            <img src={item.thumbnail} alt={item.title} className="w-full h-full object-cover" />
-          ) : (
-            <div className="w-full h-full bg-gradient-to-br from-amber-900/40 to-amber-700/20 p-3 flex flex-col justify-between text-left">
-              <span className="text-[8px] font-mono uppercase text-white/50">{item.author}</span>
-              <span className="text-[10px] font-serif font-bold text-white leading-tight line-clamp-3">{item.title}</span>
-            </div>
-          )}
-          <div className="absolute top-2 right-2 bg-amber-600 text-white text-[7px] font-mono font-bold px-1.5 py-0.5 rounded">
-            ML
-          </div>
-          {isNew && (
-            <div className="absolute top-2 left-2 px-1.5 py-0.5 bg-emerald-600 text-white text-[6px] font-mono font-bold rounded">
-              NOVO
-            </div>
-          )}
-        </div>
-        <div className="flex-1 flex flex-col justify-between w-full">
-          <div>
-            <h3 className="font-serif text-xs font-bold line-clamp-2 mb-1 text-stone-200">{item.title}</h3>
-            <p className="font-mono text-[9px] opacity-60 uppercase tracking-wider mb-1">{item.author}</p>
-            <div className="flex justify-center items-center gap-2 mt-2">
-              <span className="text-amber-400 font-serif text-base font-bold">{priceBRL}</span>
-              {item.installments && (
-                <span className="text-[8px] font-mono opacity-60">
-                  {item.installments.quantity}x {item.installments.amount.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
-                </span>
-              )}
-            </div>
-          </div>
-          <button className="mt-4 px-4 py-2 bg-amber-600 text-white rounded-full font-mono text-[8px] font-bold uppercase tracking-wider w-full cursor-pointer hover:bg-amber-700 transition-colors group-hover:shadow-lg group-hover:shadow-amber-600/20">
-            Comprar no Mercado Livre ↗
-          </button>
-        </div>
-      </a>
-    );
-  };
+    // Genre filter
+    if (selectedGenre !== "Todos") {
+      pool = pool.filter(c => c.genres.includes(selectedGenre));
+    }
 
-  // Theme classes
-  const themeClasses = {
-    dark: "bg-[#121213] text-[#F0E3CF]",
-    sepia: "bg-[#EAE5DC] text-[#121213]",
-    light: "bg-[#F0E3CF] text-[#121213]",
-  }[appTheme];
+    return pool;
+  }, [contos, activeTab, searchTerm, selectedGenre]);
 
-  const borderClasses = {
-    dark: "border-[#F0E3CF]/15",
-    sepia: "border-[#121213]/15",
-    light: "border-[#121213]/15",
-  }[appTheme];
+  // Categorias de contos para a landing
+  const categories = [
+    { id: "terror", label: "Terror 👻", desc: "Contos de arrepiar", color: "from-red-900/40 to-orange-900/20" },
+    { id: "romance", label: "Romance ❤️", desc: "Paixão e sentimentos", color: "from-pink-900/40 to-rose-900/20" },
+    { id: "fantasia", label: "Fantasia 🧙", desc: "Mundos imaginários", color: "from-violet-900/40 to-purple-900/20" },
+    { id: "ficcao", label: "Ficção 🤖", desc: "Futuro e tecnologia", color: "from-cyan-900/40 to-blue-900/20" },
+    { id: "eroticos", label: "+18 🔞", desc: "Conteúdo adulto", color: "from-red-950/40 to-rose-950/30" },
+  ];
 
-  const mutedTextClasses = {
-    dark: "text-stone-400",
-    sepia: "text-stone-600",
-    light: "text-stone-600",
-  }[appTheme];
+  const getContoUrl = (bookId: string) => `/contos/${bookId}`;
 
-  const inputClasses = {
-    dark: "bg-white/5 border-white/10 text-[#F0E3CF] focus:border-accent/60 placeholder-stone-500",
-    sepia: "bg-black/5 border-black/10 text-[#121213] focus:border-accent/60 placeholder-stone-500",
-    light: "bg-black/5 border-black/10 text-[#121213] focus:border-accent/60 placeholder-stone-500",
-  }[appTheme];
-
-  const selectClasses = {
-    dark: "bg-neutral-900 border-white/10 text-[#F0E3CF] focus:border-accent",
-    sepia: "bg-[#EAE5DC] border-black/10 text-[#121213] focus:border-accent",
-    light: "bg-[#F0E3CF] border-black/10 text-[#121213] focus:border-accent",
-  }[appTheme];
-
-  const tabBadgeCount: Record<ContentTab, string | number> = {
-    todos: books.length,
-    livros: livros.length,
-    contos: contos.length,
-    gutenberg: "70k+",
-    comerciais: "1M+",
-    brasil: livros.filter(b => b.language === "pt-br").length,
-    mercadolivre: "ML",
-  };
+  if (!mounted) return null;
 
   return (
-    <div className={`min-h-screen flex flex-col transition-colors duration-700 ${themeClasses}`}>
+    <div className="min-h-screen flex flex-col bg-zinc-950 text-stone-100">
       <Header />
 
-      {/* Preloader Overlay */}
-      {preloaderActive && (
-        <div id="preloader" style={{ opacity: enterVisible && !preloaderActive ? 0 : 1 }}>
-          <div className="text-center flex flex-col items-center relative w-full h-full justify-center">
-            <div className="loader-crest">
-              <span className="font-serif text-2xl font-bold text-accent">G</span>
-            </div>
-            <h1 className="font-serif text-4xl md:text-5xl tracking-[0.4rem] font-bold mb-2">GARGBOOKS</h1>
-            <p className="font-script text-2xl text-accent mb-8">A Arte do Raciocínio e do Conto</p>
-            
-            {!enterVisible ? (
-              <>
-                <div className="w-60 h-[2px] bg-white/10 relative overflow-hidden mb-3">
-                  <div 
-                    className="h-full bg-accent transition-all duration-150" 
-                    style={{ width: `${progress}%` }} 
-                  />
-                </div>
-                <div className="font-mono text-xs tracking-widest text-white/50">{progress}%</div>
-              </>
-            ) : (
-              <div className="flex flex-col items-center gap-4">
-                <span className="font-mono text-[9px] uppercase tracking-widest text-white/50 mb-2">
-                  Escolha o seu caminho literário
-                </span>
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <button
-                    onClick={() => completePreloader("livros")}
-                    className="font-serif text-xs tracking-[0.2rem] px-6 py-3.5 border border-accent text-accent hover:bg-accent hover:text-[#121213] transition-all duration-300 transform hover:scale-105 cursor-pointer w-48 font-bold"
-                  >
-                    EXPLORAR LIVROS
-                  </button>
-                  <button
-                    onClick={() => completePreloader("contos")}
-                    className="font-serif text-xs tracking-[0.2rem] px-6 py-3.5 border border-accent text-accent hover:bg-accent hover:text-[#121213] transition-all duration-300 transform hover:scale-105 cursor-pointer w-48 font-bold"
-                  >
-                    LER CONTOS
-                  </button>
-                </div>
-                 <button
-                  onClick={() => completePreloader("livros")}
-                  className="font-mono text-[9px] uppercase tracking-[0.15rem] text-white/40 hover:text-white transition-colors duration-300 cursor-pointer mt-2 underline underline-offset-4"
-                >
-                  Ir para a estante
-                </button>
-              </div>
-            )}
-            
-            {/* Skip Intro Button */}
-            <button
-              onClick={() => completePreloader("livros")}
-              className="absolute bottom-10 right-10 text-[9px] font-mono uppercase tracking-[0.2rem] text-accent/50 hover:text-accent transition-colors duration-300 cursor-pointer"
-            >
-              Pular Introdução ➔
-            </button>
-          </div>
-        </div>
-      )}
-
       <main className="flex-1 max-w-7xl w-full mx-auto px-6 py-12 md:py-20">
-
-        {/* ── Hero ─────────────────────────────────────────────────────── */}
+        
+        {/* ── Hero Section ── */}
         <section className="mb-16 animate-fade-in-up">
           <div className="flex items-center gap-3 mb-6">
             <span className="h-[1px] w-8 bg-accent" />
             <span className="font-mono text-xs uppercase tracking-widest text-accent font-semibold">
-              Gargbooks Editorial / Curadoria
+              Gargbooks — Portal de Contos
             </span>
           </div>
 
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-10">
             <div className="max-w-4xl">
               <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[0.9] mb-4">
-                Estante{" "}
-                <span className="font-light italic text-accent font-serif">editorial</span> de obras
-                e{" "}
-                <span className="font-light italic text-accent font-serif">contos</span> literários.
+                Contos{" "}
+                <span className="font-light italic text-accent font-serif">que</span>{" "}
+                atravessam{" "}
+                <span className="font-light italic text-accent font-serif">fronteiras</span>
               </h1>
-              <span className="font-script text-accent text-3xl md:text-5xl block -mt-2 mb-6">A Curadoria da Escrita</span>
-              <p className={`text-sm md:text-base max-w-2xl ${mutedTextClasses} leading-relaxed font-sans`}>
-                Uma curadoria de livros clássicos, edições raras e contos contemporâneos. Explore,
-                descubra e compre com links de afiliados curados pela nossa equipe editorial.
+              <span className="font-script text-accent text-3xl md:text-5xl block -mt-2 mb-6">Tradução automática via IA</span>
+              <p className="text-sm md:text-base max-w-2xl text-stone-400 leading-relaxed font-sans">
+                Publique seus contos, leia histórias do mundo inteiro e conecte-se com 
+                leitores e escritores. Tradução instantânea para qualquer idioma.
               </p>
             </div>
 
-            {/* Theme switcher */}
-            <div className="flex items-center gap-1 bg-current/5 p-1 rounded-full border border-current/10 self-start lg:self-end">
-              {(["light", "dark"] as const).map((t) => (
-                <button
-                  key={t}
-                  onClick={() => setAppTheme(t)}
-                  className={`px-4 py-2 text-[10px] uppercase tracking-wider font-mono font-bold rounded-full transition-all cursor-pointer ${
-                    appTheme === t
-                      ? "bg-accent text-white shadow-md shadow-accent/25"
-                      : "text-current/60 hover:text-current"
-                  }`}
-                >
-                  {t === "light" ? "Pergaminho" : "Antracite"}
-                </button>
-              ))}
-            </div>
+            <Link
+              href="/publicar"
+              className="px-6 py-3 bg-accent text-zinc-950 rounded-full font-mono text-xs font-bold uppercase tracking-widest hover:bg-accent-hover transition-all hover:scale-105 active:scale-95"
+            >
+              ✍️ Escrever Conto
+            </Link>
           </div>
 
           <div className="editorial-line mt-12" />
         </section>
 
-        {/* ── Amazon Affiliate Promotion Carousel ── */}
-        <section className="mb-24 rounded-3xl border border-accent/20 bg-current/3 p-8 flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden transition-all duration-500 shadow-md">
-          {/* Subtle gold mesh backdrop */}
-          <div className="absolute inset-0 bg-radial-gradient(circle at 90% 20%, rgba(var(--color-accent-rgb), 0.04) 0%, transparent 40%) pointer-events-none" />
-          
-          <div className="flex-1 z-10">
-            <div className="flex items-center gap-3 mb-4">
-              <span className="h-[1.5px] w-6 bg-accent animate-pulse" />
-              <span className="font-mono text-[9px] uppercase tracking-widest text-accent font-bold">
-                Oferta Exclusiva Amazon
-              </span>
-              <button 
-                onClick={() => setUserRegion(prev => prev === "BR" ? "PT" : "BR")}
-                className="px-2.5 py-1 border border-accent/30 text-accent/80 hover:text-accent hover:border-accent text-[8px] font-mono rounded font-bold uppercase transition-all cursor-pointer bg-transparent"
-                title="Clique para alternar região de ofertas"
-              >
-                {userRegion === "BR" ? "🇧🇷 BRASIL" : "🇪🇺 EUROPA"}
-              </button>
-            </div>
-            
-            <div className="min-h-[120px] transition-all duration-500">
-              <h3 className="font-serif text-2xl md:text-3xl font-bold tracking-tight mb-1 text-current">
-                {promoList[currentPromoIndex]?.title}
-              </h3>
-              <p className="font-mono text-[10px] uppercase tracking-widest text-current/60 mb-4 font-semibold">
-                por {promoList[currentPromoIndex]?.author}
-              </p>
-              <p className={`text-xs md:text-sm leading-relaxed max-w-2xl ${mutedTextClasses}`}>
-                {promoList[currentPromoIndex]?.description}
-              </p>
-            </div>
-            
-            <div className="flex items-center gap-4 mt-6">
-              <div className="font-serif text-2xl font-black text-accent">
-                {userRegion === "BR" 
-                  ? `R$ ${promoList[currentPromoIndex]?.prices.BR.current.toFixed(2)}`
-                  : `€ ${promoList[currentPromoIndex]?.prices.PT.current.toFixed(2)}`
-                }
-              </div>
-              <div className="font-mono text-xs line-through opacity-40">
-                {userRegion === "BR"
-                  ? `R$ ${promoList[currentPromoIndex]?.prices.BR.original.toFixed(2)}`
-                  : `€ ${promoList[currentPromoIndex]?.prices.PT.original.toFixed(2)}`
-                }
-              </div>
-              <span className="px-2 py-0.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[8px] font-mono font-bold rounded uppercase tracking-wider">
-                Economia Ativa
-              </span>
-            </div>
-
-            {/* Navigation Dots */}
-            <div className="flex items-center gap-2 mt-8">
-              {promoList.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setCurrentPromoIndex(idx)}
-                  className={`w-2 h-2 rounded-full transition-all cursor-pointer ${
-                    currentPromoIndex === idx ? "bg-accent w-4" : "bg-current/15 hover:bg-current/35"
-                  }`}
-                  aria-label={`Slide de promoção ${idx + 1}`}
-                />
-              ))}
-            </div>
+        {/* ── Categories Grid ── */}
+        <section className="mb-16">
+          <div className="flex items-center gap-3 mb-8">
+            <span className="h-[1px] w-8 bg-accent" />
+            <span className="font-mono text-xs uppercase tracking-widest text-accent font-bold">
+              Categorias
+            </span>
           </div>
-
-          <div className="flex items-center gap-6 z-10 flex-shrink-0 w-full md:w-auto">
-            <div className="w-[110px] h-[165px] bg-stone-800 rounded-lg shadow-xl overflow-hidden flex-shrink-0 relative border border-current/10 group">
-              <img
-                src={promoList[currentPromoIndex]?.image}
-                alt={promoList[currentPromoIndex]?.title}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-            </div>
-            
-            <a
-              href={userRegion === "BR" 
-                ? promoList[currentPromoIndex]?.prices.BR.link
-                : promoList[currentPromoIndex]?.prices.PT.link
-              }
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-1 md:flex-initial px-6 py-4 bg-accent text-[#121213] rounded-full font-mono text-[10px] font-bold uppercase tracking-widest hover:scale-105 active:scale-95 transition-all text-center hover:bg-accent-hover font-bold"
-            >
-              Comprar na Amazon ↗
-            </a>
-          </div>
-        </section>
-
-        {/* ── Featured Book Reveal Section ── */}
-        <section className="mb-24 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center animate-fade-in-up">
-          <div className="lg:col-span-7">
-            <div className="flex items-center gap-3 mb-4">
-              <span className="h-[1px] w-8 bg-accent" />
-              <span className="font-mono text-[10px] uppercase tracking-widest text-accent font-semibold">
-                Obra em Destaque
-              </span>
-            </div>
-            <h2 className="font-serif text-4xl md:text-5xl font-bold tracking-tight mb-4">
-              {books[0]?.title || "A Divina Comédia"}
-            </h2>
-            <p className="font-mono text-xs uppercase tracking-widest text-current/60 mb-6 font-semibold">
-              por {books[0]?.author || "Dante Alighieri"}
-            </p>
-            <p className={`text-sm md:text-base leading-relaxed mb-8 max-w-xl ${mutedTextClasses}`}>
-              {books[0]?.synopsis || "Uma viagem alegórica pelo além-túmulo, que moldou a literatura ocidental. Nesta edição especial, explore os detalhes de sua estrutura narrativa de forma escultural."}
-            </p>
-            {featuredRevealed && (
-              <Link
-                href={`/livros/${books[0]?.id || "a-divina-comedia"}`}
-                className="inline-block px-8 py-3 bg-accent text-white hover:bg-accent-hover text-xs uppercase tracking-widest font-mono font-bold transition-all duration-300 transform active:scale-95 shadow-lg shadow-accent/25 hover:shadow-accent/40"
-              >
-                Acessar Edição Luxo ↗
-              </Link>
-            )}
-          </div>
-          
-          <div className="lg:col-span-5 flex justify-center">
-            <div className="book-container rounded-2xl border border-current/15 bg-current/3">
-              <div 
-                className={`book-veil transition-all duration-1000 ${featuredRevealed ? 'opacity-0 pointer-events-none scale-105' : 'opacity-100'}`}
-              >
-                <div className="veil-pattern" />
-                <button
-                  onClick={() => setFeaturedRevealed(true)}
-                  className="z-12 cursor-pointer relative px-6 py-3 font-serif text-[10px] font-bold uppercase tracking-[0.2rem] text-accent border border-accent hover:bg-accent hover:text-[#121213] transition-all duration-500"
-                >
-                  REVELAR DESTAQUE
-                </button>
-              </div>
-              <div className={`w-full h-full p-6 flex flex-col justify-center items-center relative transition-all duration-700 ${featuredRevealed ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}>
-                <img 
-                  src="/book_cover.png" 
-                  alt="Livro em Destaque" 
-                  className="max-h-[85%] max-w-[85%] object-contain shadow-2xl rounded-md transition-transform duration-500 hover:scale-105 hover:-rotate-1"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ── Personalized Recommendations ─────────────────────────────── */}
-        {recommendations.length > 0 && currentUser && (
-          <RecommendedSection
-            recommendations={recommendations}
-            region={userRegion}
-            title={`Recomendado para @${currentUser.username}`}
-            subtitle={`Com base no seu estilo ${currentUser.favorite_style ?? "literário"} e histórico de leitura`}
-          />
-        )}
-
-        {/* ── Content Type Tabs ────────────────────────────────────────── */}
-        <section className="mb-10 animate-fade-in-up">
-          <div className="flex flex-wrap items-center gap-2 border-b border-current/10 pb-0">
-            {(
-              [
-                {
-                  id: "livros",
-                  label: "Estante Curada",
-                  icon: "📚",
-                  description: "Nossa seleção de edições físicas e digitais raras",
-                },
-                {
-                  id: "contos",
-                  label: "Contos",
-                  icon: "✍️",
-                  description: "Histórias curtas originais",
-                },
-                {
-                  id: "brasil",
-                  label: "Brasileiros",
-                  icon: "🇧🇷",
-                  description: "Clássicos da literatura brasileira em domínio público",
-                },
-                {
-                  id: "gutenberg",
-                  label: "Biblioteca Gutenberg",
-                  icon: "🌐",
-                  description: "Mais de 70.000 livros de domínio público gratuitos",
-                },
-                {
-                  id: "comerciais",
-                  label: "Catálogo Comercial",
-                  icon: "🛒",
-                  description: "Pesquise e compre edições comerciais na Amazon",
-                },
-                {
-                  id: "mercadolivre",
-                  label: "Mercado Livre",
-                  icon: "🛍️",
-                  description: "Preços e ofertas em tempo real do Mercado Livre com link de afiliado",
-                },
-              ] as { id: ContentTab; label: string; icon: string; description: string }[]
-            ).map((tab) => (
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+            {categories.map((cat) => (
               <button
-                key={tab.id}
-                onClick={() => handleTabChange(tab.id)}
-                title={tab.description}
-                className={`relative flex items-center gap-2 px-5 py-3 text-[11px] font-mono font-bold uppercase tracking-widest cursor-pointer transition-all duration-300 border-b-2 ${
-                  activeTab === tab.id
-                    ? "border-accent text-accent"
-                    : "border-transparent text-current/50 hover:text-current/80 hover:border-current/20"
+                key={cat.id}
+                onClick={() => {
+                  if (cat.id === "terror") setActiveTab("terror");
+                  else if (cat.id === "eroticos") setActiveTab("eroticos");
+                  else setSelectedGenre(cat.label.split(" ")[0]);
+                }}
+                className={`relative rounded-2xl p-6 text-left border transition-all duration-300 hover:scale-[1.02] cursor-pointer bg-gradient-to-br ${cat.color} border-white/10 hover:border-accent/40`}
+              >
+                <h3 className="font-serif text-lg font-bold mb-1">{cat.label}</h3>
+                <p className="text-xs text-stone-400 font-mono">{cat.desc}</p>
+              </button>
+            ))}
+          </div>
+        </section>
+
+        {/* ── Genre Filter Pills ── */}
+        <section className="mb-10">
+          <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+            {genres.map((genre) => (
+              <button
+                key={genre}
+                onClick={() => setSelectedGenre(genre)}
+                className={`whitespace-nowrap px-5 py-2 text-[10px] font-semibold font-mono uppercase tracking-widest rounded-full border transition-all active:scale-95 cursor-pointer ${
+                  selectedGenre === genre
+                    ? "bg-accent border-accent text-zinc-950 shadow-sm"
+                    : "border-white/10 bg-white/5 text-stone-300 hover:border-accent/40"
                 }`}
               >
-                <span>{tab.icon}</span>
-                <span>{tab.label}</span>
-                <span
-                  className={`px-1.5 py-0.5 text-[8px] rounded-full font-bold ${
-                    activeTab === tab.id
-                      ? "bg-accent text-white"
-                      : "bg-current/10 text-current/60"
-                  }`}
-                >
-                  {tabBadgeCount[tab.id]}
-                </span>
+                {genre}
               </button>
             ))}
           </div>
 
-          {/* Tab description */}
-          <p className={`mt-3 text-[10px] font-mono ${mutedTextClasses} tracking-wide`}>
-            {activeTab === "livros" &&
-              "📚 Livros clássicos e edições raras — com links de afiliados para compra no Brasil e em Portugal."}
-            {activeTab === "contos" &&
-              "✍️ Contos originais gerados por escritores da comunidade e personas da IA editorial Gargbooks."}
-            {activeTab === "brasil" &&
-              "🇧🇷 Clássicos Brasileiros — Obras fundamentais da literatura do Brasil, de Machado de Assis a Raul Pompeia, todas em domínio público."}
-            {activeTab === "gutenberg" &&
-              "🌐 Biblioteca Gutenberg — Busque e leia na hora mais de 70.000 clássicos de domínio público inteiramente grátis."}
-            {activeTab === "comerciais" &&
-              "🛒 Catálogo Geral (Amazon) — Encontre milhões de livros comerciais e compre na Amazon via link de afiliado."}
-            {activeTab === "mercadolivre" &&
-              "🛍️ Mercado Livre — Busque livros com preços REAIS do Mercado Livre. Resultados com link de afiliado e condições de frete."}
-          </p>
+          {/* Search */}
+          <div className="relative mt-6 max-w-md">
+            <input
+              type="text"
+              placeholder="Buscar conto ou autor..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full px-5 py-2.5 pl-10 text-sm font-mono rounded-full border border-white/10 bg-white/5 text-stone-100 focus:border-accent/60 placeholder-stone-500 outline-none transition-all"
+            />
+            <span className="absolute left-4 top-3 text-sm opacity-60">🔍</span>
+          </div>
         </section>
 
-        {/* ── Filter Toolbar ── */}
-        {activeTab === "gutenberg" ? (
-          <section className="mb-12 flex flex-col gap-6 lg:flex-row lg:items-center justify-between animate-fade-in-up">
-            {/* Language filter for Gutenberg */}
-            <div className="flex items-center gap-1.5 p-1 bg-current/5 rounded-full border border-current/10 overflow-x-auto scrollbar-none">
-              {([
-                { id: "all", label: "Qualquer Idioma" },
-                { id: "pt", label: "Português 🇧🇷" },
-                { id: "en", label: "Inglês 🇬🇧" }
-              ] as const).map((lang) => (
-                <button
-                  key={lang.id}
-                  onClick={() => setGutenbergSearchLang(lang.id)}
-                  className={`px-4 py-2 text-[9px] uppercase tracking-wider font-mono font-bold rounded-full transition-all cursor-pointer ${
-                    gutenbergSearchLang === lang.id
-                      ? "bg-accent text-white shadow-md"
-                      : "text-current/60 hover:text-current"
-                  }`}
-                >
-                  {lang.label}
-                </button>
-              ))}
-            </div>
-
-            {/* Gutenberg search input form */}
-            <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
-              <form
-                onSubmit={(e) => { e.preventDefault(); handleGutenbergSearch(); }}
-                className="relative flex-1 sm:w-80 flex gap-2"
+        {/* ── Tab Navigation ── */}
+        <section className="mb-10">
+          <div className="flex flex-wrap items-center gap-2 border-b border-white/10 pb-0">
+            {[
+              { id: "contos" as ContentTab, label: "📖 Todos os Contos" },
+              { id: "recentes" as ContentTab, label: "🆕 Recentes" },
+              { id: "populares" as ContentTab, label: "🔥 Populares" },
+              { id: "terror" as ContentTab, label: "👻 Terror" },
+              { id: "eroticos" as ContentTab, label: "🔞 +18" },
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`px-5 py-3 text-[11px] font-mono font-bold uppercase tracking-widest cursor-pointer transition-all duration-300 border-b-2 ${
+                  activeTab === tab.id
+                    ? "border-accent text-accent"
+                    : "border-transparent text-stone-500 hover:text-stone-300 hover:border-white/20"
+                }`}
               >
-                <div className="relative flex-1">
-                  <input
-                    type="text"
-                    placeholder="Buscar no Project Gutenberg..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className={`w-full px-5 py-2.5 pl-10 text-[11px] font-mono rounded-full border outline-none transition-all ${inputClasses}`}
-                  />
-                  <span className="absolute left-4 top-3 text-[11px] opacity-60">🔍</span>
-                </div>
-                <button
-                  type="submit"
-                  className="px-5 py-2.5 bg-accent hover:bg-accent-hover text-[#121213] font-mono text-[10px] uppercase tracking-widest font-bold rounded-full transition-all active:scale-95 cursor-pointer shrink-0"
-                >
-                  Buscar
-                </button>
-              </form>
-            </div>
-          </section>
-        ) : activeTab === "mercadolivre" ? (
-          <section className="mb-12 flex flex-col gap-6 lg:flex-row lg:items-center justify-end animate-fade-in-up">
-            {/* ML search input form */}
-            <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
-              <form
-                onSubmit={(e) => { e.preventDefault(); handleMlSearch(); }}
-                className="relative flex-1 sm:w-80 flex gap-2"
-              >
-                <div className="relative flex-1">
-                  <input
-                    type="text"
-                    placeholder="Buscar livros no Mercado Livre..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className={`w-full px-5 py-2.5 pl-10 text-[11px] font-mono rounded-full border outline-none transition-all ${inputClasses}`}
-                  />
-                  <span className="absolute left-4 top-3 text-[11px] opacity-60">🔍</span>
-                </div>
-                <button
-                  type="submit"
-                  className="px-5 py-2.5 bg-amber-600 hover:bg-amber-700 text-white font-mono text-[10px] uppercase tracking-widest font-bold rounded-full transition-all active:scale-95 cursor-pointer shrink-0"
-                >
-                  Buscar
-                </button>
-              </form>
-            </div>
-          </section>
-        ) : activeTab === "comerciais" ? (
-          <section className="mb-12 flex flex-col gap-6 lg:flex-row lg:items-center justify-end animate-fade-in-up">
-            {/* Commercial search input form */}
-            <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
-              <form
-                onSubmit={(e) => { e.preventDefault(); handleAmazonSearch(); }}
-                className="relative flex-1 sm:w-80 flex gap-2"
-              >
-                <div className="relative flex-1">
-                  <input
-                    type="text"
-                    placeholder="Pesquisar milhões de livros comerciais..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className={`w-full px-5 py-2.5 pl-10 text-[11px] font-mono rounded-full border outline-none transition-all ${inputClasses}`}
-                  />
-                  <span className="absolute left-4 top-3 text-[11px] opacity-60">🔍</span>
-                </div>
-                <button
-                  type="submit"
-                  className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-mono text-[10px] uppercase tracking-widest font-bold rounded-full transition-all active:scale-95 cursor-pointer shrink-0"
-                >
-                  Pesquisar
-                </button>
-              </form>
-            </div>
-          </section>
-        ) : (
-          <section className="mb-12 flex flex-col gap-6 lg:flex-row lg:items-center justify-between animate-fade-in-up">
-            {/* Genre badges */}
-            <div className="flex items-center gap-2 overflow-x-auto pb-2 -mx-6 px-6 lg:mx-0 lg:px-0 scrollbar-none">
-              {genres.map((genre) => (
-                <button
-                  key={genre}
-                  onClick={() => setSelectedGenre(genre)}
-                  className={`whitespace-nowrap px-5 py-2 text-[10px] font-semibold font-mono uppercase tracking-widest rounded-full border transition-all active:scale-95 cursor-pointer ${
-                    selectedGenre === genre
-                      ? "bg-accent border-accent text-white shadow-sm"
-                      : appTheme === "dark"
-                      ? "border-white/10 bg-white/5 text-stone-300 hover:border-accent/40"
-                      : appTheme === "sepia"
-                      ? "border-sepia-text/20 bg-sepia-text/5 text-sepia-text hover:border-accent/40"
-                      : "border-corto-charcoal/10 bg-corto-charcoal/5 text-corto-charcoal hover:border-accent/40"
-                  }`}
-                >
-                  {genre}
-                </button>
-              ))}
-            </div>
-
-            {/* Search & Sort */}
-            <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
-              <div className="relative flex-1 sm:w-72">
-                <input
-                  type="text"
-                  placeholder={activeTab === "contos" ? "Buscar conto ou autor..." : "Buscar livro ou autor..."}
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className={`w-full px-5 py-2.5 pl-10 text-[11px] font-mono rounded-full border outline-none transition-all ${inputClasses}`}
-                />
-                <span className="absolute left-4 top-3 text-[11px] opacity-60">🔍</span>
-              </div>
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className={`px-5 py-2.5 text-[11px] font-mono uppercase tracking-widest rounded-full border outline-none cursor-pointer transition-all ${selectClasses}`}
-              >
-                <option value="author-asc">Autor (A-Z)</option>
-                <option value="year-desc">Mais Recentes</option>
-                <option value="year-asc">Mais Antigos</option>
-                <option value="title-asc">Título (A-Z)</option>
-                <option value="rating-desc">Melhor Avaliados</option>
-              </select>
-            </div>
-          </section>
-        )}
-
-        {/* ── Main Catalog Grid ── */}
-        {activeTab === "gutenberg" ? (
-          <div>
-            {loadingGutenberg || loadingPopularGutenberg ? (
-              <div className="text-center py-24">
-                <span className="block animate-spin text-3xl text-accent mb-3">🌀</span>
-                <p className="font-mono text-xs opacity-60">Consultando base de dados do Project Gutenberg...</p>
-              </div>
-            ) : hasSearchedGutenberg ? (
-              /* Gutenberg Search Results */
-              gutenbergResults.length === 0 ? (
-                <div className="text-center py-24 border border-dashed rounded-3xl border-current/15">
-                  <span className="text-5xl block mb-4">🔍</span>
-                  <h3 className="font-serif text-xl font-bold mb-2">Nenhum livro encontrado no Project Gutenberg</h3>
-                  <p className={`text-xs ${mutedTextClasses} max-w-sm mx-auto`}>
-                    Verifique a ortografia ou tente buscar em outro idioma utilizando o filtro.
-                  </p>
-                </div>
-              ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 animate-fade-in-up">
-                  {gutenbergResults.map((gbook) => renderGutenbergCard(gbook))}
-                </div>
-              )
-            ) : (
-              /* Gutenberg Popular Books */
-              <div>
-                <div className="flex items-center gap-3 mb-6">
-                  <span className="h-[1px] w-6 bg-accent" />
-                  <span className="font-mono text-[10px] uppercase tracking-widest text-accent font-bold">
-                    Obras de Domínio Público Mais Populares
+                {tab.label}
+                {tab.id === "eroticos" && (
+                  <span className="ml-2 px-1.5 py-0.5 text-[8px] bg-red-900/30 text-red-400 rounded-full border border-red-800/30">
+                    +18
                   </span>
-                </div>
-                {popularGutenberg.length === 0 ? (
-                  <p className="text-center py-12 font-mono text-xs opacity-50">Nenhum livro popular disponível no momento.</p>
-                ) : (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 animate-fade-in-up">
-                    {popularGutenberg.map((gbook) => renderGutenbergCard(gbook))}
-                  </div>
                 )}
-              </div>
-            )}
+              </button>
+            ))}
           </div>
-        ) : activeTab === "mercadolivre" ? (
-          <div>
-            {loadingMl ? (
-              <div className="text-center py-24">
-                <span className="block animate-spin text-3xl text-amber-500 mb-3">🌀</span>
-                <p className="font-mono text-xs opacity-60">Consultando Mercado Livre...</p>
-              </div>
-            ) : hasSearchedMl ? (
-              /* ML Search Results */
-              mlResults.length === 0 ? (
-                <div className="text-center py-24 border border-dashed rounded-3xl border-current/15">
-                  <span className="text-5xl block mb-4">🔍</span>
-                  <h3 className="font-serif text-xl font-bold mb-2">Nenhum livro encontrado no Mercado Livre</h3>
-                  <p className={`text-xs ${mutedTextClasses} max-w-sm mx-auto`}>
-                    Verifique a ortografia ou tente um termo de busca diferente.
-                  </p>
-                </div>
-              ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 animate-fade-in-up">
-                  {mlResults.map((item: MlResultItem) => renderMlCard(item))}
-                </div>
-              )
-            ) : (
-              /* Search Prompt for Mercado Livre */
-              <div className="text-center py-24 border border-dashed rounded-3xl border-current/15 max-w-3xl mx-auto px-6">
-                <span className="text-5xl block mb-6 animate-pulse">🛍️</span>
-                <h3 className="font-serif text-2xl font-bold mb-3 text-stone-250">Busque Livros no Mercado Livre</h3>
-                <p className={`text-xs md:text-sm ${mutedTextClasses} max-w-lg mx-auto leading-relaxed mb-8`}>
-                  Pesquise títulos de livros e veja preços REAIS praticados no Mercado Livre.
-                  Os links incluem nosso código de afiliado para apoiar o projeto.
-                </p>
-                <div className="flex justify-center">
-                  <div className="h-[1px] w-24 bg-accent/20" />
-                </div>
-              </div>
-            )}
-          </div>
-        ) : activeTab === "comerciais" ? (
-          <div>
-            {loadingAmazon ? (
-              <div className="text-center py-24">
-                <span className="block animate-spin text-3xl text-emerald-500 mb-3">🌀</span>
-                <p className="font-mono text-xs opacity-60">Pesquisando catálogo comercial do Google Books...</p>
-              </div>
-            ) : hasSearchedAmazon ? (
-              /* Amazon Search Results */
-              amazonResults.length === 0 ? (
-                <div className="text-center py-24 border border-dashed rounded-3xl border-current/15">
-                  <span className="text-5xl block mb-4">🔍</span>
-                  <h3 className="font-serif text-xl font-bold mb-2">Nenhum livro comercial localizado</h3>
-                  <p className={`text-xs ${mutedTextClasses} max-w-sm mx-auto`}>
-                    Não encontramos resultados para esta busca no momento.
-                  </p>
-                </div>
-              ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 animate-fade-in-up">
-                  {amazonResults.map((book) => renderCommercialCard(book))}
-                </div>
-              )
-            ) : (
-              /* Search Prompt for Commercial Books */
-              <div className="text-center py-24 border border-dashed rounded-3xl border-current/15 max-w-3xl mx-auto px-6">
-                <span className="text-5xl block mb-6 animate-pulse">🛒</span>
-                <h3 className="font-serif text-2xl font-bold mb-3 text-stone-250">Explore Milhões de Livros Digitais e Físicos</h3>
-                <p className={`text-xs md:text-sm ${mutedTextClasses} max-w-lg mx-auto leading-relaxed mb-8`}>
-                  Nossa busca está conectada ao catálogo global. Digite o título ou autor de qualquer livro comercial 
-                  para ver detalhes de edições e links de parceiros afiliados da Amazon.
-                </p>
-                <div className="flex justify-center">
-                  <div className="h-[1px] w-24 bg-accent/20" />
-                </div>
-              </div>
-            )}
-          </div>
-        ) : (
-          /* Original Local Books and Contos Grid */
-          filteredBooks.length === 0 ? (
-            <div className="text-center py-24 border border-dashed rounded-3xl border-current/15">
-              <span className="text-5xl block mb-4">
-                {activeTab === "contos" ? "✍️" : "📖"}
-              </span>
-              <h3 className="font-serif text-xl font-bold mb-2">
-                Nenhum {activeTab === "contos" ? "conto" : "livro"} encontrado localmente
-              </h3>
-              <p className={`text-xs ${mutedTextClasses} max-w-sm mx-auto mb-6`}>
-                Tente redefinir seus filtros ou buscar por outros termos de pesquisa na estante.
+        </section>
+
+        {/* ── Contos Grid ── */}
+        <section>
+          {filteredContos.length === 0 ? (
+            <div className="text-center py-24 border border-dashed rounded-3xl border-white/10">
+              <span className="text-6xl block mb-4">✍️</span>
+              <h3 className="font-serif text-2xl font-bold mb-2">Nenhum conto encontrado</h3>
+              <p className="text-sm text-stone-500 max-w-sm mx-auto mb-6">
+                Nenhum conto corresponde aos filtros selecionados.
               </p>
+              <Link
+                href="/publicar"
+                className="inline-block px-6 py-3 bg-accent text-zinc-950 rounded-full font-mono text-xs font-bold uppercase tracking-widest hover:bg-accent-hover transition-all"
+              >
+                ✍️ Seja o primeiro a publicar
+              </Link>
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 animate-fade-in-up">
-              {filteredBooks.map((book, idx) => {
-              const isLivro = book.type === "livro";
-              const hasBuyLink = isLivro && book.editions && book.editions.length > 0;
+              {filteredContos.map((book) => {
+                const isErotic = book.genres.some(g => 
+                  g.toLowerCase().includes("erótico") || g.toLowerCase().includes("adulto") || g === "+18"
+                );
+                const isTerror = book.genres.some(g => 
+                  g.toLowerCase().includes("terror") || g.toLowerCase().includes("horror")
+                );
 
-              return (
-                <React.Fragment key={book.id}>
-                  {/* Manifesto row after 2nd item */}
-                  {idx === 2 && (
-                    <div className="col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-4 my-8 border-y border-current/10 py-12 text-center w-full">
-                      <span className="text-[10px] font-mono uppercase tracking-widest text-accent mb-3 block font-bold">
-                        O Manifesto Gargbooks
-                      </span>
-                      <p className="font-serif text-2xl md:text-3xl italic leading-relaxed text-current max-w-3xl mx-auto">
-                        &ldquo;A leitura é a arquitetura da alma. Cada obra não é apenas um texto,
-                        mas uma estrutura escultural que esculpe a mente e o espaço ao redor.&rdquo;
-                      </p>
-                      <div className="mt-6 flex justify-center gap-6 text-[10px] font-mono uppercase tracking-widest">
-                        <span className="text-current/60">curadoria independente</span>
-                        <span className="text-accent">•</span>
-                        <span className="text-current/60">edições raras</span>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Philosophy block after 4th item */}
-                  {idx === 4 && (
-                    <div className="col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-4 my-8 grid grid-cols-1 md:grid-cols-2 gap-8 border border-current/10 p-8 rounded-2xl bg-current/3">
-                      <div className="flex flex-col justify-between">
-                        <h3 className="font-serif text-xl md:text-2xl font-bold tracking-tight">
-                          Nossa{" "}
-                          <span className="font-light italic text-accent font-serif">filosofia</span>{" "}
-                          de design geométrico
-                        </h3>
-                        <p className={`text-xs leading-relaxed font-sans ${mutedTextClasses} max-w-sm mt-3`}>
-                          Cada elemento do Gargbooks é regido por proporções visuais de equilíbrio,
-                          buscando criar um refúgio visual para leitores que apreciam a tipografia
-                          clássica, o minimalismo e a beleza estrutural das palavras.
-                        </p>
-                      </div>
-                      <div className="flex flex-col justify-end items-start md:items-end mt-4 md:mt-0 font-mono text-[9px] uppercase tracking-widest gap-2 text-current/60">
-                        <span>📐 Grade Proporcional</span>
-                        <span>🌿 Tons Orgânicos</span>
-                        <span>🔒 Proteção Intelectual</span>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Book / Conto Card */}
-                  <div className="group flex flex-col h-full bg-current/[0.02] border border-current/10 rounded-2xl p-5 hover:border-accent/40 hover:shadow-xl transition-all duration-500 ease-corto justify-between">
+                return (
+                  <Link
+                    key={book.id}
+                    href={getContoUrl(book.id)}
+                    className="group flex flex-col h-full bg-white/[0.02] border border-white/10 rounded-2xl p-5 hover:border-accent/40 hover:shadow-xl transition-all duration-500 justify-between"
+                  >
                     <div>
-                      <Link
-                        href={`/livros/${book.id}`}
-                        className="flex flex-col hover:-translate-y-1 transition-all duration-500 ease-corto"
-                      >
-                        {/* Cover */}
+                      {/* Cover / Gradient */}
+                      <div className="relative w-full overflow-hidden rounded-xl border border-white/8 group-hover:border-accent/40 shadow-sm group-hover:shadow-lg transition-all duration-500 aspect-[2/3]">
                         <div
-                          className="relative w-full overflow-hidden rounded-xl border border-current/8 group-hover:border-accent/40 shadow-sm group-hover:shadow-lg transition-all duration-500 ease-corto aspect-[2/3]"
-                        >
-                          {/* Background */}
-                          <div
-                            className="absolute inset-0 bg-gradient-to-tr transition-transform duration-500 ease-corto group-hover:scale-105"
-                            style={
-                              book.coverImage
-                                ? {
-                                    backgroundImage: `url(${book.coverImage})`,
-                                    backgroundSize: "cover",
-                                    backgroundPosition: "center",
-                                  }
-                                : {
-                                    backgroundColor: "#1c1917"
-                                  }
-                            }
-                          />
-
-                          {/* Geometric overlay */}
-                          <div className="absolute inset-0 opacity-10 pointer-events-none mix-blend-overlay group-hover:opacity-20 transition-all duration-500">
-                            <svg
-                              viewBox="0 0 100 100"
-                              className="w-full h-full stroke-white fill-none stroke-[0.8]"
-                            >
-                              <path d="M50,50 A0.5,0.5 0 0,1 50,50.1 A1,1 0 0,1 49,49 A2,2 0 0,1 51,47 A4,4 0 0,1 55,51 A8,8 0 0,1 47,59 A16,16 0 0,1 31,43 A32,32 0 0,1 63,11 A64,64 0 0,1 -1,75" />
-                            </svg>
-                          </div>
-
-                          {/* Top overlay: type badge + rating */}
-                          <div className="absolute top-4 left-4 right-4 flex justify-between items-start z-10">
-                            {/* Type badge — visually distinct */}
-                            <span
-                              className={`px-2.5 py-0.5 text-[8px] font-mono uppercase tracking-widest border rounded-full font-bold ${
-                                isLivro
-                                  ? "bg-sky-950/80 border-sky-400/30 text-sky-300"
-                                  : "bg-violet-950/80 border-violet-400/30 text-violet-300"
-                              }`}
-                            >
-                              {isLivro ? "📚 Livro" : "✍️ Conto"}
+                          className="absolute inset-0 bg-gradient-to-tr transition-transform duration-500 group-hover:scale-105"
+                          style={
+                            book.coverImage
+                              ? { backgroundImage: `url(${book.coverImage})`, backgroundSize: "cover", backgroundPosition: "center" }
+                              : { background: `linear-gradient(135deg, ${book.coverGradient || "from-stone-900 via-neutral-800 to-stone-900"})` }
+                          }
+                        />
+                        {/* Top badges */}
+                        <div className="absolute top-3 left-3 right-3 flex justify-between items-start z-10">
+                          {isErotic && (
+                            <span className="px-2 py-0.5 text-[8px] font-mono font-bold uppercase tracking-widest rounded-full bg-red-900/80 border border-red-400/30 text-red-300">
+                              🔞 +18
                             </span>
-                            <span className="font-mono text-[9px] tracking-wider text-accent font-bold drop-shadow">
-                              ★ {book.rating}
-                            </span>
-                          </div>
-
-                          {/* Buy badge (livros with editions only) */}
-                          {hasBuyLink && (
-                            <div className="absolute bottom-3 left-3 z-10">
-                              <span className="px-2 py-0.5 text-[8px] font-bold font-mono uppercase tracking-widest rounded-full bg-emerald-900/80 border border-emerald-400/30 text-emerald-300">
-                                🛒 Comprar
-                              </span>
-                            </div>
                           )}
+                          {isTerror && !isErotic && (
+                            <span className="px-2 py-0.5 text-[8px] font-mono font-bold uppercase tracking-widest rounded-full bg-orange-900/80 border border-orange-400/30 text-orange-300">
+                              👻 Terror
+                            </span>
+                          )}
+                          <span className="font-mono text-[9px] tracking-wider text-accent font-bold drop-shadow ml-auto">
+                            ★ {book.rating || 5}
+                          </span>
                         </div>
-                      </Link>
+                      </div>
 
                       {/* Metadata */}
                       <div className="mt-4">
-                        {/* Tags */}
                         <div className="flex items-center gap-1 flex-wrap mb-2">
                           {book.genres.slice(0, 3).map((g) => (
                             <span
@@ -1406,64 +274,57 @@ export default function Home() {
                             </span>
                           ))}
                         </div>
-
-                        {/* Title */}
-                        <Link href={`/livros/${book.id}`}>
-                          <h3 className="font-serif text-lg md:text-xl font-bold text-current leading-snug hover:text-accent transition-colors duration-300 line-clamp-2">
-                            {book.title}
-                          </h3>
-                        </Link>
+                        <h3 className="font-serif text-lg font-bold text-stone-100 leading-snug hover:text-accent transition-colors duration-300 line-clamp-2">
+                          {book.title}
+                        </h3>
                         <p className="text-[9px] font-mono uppercase tracking-widest text-accent mt-0.5 font-bold">
                           {book.author}
                         </p>
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between text-[9px] font-mono mt-4 pt-3 border-t border-current/10 text-current/40">
-                      <div className="flex items-center gap-2">
-                        <span>{book.year}</span>
-                        <span>•</span>
-                        {book.publicDomain === false ? (
-                          <span className="text-red-400 font-bold uppercase tracking-wider text-[7px] border border-red-500/10 px-1 py-0.5 rounded bg-red-950/10">
-                            © Copyright
-                          </span>
-                        ) : (
-                          <span className="text-stone-400 font-bold uppercase tracking-wider text-[7px] border border-stone-400/10 px-1 py-0.5 rounded bg-stone-950/10">
-                            Domínio Público
-                          </span>
-                        )}
-                      </div>
-                      <div className="flex items-center gap-2">
-                        {hasBuyLink && (
-                          <a
-                            href={book.editions[0].linkBR}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-emerald-450 uppercase tracking-widest font-bold hover:underline"
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            Comprar ↗
-                          </a>
-                        )}
-                        <Link
-                          href={`/livros/${book.id}`}
-                          className="text-accent uppercase tracking-widest font-bold hover:underline"
-                        >
-                          {isLivro ? "Acessar ↗" : "Ler ↗"}
-                        </Link>
-                      </div>
+                    <div className="flex items-center justify-between text-[9px] font-mono mt-4 pt-3 border-t border-white/10 text-stone-500">
+                      <span>{book.year}</span>
+                      <span className="text-accent uppercase tracking-widest font-bold group-hover:underline">
+                        Ler Conto ↗
+                      </span>
                     </div>
-                  </div>
-                </React.Fragment>
-              );
-            })}
+                  </Link>
+                );
+              })}
+            </div>
+          )}
+        </section>
+
+        {/* ── Call to Action ── */}
+        <section className="mt-24 rounded-3xl border border-accent/20 bg-white/[0.02] p-12 text-center">
+          <span className="font-script text-4xl text-accent block mb-4">✍️</span>
+          <h2 className="font-serif text-3xl md:text-4xl font-bold mb-4">
+            Tem uma história para contar?
+          </h2>
+          <p className="text-stone-400 max-w-lg mx-auto mb-8 text-sm">
+            Publique seus contos gratuitamente e alcance leitores do mundo inteiro 
+            com tradução automática. Crie seu perfil de escritor e construa sua audiência.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              href="/publicar"
+              className="px-8 py-3 bg-accent text-zinc-950 rounded-full font-mono text-xs font-bold uppercase tracking-widest hover:bg-accent-hover transition-all hover:scale-105 active:scale-95"
+            >
+              Publicar Conto
+            </Link>
+            <Link
+              href="/perfil"
+              className="px-8 py-3 border border-white/20 text-stone-300 rounded-full font-mono text-xs font-bold uppercase tracking-widest hover:border-accent/40 transition-all"
+            >
+              Criar Perfil
+            </Link>
           </div>
-          )
-        )}
+        </section>
+
       </main>
 
-      {/* ── Footer ───────────────────────────────────────────────────────── */}
-      <Footer borderClass={borderClasses} />
+      <Footer />
     </div>
   );
 }
