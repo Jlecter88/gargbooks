@@ -34,20 +34,20 @@ export default function Header() {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-8 text-xs uppercase tracking-widest font-mono font-semibold">
           <Link href="/" className="corto-underline py-1 text-current/80 hover:text-current transition-colors">
-            Estante
+            Início
           </Link>
           <Link href="/comunidade" className="corto-underline py-1 text-current/80 hover:text-current transition-colors flex items-center gap-2">
             <span className="w-1 h-1 rounded-full bg-accent animate-pulse"></span>
             Comunidade & RPG
           </Link>
           <Link href="/publicar" className="corto-underline py-1 text-current/80 hover:text-current transition-colors">
-            Publicar
+            Publicar Conto
           </Link>
           <button
             onClick={() => setIsDrawerOpen(true)}
             className="corto-underline py-1 text-current/80 hover:text-current transition-colors flex items-center gap-2 cursor-pointer"
           >
-            Marcadores
+            Favoritos
             {bookmarks.length > 0 && (
               <span className="px-1.5 py-0.5 text-[9px] font-mono font-bold bg-accent text-white rounded-full">
                 {bookmarks.length}
@@ -127,7 +127,7 @@ export default function Header() {
               onClick={() => setIsDrawerOpen(false)}
               className="hover:text-accent flex items-center gap-3 transition-colors duration-200"
             >
-              <span className="text-[10px] text-accent">01/</span> Estante Virtual
+              <span className="text-[10px] text-accent">01/</span> Início
             </Link>
             <Link
               href="/perfil"
@@ -148,7 +148,7 @@ export default function Header() {
               onClick={() => setIsDrawerOpen(false)}
               className="hover:text-accent flex items-center gap-3 transition-colors duration-200"
             >
-              <span className="text-[10px] text-accent">04/</span> Publicar Obra
+              <span className="text-[10px] text-accent">04/</span> Publicar Conto
             </Link>
             <Link
               href="/admin"
@@ -201,7 +201,7 @@ export default function Header() {
             <span className="text-accent uppercase tracking-wider font-bold">Aesthetics by Capitolium</span>
           </div>
           <div className="text-[9px] text-current/40 leading-relaxed">
-            Marketplace de edições raras e clube de leitura com curadoria focada em design escultural.
+            Portal mundial de contos, relatos e histórias. Leia, publique e compartilhe.
           </div>
         </div>
       </div>

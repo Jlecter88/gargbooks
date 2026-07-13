@@ -29,7 +29,7 @@ export default function Footer({
         {/* Links */}
         <div className="flex flex-wrap justify-center gap-8 uppercase tracking-widest">
           <Link href="/" className="hover:text-accent transition-colors">
-            Estante
+            Início
           </Link>
           <Link href="/perfil" className="hover:text-accent transition-colors">
             Perfil
@@ -38,7 +38,7 @@ export default function Footer({
             Comunidade & RPG
           </Link>
           <Link href="/publicar" className="hover:text-accent transition-colors">
-            Publicar
+            Publicar Conto
           </Link>
           <Link href="/faq" className="hover:text-accent text-accent font-bold transition-colors flex items-center gap-1.5">
             <span className="inline-block w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span>

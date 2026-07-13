@@ -26,8 +26,8 @@ const pinyon = Pinyon_Script({
 });
 
 export const metadata: Metadata = {
-  title: "Gargbooks - Sebo e Leitura Premium",
-  description: "Marketplace literário e clube de leitura digital com design premium por Creative Pash",
+  title: "Gargbooks - Contos, Relatos & Histórias",
+  description: "Portal mundial de contos e relatos com tradução automática. Leia, publique, comente e descubra histórias de todos os gêneros.",
 };
 
 export default function RootLayout({
